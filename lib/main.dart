@@ -98,10 +98,10 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  XFile? portrait;
-  void setPortrait(XFile image) {
+  String? portrait;
+  void setPortrait(String portrait) {
     setState(() {
-      portrait = image;
+      portrait = portrait;
     });
   }
 
@@ -146,7 +146,8 @@ class _MyHomePageState extends State<MyHomePage> {
             DogTagsInput(tags, addTag, removeTag),
             GenderRadioGroup(gender, setGender),
             BirthdayPicker(birthday, setBirthday),
-            PortraitPicker(setPortrait),
+            PortraitPicker(
+                setPortrait, Uri.parse("http://10.0.2.2:8000/upload")),
           ],
         ),
       ),
