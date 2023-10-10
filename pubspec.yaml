@@ -39,6 +39,7 @@ dependencies:
   flutter_tags: ^1.0.0-nullsafety.1
   image_picker: ^1.0.4
   fluttertoast: ^8.2.2
+  image_cropper: ^5.0.0
 
 dev_dependencies:
   flutter_test:

@@ -146,8 +146,7 @@ class _MyHomePageState extends State<MyHomePage> {
             DogTagsInput(tags, addTag, removeTag),
             GenderRadioGroup(gender, setGender),
             BirthdayPicker(birthday, setBirthday),
-            PortraitPicker(
-                setPortrait, Uri.parse("http://10.0.2.2:8000/upload")),
+            PortraitPicker(setPortrait, Uri.parse("http://10.0.2.2:8001")),
           ],
         ),
       ),
