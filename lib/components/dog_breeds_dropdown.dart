@@ -19,7 +19,7 @@ class _DogBreedsDropdownState extends State<DogBreedsDropdown> {
   @override
   void initState() {
     super.initState();
-    future = allDogBreeds("Small");
+    future = queryBreeds("Small", Pagination(1, 10));
   }
 
   @override
@@ -31,7 +31,7 @@ class _DogBreedsDropdownState extends State<DogBreedsDropdown> {
             print("${snapshot.error}\n");
           }
           if (snapshot.hasData) {
-            return Column(children: [
+            return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               DropdownButton(
                 value: size ?? "Small",
                 items: const [
@@ -43,7 +43,8 @@ class _DogBreedsDropdownState extends State<DogBreedsDropdown> {
                 onChanged: (value) {
                   setState(() {
                     size = value;
-                    future = allDogBreeds(value);
+                    widget.setSelected(null);
+                    future = queryBreeds(value, Pagination(1, 10));
                   });
                 },
               ),
@@ -53,6 +54,7 @@ class _DogBreedsDropdownState extends State<DogBreedsDropdown> {
                     return DropdownMenuItem(value: b.id, child: Text(b.name));
                   }).toList(),
                   onChanged: (val) {
+                    print("selected: $val");
                     widget.setSelected(val);
                   })
             ]);
