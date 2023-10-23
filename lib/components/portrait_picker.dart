@@ -6,8 +6,8 @@ import 'package:http/http.dart' as http;
 import 'package:image_cropper/image_cropper.dart';
 
 class PortraitPicker extends StatelessWidget {
-  late Function(String) setPortrait;
-  late Uri uploadURL;
+  final Function(String) setPortrait;
+  final Uri uploadURL;
   late ScaffoldMessengerState messager;
   PortraitPicker(this.setPortrait, this.uploadURL, {super.key});
 
@@ -55,7 +55,9 @@ class PortraitPicker extends StatelessWidget {
               "上传失败(status code:  ${resp.statusCode}): ${await resp.stream.transform(utf8.decoder).join()}")));
       return;
     }
-    final data = jsonDecode(resp.stream.toString());
+    final body = await resp.stream.bytesToString();
+    print(body);
+    final data = jsonDecode(body);
     setPortrait(data["id"]);
   }
 
