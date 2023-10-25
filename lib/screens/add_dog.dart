@@ -53,7 +53,7 @@ class AddDogScreenState extends State<AddDogScreen> {
     });
   }
 
-  void setPortrait(String portrait) {
+  void setPortrait(String? portrait) {
     setState(() {
       portrait = portrait;
     });
@@ -96,7 +96,7 @@ class AddDogScreenState extends State<AddDogScreen> {
             DogTagsInput(tags, addTag, removeTag),
             GenderRadioGroup(gender, setGender),
             BirthdayPicker(birthday, setBirthday),
-            PortraitPicker(setPortrait, Uri.parse("http://10.0.2.2:8001")),
+            PortraitPicker(setPortrait),
             AddDogSubmitButton(submit),
           ],
         ),

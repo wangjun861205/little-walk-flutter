@@ -1,23 +1,17 @@
-import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:http/http.dart' as http;
 import 'package:image_cropper/image_cropper.dart';
+import '../apis/upload.dart' as upload_api;
 
-class PortraitPicker extends StatelessWidget {
-  final Function(String) setPortrait;
-  final Uri uploadURL;
+class PortraitPickerState extends State<PortraitPicker> {
+  String? imageURL;
   late ScaffoldMessengerState messager;
-  PortraitPicker(this.setPortrait, this.uploadURL, {super.key});
 
-  void upload() async {
-    final image = await ImagePicker().pickImage(source: ImageSource.camera);
-    if (image == null) {
-      return;
-    }
+  Future<Uint8List?> crop(String path) async {
     final croppedImage = await ImageCropper().cropImage(
-      sourcePath: image.path,
+      sourcePath: path,
       cropStyle: CropStyle.circle,
       aspectRatioPresets: [
         CropAspectRatioPreset.square,
@@ -36,34 +30,65 @@ class PortraitPicker extends StatelessWidget {
         IOSUiSettings(
           title: 'Cropper',
         ),
-        // WebUiSettings(
-        //   context: context,
-        // ),
       ],
     );
     if (croppedImage == null) {
+      return null;
+    }
+    return croppedImage.readAsBytes();
+  }
+
+  void upload() async {
+    final image = await ImagePicker().pickImage(source: ImageSource.camera);
+    if (image == null) {
       return;
     }
-    final bs = await croppedImage.readAsBytes();
-    final request = http.MultipartRequest("POST", uploadURL)
-      ..headers.addAll({"X-User-ID": "1", "X-Size-Limit": "1000000"})
-      ..files.add(http.MultipartFile.fromBytes("file", bs));
-    final resp = await request.send();
-    if (resp.statusCode != 200) {
-      messager.showSnackBar(SnackBar(
-          content: Text(
-              "上传失败(status code:  ${resp.statusCode}): ${await resp.stream.transform(utf8.decoder).join()}")));
-      return;
+    final bs = await crop(image.path);
+    if (bs == null) {
+      return null;
     }
-    final body = await resp.stream.bytesToString();
-    print(body);
-    final data = jsonDecode(body);
-    setPortrait(data["id"]);
+    final res = await upload_api.upload(
+      "",
+      image.name,
+      bs,
+    );
+    widget.setPortrait(res.ids[0]);
+    setState(() {
+      imageURL = res.ids[0];
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     messager = ScaffoldMessenger.of(context);
-    return TextButton(onPressed: upload, child: const Text("选取照片"));
+    return (imageURL != null)
+        ? Row(children: [
+            TextButton(onPressed: upload, child: const Text("选取照片")),
+            GestureDetector(
+                onTap: () {
+                  widget.setPortrait(null);
+                  setState(() => imageURL = null);
+                },
+                child: CircleAvatar(
+                  radius: 50,
+                  backgroundImage: NetworkImage(
+                      "http://10.0.2.2:8001/files/$imageURL",
+                      scale: 0.2),
+                ))
+          ])
+        : Row(children: [
+            TextButton(onPressed: upload, child: const Text("选取照片")),
+          ]);
+  }
+}
+
+class PortraitPicker extends StatefulWidget {
+  final Function(String?) setPortrait;
+
+  const PortraitPicker(this.setPortrait, {super.key});
+
+  @override
+  State<StatefulWidget> createState() {
+    return PortraitPickerState();
   }
 }
