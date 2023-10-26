@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class GenderRadioGroup extends StatelessWidget {
-  final String? gender;
-  final void Function(String?) setGender;
+  final String gender;
+  final void Function(String) setGender;
 
   const GenderRadioGroup(this.gender, this.setGender, {super.key});
 
@@ -16,7 +16,7 @@ class GenderRadioGroup extends StatelessWidget {
             value: "Male",
             groupValue: gender,
             onChanged: (value) {
-              setGender(value);
+              setGender(value ?? "");
             }),
       )),
       Flexible(
@@ -26,7 +26,7 @@ class GenderRadioGroup extends StatelessWidget {
             value: "Famale",
             groupValue: gender,
             onChanged: (value) {
-              setGender(value);
+              setGender(value ?? "");
             }),
       ))
     ]);

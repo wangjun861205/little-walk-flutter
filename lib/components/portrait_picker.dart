@@ -66,7 +66,7 @@ class PortraitPickerState extends State<PortraitPicker> {
             TextButton(onPressed: upload, child: const Text("选取照片")),
             GestureDetector(
                 onTap: () {
-                  widget.setPortrait(null);
+                  widget.setPortrait("");
                   setState(() => imageURL = null);
                 },
                 child: CircleAvatar(
@@ -83,7 +83,7 @@ class PortraitPickerState extends State<PortraitPicker> {
 }
 
 class PortraitPicker extends StatefulWidget {
-  final Function(String?) setPortrait;
+  final Function(String) setPortrait;
 
   const PortraitPicker(this.setPortrait, {super.key});
 

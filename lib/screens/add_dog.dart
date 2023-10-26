@@ -11,19 +11,19 @@ import '../components/gender_radio_group.dart';
 import '../components/portrait_picker.dart';
 
 class AddDogScreenState extends State<AddDogScreen> {
-  String? name;
-  String? breed;
+  String name = "";
+  String breed = "";
   List<String> tags = [];
-  String? gender;
-  DateTime? birthday;
-  String? portrait;
-  String? authToken;
+  String gender = "Male";
+  DateTime birthday = DateTime.now();
+  String portrait = "";
+  String authToken = "";
 
   void setName(String? name) {
     setState(() => name = name);
   }
 
-  void setBreed(String? b) {
+  void setBreed(String b) {
     setState(() {
       breed = b;
     });
@@ -41,43 +41,22 @@ class AddDogScreenState extends State<AddDogScreen> {
     });
   }
 
-  void setGender(String? gender) {
+  void setGender(String gender) {
     setState(() {
       this.gender = gender;
     });
   }
 
-  void setBirthday(DateTime? birthday) {
+  void setBirthday(DateTime birthday) {
     setState(() {
       this.birthday = birthday;
     });
   }
 
-  void setPortrait(String? portrait) {
+  void setPortrait(String portrait) {
     setState(() {
       portrait = portrait;
     });
-  }
-
-  submit() {
-    try {
-      getAuthToken().then((token) {
-        if (token == null) {
-          Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => const LoginScreen(60),
-          ));
-        }
-        final req =
-            AddDogRequest(name!, birthday!, breed!, tags, gender!, portrait!);
-        addDog(token!, req).then((_) {
-          ScaffoldMessenger.of(context)
-              .showSnackBar(const SnackBar(content: Text("创建成功")));
-        });
-      });
-    } catch (err) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text("创建失败")));
-    }
   }
 
   @override
@@ -97,7 +76,10 @@ class AddDogScreenState extends State<AddDogScreen> {
             GenderRadioGroup(gender, setGender),
             BirthdayPicker(birthday, setBirthday),
             PortraitPicker(setPortrait),
-            AddDogSubmitButton(submit),
+            AddDogSubmitButton(
+                "",
+                AddDogRequest(name, gender, breed, birthday, false, "", "1",
+                    tags, portrait)),
           ],
         ),
       ),

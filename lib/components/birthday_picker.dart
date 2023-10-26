@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class BirthdayPicker extends StatelessWidget {
-  final DateTime? birthday;
-  final void Function(DateTime?) setBirthday;
+  final DateTime birthday;
+  final void Function(DateTime) setBirthday;
 
   TextEditingController? dateController;
 
   BirthdayPicker(this.birthday, this.setBirthday, {super.key}) {
-    dateController = TextEditingController(text: birthday?.toIso8601String());
+    dateController = TextEditingController(text: birthday.toIso8601String());
   }
 
   @override
@@ -25,7 +25,7 @@ class BirthdayPicker extends StatelessWidget {
             firstDate: DateTime(1900),
             lastDate: DateTime(2100),
           );
-          setBirthday(date);
+          setBirthday(date ?? DateTime.now());
         });
   }
 }
