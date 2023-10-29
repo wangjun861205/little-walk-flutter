@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:little_walk/apis/common.dart';
 import 'package:little_walk/apis/dog.dart';
 import 'package:little_walk/components/add_dog_submit_button.dart';
 import 'package:little_walk/components/dog_name_input.dart';
-import 'package:little_walk/screens/login.dart';
 import '../components/birthday_picker.dart';
 import '../components/dog_breeds_dropdown.dart';
 import '../components/dog_tags_input.dart';

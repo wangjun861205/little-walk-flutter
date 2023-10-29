@@ -1,5 +1,4 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:little_walk/models/dog_breed.dart';
 
 abstract class FromJSON {
   fromJSON(Map m);
