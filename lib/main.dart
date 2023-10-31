@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:little_walk/apis/auth.dart';
 import 'package:little_walk/screens/add_dog.dart';
-import 'package:go_router/go_router.dart';
 import 'package:little_walk/screens/login.dart';
 
 void main() {
@@ -16,22 +16,31 @@ class MyApp extends StatefulWidget {
   }
 }
 
+Future<bool> needLogin() async {
+  final token = await const FlutterSecureStorage().read(key: "AUTH_TOKEN");
+  if (token == null) {
+    return true;
+  }
+  return await verifyToken(token) == null ? true : false;
+}
+
 class MyAppState extends State<MyApp> {
   int selectedIndex = 0;
-  final future = const FlutterSecureStorage().read(key: "AUTH_TOKEN");
+  final future = needLogin();
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: future,
       builder: (context, snapshot) {
         if (snapshot.hasError) {
-          return Text(snapshot.error.toString());
+          return MaterialApp(
+              home: Scaffold(body: Center(child: Text("${snapshot.error}"))));
         }
         if (!snapshot.hasData) {
-          return const Text("请稍后...");
+          return const MaterialApp(home: Scaffold(body: Text("请稍后")));
         }
-        if (snapshot.data == null) {
-          return const LoginScreen(60);
+        if (snapshot.data!) {
+          return const MaterialApp(home: LoginScreen(60));
         }
         return MaterialApp(
             home: Scaffold(

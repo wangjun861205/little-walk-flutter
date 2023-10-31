@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:http/http.dart';
 
@@ -35,5 +36,33 @@ Future<String> loginByVerificationCode(String phone, code) async {
     return loginResp.token;
   } catch (err) {
     throw Exception("登录失败: ${err.toString()}");
+  }
+}
+
+class VerifyTokenResp {
+  String id;
+
+  VerifyTokenResp(this.id);
+
+  factory VerifyTokenResp.fromJSON(String json) {
+    final m = jsonDecode(json);
+    return VerifyTokenResp(m["id"]);
+  }
+}
+
+Future<String?> verifyToken(String token) async {
+  try {
+    final uri = Uri.http("10.0.2.2:8002", "/verify_token/$token");
+    final resp = await get(uri);
+    if (resp.statusCode == HttpStatus.unauthorized) {
+      return null;
+    }
+    if (resp.statusCode != 200) {
+      throw Exception(resp.body);
+    }
+    final body = VerifyTokenResp.fromJSON(resp.body);
+    return body.id;
+  } catch (err) {
+    throw Exception("验证Token失败: ${err.toString()}");
   }
 }
