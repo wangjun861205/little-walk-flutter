@@ -3,6 +3,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:little_walk/apis/auth.dart';
 import 'package:little_walk/screens/add_dog.dart';
 import 'package:little_walk/screens/login.dart';
+import 'package:little_walk/screens/profile_menu.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,8 +28,15 @@ Future<bool> needLogin() async {
 class MyAppState extends State<MyApp> {
   int selectedIndex = 0;
   final future = needLogin();
+
   @override
   Widget build(BuildContext context) {
+    final pages = [
+      const ProfileMenuScreen(),
+      const ProfileMenuScreen(),
+      const ProfileMenuScreen(),
+      const ProfileMenuScreen(),
+    ];
     return FutureBuilder(
       future: future,
       builder: (context, snapshot) {
@@ -44,7 +52,7 @@ class MyAppState extends State<MyApp> {
         }
         return MaterialApp(
             home: Scaffold(
-          body: const Text("test"),
+          body: pages[selectedIndex],
           bottomNavigationBar: BottomNavigationBar(
               items: [
                 BottomNavigationBarItem(

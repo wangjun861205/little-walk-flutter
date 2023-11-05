@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:little_walk/apis/auth.dart';
 import 'package:little_walk/apis/common.dart';
+import 'package:little_walk/main.dart';
 
 class VerificationCodeLoginButton extends StatelessWidget {
   final ValueNotifier<String> phone;

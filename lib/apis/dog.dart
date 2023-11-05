@@ -1,7 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart';
+import 'package:little_walk/apis/common.dart';
+import '../models/dog.dart';
 
 class AddDogRequest {
   String name;
@@ -61,4 +64,16 @@ Future<AddDogResponse> addDog(String authToken, AddDogRequest req) async {
     throw HttpException("创建失败(status code: ${resp.statusCode})");
   }
   return AddDogResponse.fromJson(jsonDecode(resp.body));
+}
+
+Future<List<Dog>> myDogs(String authToken) async {
+  final url = Uri.parse("http://10.0.2.2:8000/dogs/mine");
+  final resp = await get(url, headers: {"X-Auth-Token": authToken});
+  if (resp.statusCode != 200) {
+    throw Exception("查询我的狗狗失败: ${resp.body}");
+  }
+  List<Map<String, dynamic>> list = jsonDecode(resp.body);
+  return list.map((m) {
+    return Dog(m["name"], m["portrait"]);
+  }).toList();
 }

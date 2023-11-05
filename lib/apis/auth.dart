@@ -16,26 +16,30 @@ class LoginResponse {
 }
 
 Future<void> acquireSMSVerificationCode(String phone) async {
-  final uri = Uri.parse("http://10.0.2.2:8002/$phone");
+  final uri = Uri.parse(
+      "http://10.0.2.2:8000/accounts/phones/$phone/verification_codes");
   final resp = await put(uri);
   if (resp.statusCode != 200) {
-    log("获取验证码失败(status code: ${resp.statusCode}): ${resp.body}");
-    throw Exception("获取验证码失败");
+    throw Exception("获取验证码失败(status: ${resp.statusCode}): ${resp.body}");
   }
 }
 
 Future<String> loginByVerificationCode(String phone, code) async {
   try {
-    final uri = Uri.http("10.0.2.2:8003", "/login_by_verification_code",
-        {"phone": phone, "code": code});
-    final resp = await put(uri);
+    final uri = Uri.http(
+      "10.0.2.2:8000",
+      "/accounts/login/by_sms_verification_code",
+    );
+    final resp = await put(uri,
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode({"phone": phone, "code": code}));
     if (resp.statusCode != 200) {
-      throw Exception(resp.body);
+      throw Exception("status: ${resp.statusCode}, detail: ${resp.body}");
     }
     LoginResponse loginResp = LoginResponse.fromJSON(resp.body);
     return loginResp.token;
   } catch (err) {
-    throw Exception("登录失败: ${err.toString()}");
+    throw Exception("登录失败: $err");
   }
 }
 
@@ -52,7 +56,8 @@ class VerifyTokenResp {
 
 Future<String?> verifyToken(String token) async {
   try {
-    final uri = Uri.http("10.0.2.2:8002", "/verify_token/$token");
+    final uri =
+        Uri.http("10.0.2.2:8000", "/accounts/tokens/$token/verification");
     final resp = await get(uri);
     if (resp.statusCode == HttpStatus.unauthorized) {
       return null;
@@ -63,6 +68,6 @@ Future<String?> verifyToken(String token) async {
     final body = VerifyTokenResp.fromJSON(resp.body);
     return body.id;
   } catch (err) {
-    throw Exception("验证Token失败: ${err.toString()}");
+    throw Exception("验证Token失败: $err");
   }
 }
