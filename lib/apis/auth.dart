@@ -2,7 +2,9 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart';
+import 'package:little_walk/apis/common.dart';
 
 class LoginResponse {
   String token;
@@ -70,4 +72,21 @@ Future<String?> verifyToken(String token) async {
   } catch (err) {
     throw Exception("验证Token失败: $err");
   }
+}
+
+Future<String> signup(String phone, password, verificationCode) async {
+  final address = dotenv.get("BACKEND_ADDRESS");
+  final uri = Uri.http(address, "/accounts/signup");
+  final resp = await post(uri,
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode({
+        "phone": phone,
+        "password": password,
+        "verification_code": verificationCode
+      }));
+  if (resp.statusCode != HttpStatus.ok) {
+    throw Exception("注册失败: ${resp.body}");
+  }
+  Map<String, dynamic> map = jsonDecode(resp.body);
+  return map["token"];
 }

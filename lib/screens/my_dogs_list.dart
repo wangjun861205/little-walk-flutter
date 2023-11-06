@@ -7,11 +7,7 @@ import 'package:little_walk/screens/login.dart';
 import '../models/dog.dart';
 
 class MyDogsList extends StatelessWidget {
-  var future;
-
-  @override
-  Widget build(BuildContext context) {
-    future = () async {
+Future<List<Dog>> () async {
       final authToken = await getAuthToken();
       if (authToken == null) {
         Navigator.of(context).push(MaterialPageRoute(builder: (context) {
@@ -19,9 +15,11 @@ class MyDogsList extends StatelessWidget {
         }));
       }
       return await myDogs(authToken!);
-    };
+    }
+  @override
+  Widget build(BuildContext context) {
     return FutureBuilder(
-        future: future,
+        future: myDogs(""),
         builder: (context, snapshot) {
           return LoginScreen(60);
         });

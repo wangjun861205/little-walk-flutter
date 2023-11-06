@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:little_walk/components/send_verification_code_button.dart';
 import 'package:little_walk/components/verification_code_login_button.dart';
+import 'package:little_walk/screens/signup.dart';
 
 class _LoginScreenState extends State<LoginScreen> {
   String phone = "";
@@ -49,7 +50,15 @@ class _LoginScreenState extends State<LoginScreen> {
               padding: const EdgeInsets.only(top: 10),
               child: VerificationCodeLoginButton(
                   ValueNotifier(phone), ValueNotifier(code)),
-            )
+            ),
+            Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: TextButton(
+                    child: const Text("去注册"),
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => SignupScreen()));
+                    }))
           ],
         )));
   }

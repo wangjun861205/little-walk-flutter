@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:little_walk/apis/auth.dart';
 import 'package:little_walk/screens/add_dog.dart';
+import 'package:little_walk/screens/home.dart';
 import 'package:little_walk/screens/login.dart';
 import 'package:little_walk/screens/profile_menu.dart';
 
-void main() {
+void main() async {
+  await dotenv.load();
   runApp(const MyApp());
 }
 
@@ -31,12 +34,6 @@ class MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    final pages = [
-      const ProfileMenuScreen(),
-      const ProfileMenuScreen(),
-      const ProfileMenuScreen(),
-      const ProfileMenuScreen(),
-    ];
     return FutureBuilder(
       future: future,
       builder: (context, snapshot) {
@@ -50,39 +47,7 @@ class MyAppState extends State<MyApp> {
         if (snapshot.data!) {
           return const MaterialApp(home: LoginScreen(60));
         }
-        return MaterialApp(
-            home: Scaffold(
-          body: pages[selectedIndex],
-          bottomNavigationBar: BottomNavigationBar(
-              items: [
-                BottomNavigationBarItem(
-                    icon: Icon(Icons.home, color: Colors.amber[400]),
-                    label: "首页"),
-                BottomNavigationBarItem(
-                    icon: Icon(
-                      Icons.handshake,
-                      color: Colors.amber[400],
-                    ),
-                    label: "代遛"),
-                BottomNavigationBarItem(
-                    icon: Icon(
-                      Icons.sports,
-                      color: Colors.amber[400],
-                    ),
-                    label: "邀请"),
-                BottomNavigationBarItem(
-                    icon: Icon(
-                      color: Colors.amber[400],
-                      Icons.portrait,
-                    ),
-                    label: "个人"),
-              ],
-              selectedItemColor: Colors.amber[800],
-              currentIndex: selectedIndex,
-              onTap: (idx) {
-                setState(() => selectedIndex = idx);
-              }),
-        ));
+        return const MaterialApp(home: HomeScreen());
       },
     );
   }
