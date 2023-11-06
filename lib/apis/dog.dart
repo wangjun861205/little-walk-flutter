@@ -66,14 +66,19 @@ Future<AddDogResponse> addDog(String authToken, AddDogRequest req) async {
   return AddDogResponse.fromJson(jsonDecode(resp.body));
 }
 
-Future<List<Dog>> myDogs(String authToken) async {
-  final url = Uri.parse("http://10.0.2.2:8000/dogs/mine");
+Future<(List<Dog>, int)> myDogs(String authToken, int page, size) async {
+  final url =
+      Uri.parse("http://10.0.2.2:8000/apis/dogs/mine?page=$page&size=$size");
   final resp = await get(url, headers: {"X-Auth-Token": authToken});
   if (resp.statusCode != 200) {
     throw Exception("查询我的狗狗失败: ${resp.body}");
   }
-  List<Map<String, dynamic>> list = jsonDecode(resp.body);
-  return list.map((m) {
-    return Dog(m["name"], m["portrait"]);
+  Map<String, dynamic> map = jsonDecode(resp.body);
+  final total = map["total"] as int;
+  final list = map["list"] as List<dynamic>;
+  final l = list.map((d) {
+    final m = d as Map<String, dynamic>;
+    return Dog(m["name"] as String, "");
   }).toList();
+  return (l, total);
 }
