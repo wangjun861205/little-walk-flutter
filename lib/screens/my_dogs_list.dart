@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:little_walk/apis/common.dart';
 import 'package:little_walk/apis/dog.dart';
 import 'package:little_walk/exceptions.dart';
+import 'package:little_walk/screens/dog_detail.dart';
 import 'package:little_walk/screens/login.dart';
 import '../models/dog.dart';
 
@@ -31,10 +32,15 @@ class MyDogsListScreen extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           }
           return Scaffold(
+            appBar: AppBar(),
             body: ListView.builder(
                 itemCount: snapshot.data?.$2,
                 itemBuilder: (context, i) {
-                  return ListTile(title: Text("${snapshot.data?.$1[i].name}"));
+                  return ListTile(
+                      title: Text("${snapshot.data?.$1[i].name}"),
+                      onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) =>
+                              DogDetailScreen(snapshot.data!.$1[i]))));
                 }),
           );
         });

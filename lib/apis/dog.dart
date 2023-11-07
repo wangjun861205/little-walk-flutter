@@ -78,7 +78,7 @@ Future<(List<Dog>, int)> myDogs(String authToken, int page, size) async {
   final list = map["list"] as List<dynamic>;
   final l = list.map((d) {
     final m = d as Map<String, dynamic>;
-    return Dog(m["name"] as String, "");
+    return Dog.fromJSON(d);
   }).toList();
   return (l, total);
 }
