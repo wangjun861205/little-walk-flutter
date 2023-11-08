@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:little_walk/screens/profile_menu.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final String backendAddress;
+  final String authToken;
+  const HomeScreen(this.backendAddress, this.authToken, {super.key});
 
   @override
   State<StatefulWidget> createState() {
@@ -13,14 +15,16 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int selectedIndex = 0;
 
-  final pages = [
-    const ProfileMenuScreen(),
-    const ProfileMenuScreen(),
-    const ProfileMenuScreen(),
-    const ProfileMenuScreen(),
-  ];
+  _HomeScreenState();
+
   @override
   Widget build(BuildContext context) {
+    final pages = [
+      ProfileMenuScreen(widget.backendAddress, widget.authToken),
+      ProfileMenuScreen(widget.backendAddress, widget.authToken),
+      ProfileMenuScreen(widget.backendAddress, widget.authToken),
+      ProfileMenuScreen(widget.backendAddress, widget.authToken),
+    ];
     return Scaffold(
       body: pages[selectedIndex],
       bottomNavigationBar: BottomNavigationBar(

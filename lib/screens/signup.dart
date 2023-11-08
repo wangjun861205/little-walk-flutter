@@ -6,6 +6,10 @@ import 'package:little_walk/components/send_verification_code_button.dart';
 import 'package:little_walk/screens/home.dart';
 
 class SignupScreen extends StatefulWidget {
+  final String backendAddress;
+
+  const SignupScreen(this.backendAddress, {super.key});
+
   @override
   State<StatefulWidget> createState() {
     return _SignupScreenState();
@@ -109,7 +113,8 @@ class _SignupScreenState extends State<SignupScreen> {
                                   .then((token) {
                                 putAuthToken(token);
                                 Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => const HomeScreen()));
+                                    builder: (context) => HomeScreen(
+                                        widget.backendAddress, token)));
                               }).catchError((e) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(content: Text("$e")));

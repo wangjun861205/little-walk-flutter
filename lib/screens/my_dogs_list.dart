@@ -7,7 +7,9 @@ import 'package:little_walk/screens/login.dart';
 import '../models/dog.dart';
 
 class MyDogsListScreen extends StatelessWidget {
-  const MyDogsListScreen({super.key});
+  final String backendAddress;
+  final String authToken;
+  const MyDogsListScreen(this.backendAddress, this.authToken, {super.key});
 
   Future<(List<Dog>, int)> fetch() async {
     final authToken = await getAuthToken();
@@ -24,7 +26,7 @@ class MyDogsListScreen extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             if (snapshot.error == UnauthorizedException) {
-              return const LoginScreen(60);
+              return LoginScreen(60, backendAddress);
             }
             return Center(child: Text("${snapshot.error}"));
           }
@@ -39,8 +41,8 @@ class MyDogsListScreen extends StatelessWidget {
                   return ListTile(
                       title: Text("${snapshot.data?.$1[i].name}"),
                       onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) =>
-                              DogDetailScreen(snapshot.data!.$1[i]))));
+                          builder: (context) => DogDetailScreen(backendAddress,
+                              authToken, snapshot.data!.$1[i]))));
                 }),
           );
         });

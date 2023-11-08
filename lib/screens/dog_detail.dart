@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:little_walk/apis/common.dart';
+import 'package:little_walk/apis/dog.dart';
+import 'package:little_walk/components/portrait_picker.dart';
 import 'package:little_walk/models/dog.dart';
 
 class DogDetailScreen extends StatelessWidget {
+  final String backendAddress;
+  final String authToken;
   final Dog dog;
-  const DogDetailScreen(this.dog, {super.key});
+
+  const DogDetailScreen(this.backendAddress, this.authToken, this.dog,
+      {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -38,35 +46,15 @@ class DogDetailScreen extends StatelessWidget {
           Positioned(
               top: 20,
               left: MediaQuery.of(context).size.width * 0.15,
-              child: InkWell(
-                  onTap: () {
-                    showModalBottomSheet(
-                        context: context,
-                        builder: (context) {
-                          return Container(
-                              width: MediaQuery.of(context).size.width * 0.8,
-                              height: 115,
-                              decoration: const BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(30))),
-                              child: Column(
-                                children: [
-                                  TextButton(
-                                      onPressed: () {},
-                                      child: const Text("从相册中选择",
-                                          style: TextStyle(fontSize: 16))),
-                                  const Divider(),
-                                  TextButton(
-                                      onPressed: () {},
-                                      child: const Text("拍摄",
-                                          style: TextStyle(fontSize: 16)))
-                                ],
-                              ));
-                        },
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30)));
-                  },
-                  child: CircleAvatar(
+              child: PortraitPicker(backendAddress, authToken, dog.portrait,
+                  (portraitID) {
+                try {
+                  updateDogPortrait(backendAddress, dog.id, portraitID);
+                } catch (e) {
+                  debugPrint("$e");
+                }
+              },
+                  CircleAvatar(
                       radius: 50,
                       backgroundColor: Colors.cyan[800],
                       child: const Text("不二")))),

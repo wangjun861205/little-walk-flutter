@@ -57,7 +57,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: const Text("去注册"),
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => SignupScreen()));
+                          builder: (context) =>
+                              SignupScreen(widget.backendAddress)));
                     }))
           ],
         )));
@@ -66,7 +67,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
 class LoginScreen extends StatefulWidget {
   final int verificationCodeInterval;
-  const LoginScreen(this.verificationCodeInterval, {super.key});
+  final String backendAddress;
+  const LoginScreen(this.verificationCodeInterval, this.backendAddress,
+      {super.key});
   @override
   State<StatefulWidget> createState() {
     return _LoginScreenState();

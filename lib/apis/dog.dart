@@ -78,7 +78,15 @@ Future<(List<Dog>, int)> myDogs(String authToken, int page, size) async {
   final list = map["list"] as List<dynamic>;
   final l = list.map((d) {
     final m = d as Map<String, dynamic>;
-    return Dog.fromJSON(d);
+    return Dog.fromJSON(m);
   }).toList();
   return (l, total);
+}
+
+Future<void> updateDogPortrait(String backendAddress, dogID, portraitID) async {
+  final url = Uri.http(backendAddress, "/apis/dogs/$dogID/portrait");
+  final resp = await put(url);
+  if (resp.statusCode != 200) {
+    throw Exception("更新狗狗头像失败");
+  }
 }

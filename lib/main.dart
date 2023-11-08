@@ -5,15 +5,16 @@ import 'package:little_walk/apis/auth.dart';
 import 'package:little_walk/screens/add_dog.dart';
 import 'package:little_walk/screens/home.dart';
 import 'package:little_walk/screens/login.dart';
-import 'package:little_walk/screens/profile_menu.dart';
 
 void main() async {
   await dotenv.load();
-  runApp(const MyApp());
+  final backendAddress = dotenv.get("BACKEND_ADDRESS");
+  runApp(MyApp(backendAddress));
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+  final String backendAddress;
+  const MyApp(this.backendAddress, {super.key});
   @override
   State<StatefulWidget> createState() {
     return MyAppState();
@@ -30,7 +31,7 @@ Future<bool> needLogin() async {
 
 class MyAppState extends State<MyApp> {
   int selectedIndex = 0;
-  final future = needLogin();
+  final future = const FlutterSecureStorage().read(key: "AUTH_TOKEN");
 
   @override
   Widget build(BuildContext context) {
@@ -44,17 +45,20 @@ class MyAppState extends State<MyApp> {
         if (!snapshot.hasData) {
           return const MaterialApp(home: Scaffold(body: Text("请稍后")));
         }
-        if (snapshot.data!) {
-          return const MaterialApp(home: LoginScreen(60));
+        if (snapshot.data == null) {
+          return MaterialApp(home: LoginScreen(60, widget.backendAddress));
         }
-        return const MaterialApp(home: HomeScreen());
+        return MaterialApp(
+            home: HomeScreen(widget.backendAddress, snapshot.data!));
       },
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+  final String backendAddress;
+  const MyHomePage(
+      {super.key, required this.title, required this.backendAddress});
 
   final String title;
 
@@ -108,5 +112,5 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   @override
-  Widget build(BuildContext context) => const AddDogScreen();
+  Widget build(BuildContext context) => AddDogScreen(widget.backendAddress);
 }

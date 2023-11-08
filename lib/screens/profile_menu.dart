@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:little_walk/screens/my_dogs_list.dart';
 
 class ProfileMenuScreen extends StatelessWidget {
-  const ProfileMenuScreen({super.key});
+  final String backendAddress;
+  final String authToken;
+  const ProfileMenuScreen(this.backendAddress, this.authToken, {super.key});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -15,7 +17,7 @@ class ProfileMenuScreen extends StatelessWidget {
               onTap: () {
                 Navigator.of(context)
                     .push(MaterialPageRoute(builder: (context) {
-                  return const MyDogsListScreen();
+                  return MyDogsListScreen(backendAddress, authToken);
                 }));
               },
             ),

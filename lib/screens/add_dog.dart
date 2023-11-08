@@ -73,7 +73,8 @@ class AddDogScreenState extends State<AddDogScreen> {
             DogTagsInput(tags, addTag, removeTag),
             GenderRadioGroup(gender, setGender),
             BirthdayPicker(birthday, setBirthday),
-            PortraitPicker(setPortrait),
+            PortraitPicker(widget.backendAddress, authToken, portrait,
+                setPortrait, const Text("上传头像")),
             AddDogSubmitButton(
                 "",
                 AddDogRequest(name, gender, breed, birthday, false, "", "1",
@@ -86,7 +87,8 @@ class AddDogScreenState extends State<AddDogScreen> {
 }
 
 class AddDogScreen extends StatefulWidget {
-  const AddDogScreen({super.key});
+  final String backendAddress;
+  const AddDogScreen(this.backendAddress, {super.key});
   @override
   State<AddDogScreen> createState() => AddDogScreenState();
 }

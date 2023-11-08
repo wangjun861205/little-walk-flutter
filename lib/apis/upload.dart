@@ -14,11 +14,11 @@ class UploadResponse {
   }
 }
 
-Future<UploadResponse> upload(
-    String authToken, String filename, Uint8List fileContent) async {
+Future<UploadResponse> upload(String backendAddress, authToken, String filename,
+    Uint8List fileContent) async {
   final request = http.MultipartRequest(
-      "POST", Uri.parse("http://10.0.2.2:8001/files"))
-    ..headers.addAll({"X-User-ID": "1", "X-Size-Limit": "1000000"})
+      "POST", Uri.http(backendAddress, "/apis/dogs/portraits"))
+    ..headers.addAll({"X-Auth-Token": authToken})
     ..files.add(
         http.MultipartFile.fromBytes("file", fileContent, filename: filename));
   final resp = await request.send();

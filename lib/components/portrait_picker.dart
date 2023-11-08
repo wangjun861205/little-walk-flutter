@@ -5,9 +5,16 @@ import 'package:image_picker/image_picker.dart';
 import 'package:image_cropper/image_cropper.dart';
 import '../apis/upload.dart' as upload_api;
 
-class PortraitPickerState extends State<PortraitPicker> {
-  String? imageURL;
-  late ScaffoldMessengerState messager;
+class PortraitPicker extends StatelessWidget {
+  final String backendAddress;
+  final String authToken;
+  final String? imageID;
+  final void Function(String) setImageID;
+  final Widget child;
+
+  const PortraitPicker(this.backendAddress, this.authToken, this.imageID,
+      this.setImageID, this.child,
+      {super.key});
 
   Future<Uint8List?> crop(String path) async {
     final croppedImage = await ImageCropper().cropImage(
@@ -38,8 +45,11 @@ class PortraitPickerState extends State<PortraitPicker> {
     return croppedImage.readAsBytes();
   }
 
-  void upload() async {
-    final image = await ImagePicker().pickImage(source: ImageSource.camera);
+  void upload(
+      {required String backendAddress,
+      required String authToken,
+      required ImageSource imageSource}) async {
+    final image = await ImagePicker().pickImage(source: imageSource);
     if (image == null) {
       return;
     }
@@ -48,47 +58,45 @@ class PortraitPickerState extends State<PortraitPicker> {
       return null;
     }
     final res = await upload_api.upload(
-      "",
+      backendAddress,
+      authToken,
       image.name,
       bs,
     );
-    widget.setPortrait(res.ids[0]);
-    setState(() {
-      imageURL = res.ids[0];
-    });
+    setImageID(res.ids[0]);
   }
 
   @override
   Widget build(BuildContext context) {
-    messager = ScaffoldMessenger.of(context);
-    return (imageURL != null)
-        ? Row(children: [
-            TextButton(onPressed: upload, child: const Text("选取照片")),
-            GestureDetector(
-                onTap: () {
-                  widget.setPortrait("");
-                  setState(() => imageURL = null);
-                },
-                child: CircleAvatar(
-                  radius: 50,
-                  backgroundImage: NetworkImage(
-                      "http://10.0.2.2:8001/files/$imageURL",
-                      scale: 0.2),
-                ))
-          ])
-        : Row(children: [
-            TextButton(onPressed: upload, child: const Text("选取照片")),
-          ]);
-  }
-}
-
-class PortraitPicker extends StatefulWidget {
-  final Function(String) setPortrait;
-
-  const PortraitPicker(this.setPortrait, {super.key});
-
-  @override
-  State<StatefulWidget> createState() {
-    return PortraitPickerState();
+    return InkWell(
+        onTap: () async {
+          showModalBottomSheet(
+              context: context,
+              builder: (context) {
+                return SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    height: 115,
+                    child: Column(children: [
+                      TextButton(
+                          onPressed: () {
+                            upload(
+                                backendAddress: backendAddress,
+                                authToken: authToken,
+                                imageSource: ImageSource.gallery);
+                          },
+                          child: const Text("从相册选择")),
+                      const Divider(),
+                      TextButton(
+                          onPressed: () {
+                            upload(
+                                backendAddress: backendAddress,
+                                authToken: authToken,
+                                imageSource: ImageSource.camera);
+                          },
+                          child: const Text("拍摄"))
+                    ]));
+              });
+        },
+        child: child);
   }
 }
