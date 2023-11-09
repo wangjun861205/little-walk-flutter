@@ -79,6 +79,7 @@ class PortraitPicker extends StatelessWidget {
                     child: Column(children: [
                       TextButton(
                           onPressed: () {
+                            Navigator.of(context).pop();
                             upload(
                                 backendAddress: backendAddress,
                                 authToken: authToken,
@@ -88,6 +89,7 @@ class PortraitPicker extends StatelessWidget {
                       const Divider(),
                       TextButton(
                           onPressed: () {
+                            Navigator.of(context).pop();
                             upload(
                                 backendAddress: backendAddress,
                                 authToken: authToken,

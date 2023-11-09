@@ -83,10 +83,13 @@ Future<(List<Dog>, int)> myDogs(String authToken, int page, size) async {
   return (l, total);
 }
 
-Future<void> updateDogPortrait(String backendAddress, dogID, portraitID) async {
+Future<void> updateDogPortrait(
+    String backendAddress, authToken, dogID, portraitID) async {
   final url = Uri.http(backendAddress, "/apis/dogs/$dogID/portrait");
-  final resp = await put(url);
+  final resp = await put(url,
+      headers: {"X-Auth-Token": authToken, "Content-Type": "application/json"},
+      body: jsonEncode({"portrait_id": portraitID}));
   if (resp.statusCode != 200) {
-    throw Exception("更新狗狗头像失败");
+    throw Exception("更新狗狗头像失败(status: ${resp.statusCode})");
   }
 }

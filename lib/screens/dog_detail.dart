@@ -49,15 +49,23 @@ class DogDetailScreen extends StatelessWidget {
               child: PortraitPicker(backendAddress, authToken, dog.portrait,
                   (portraitID) {
                 try {
-                  updateDogPortrait(backendAddress, dog.id, portraitID);
+                  updateDogPortrait(
+                      backendAddress, authToken, dog.id, portraitID);
                 } catch (e) {
                   debugPrint("$e");
                 }
               },
-                  CircleAvatar(
-                      radius: 50,
-                      backgroundColor: Colors.cyan[800],
-                      child: const Text("不二")))),
+                  dog.portrait == null
+                      ? CircleAvatar(
+                          radius: 50,
+                          backgroundColor: Colors.cyan[800],
+                          child: const Text("不二"))
+                      : CircleAvatar(
+                          radius: 50,
+                          backgroundImage: NetworkImage(
+                              "http://$backendAddress/apis/dogs/portraits/${dog.portrait}",
+                              headers: {"X-Auth-Token": authToken}),
+                          child: const Text("不二")))),
           Positioned(
               top: 60,
               right: MediaQuery.of(context).size.width * 0.15,
