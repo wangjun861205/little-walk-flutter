@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:little_walk/apis/common.dart';
 import 'package:little_walk/apis/dog.dart';
+import 'package:little_walk/blocs/dog.dart';
 import 'package:little_walk/exceptions.dart';
 import 'package:little_walk/screens/dog_detail.dart';
 import 'package:little_walk/screens/login.dart';
 import '../models/dog.dart';
 
 class MyDogsListScreen extends StatelessWidget {
-  final String backendAddress;
-  final String authToken;
-  const MyDogsListScreen(this.backendAddress, this.authToken, {super.key});
+  const MyDogsListScreen({super.key});
 
   Future<(List<Dog>, int)> fetch() async {
     final authToken = await getAuthToken();
@@ -26,7 +26,7 @@ class MyDogsListScreen extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             if (snapshot.error == UnauthorizedException) {
-              return LoginScreen(60, backendAddress);
+              return const LoginScreen(60);
             }
             return Center(child: Text("${snapshot.error}"));
           }
@@ -41,8 +41,9 @@ class MyDogsListScreen extends StatelessWidget {
                   return ListTile(
                       title: Text("${snapshot.data?.$1[i].name}"),
                       onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => DogDetailScreen(backendAddress,
-                              authToken, snapshot.data!.$1[i]))));
+                          builder: (context) => BlocProvider(
+                              create: (_) => DogCubit(snapshot.data!.$1[i]),
+                              child: const DogDetailScreen()))));
                 }),
           );
         });

@@ -4,7 +4,7 @@ class Dog {
   String id;
   String name;
   String gender;
-  DogBreed breed;
+  DogBreed? breed;
   String? portrait;
 
   Dog(this.id, this.name, this.gender, this.breed, this.portrait);
@@ -12,5 +12,9 @@ class Dog {
   factory Dog.fromJSON(Map<String, dynamic> json) {
     return Dog(json["id"], json["name"], json["gender"],
         DogBreed.fromJSON(json["breed"]), json["portrait_id"]);
+  }
+
+  factory Dog.empty() {
+    return Dog("", "", "", null, null);
   }
 }

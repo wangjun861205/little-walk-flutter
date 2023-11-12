@@ -1,28 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:little_walk/apis/common.dart';
+import 'package:little_walk/apis/dog.dart';
 import 'package:little_walk/apis/dog_breed.dart';
+import 'package:little_walk/blocs/dog.dart';
 import '../models/dog_breed.dart';
 
-class DogBreedsDropdown extends StatefulWidget {
-  final String selected;
-  final void Function(String) setSelected;
-  const DogBreedsDropdown(this.selected, this.setSelected, {super.key});
-
-  @override
-  State<DogBreedsDropdown> createState() => _DogBreedsDropdownState();
-}
-
-class _DogBreedsDropdownState extends State<DogBreedsDropdown> {
-  String size = "";
-  List<DogBreed> breeds = [];
-
+class DogBreedsDropdown extends StatelessWidget {
+  const DogBreedsDropdown({super.key});
   @override
   Widget build(BuildContext context) {
-    final messenger = ScaffoldMessenger.of(context);
-
+    final breedsBloc = BlocProvider.of<DogBreedsCubit>(context, listen: true);
+    final dogBloc = BlocProvider.of<DogCubit>(context, listen: true);
     return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
       DropdownButton(
-        value: size,
+        value: breedsBloc.state.category,
         items: const [
           DropdownMenuItem(value: "", child: Text("请选择狗狗的类别")),
           DropdownMenuItem(value: "Small", child: Text("小型犬")),
@@ -30,24 +22,13 @@ class _DogBreedsDropdownState extends State<DogBreedsDropdown> {
           DropdownMenuItem(value: "Large", child: Text("大型犬")),
           DropdownMenuItem(value: "Giant", child: Text("超大型犬")),
         ],
-        onChanged: (value) async {
-          try {
-            if (value == null || value == "") {
-              return;
-            }
-            final resp = await queryBreeds(value, Pagination(1, 10));
-            setState(() {
-              size = value;
-              breeds = resp.list;
-            });
-          } catch (err) {
-            messenger.showSnackBar(SnackBar(content: Text(err.toString())));
-          }
+        onChanged: (category) async {
+          breedsBloc.refresh(category!);
         },
       ),
       DropdownButton(
-          value: widget.selected,
-          items: breeds.map((b) {
+          value: dogBloc.state.breed != null ? dogBloc.state.breed!.id : "",
+          items: breedsBloc.state.breeds.map((b) {
             return DropdownMenuItem(value: b.id, child: Text(b.name));
           }).toList()
             ..insert(
@@ -56,7 +37,7 @@ class _DogBreedsDropdownState extends State<DogBreedsDropdown> {
             if (val == null) {
               return;
             }
-            widget.setSelected(val);
+            dogBloc.setBreed(DogBreed(val, "", ""));
           })
     ]);
   }

@@ -1,20 +1,18 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image_cropper/image_cropper.dart';
-import '../apis/upload.dart' as upload_api;
+import 'package:little_walk/apis/common.dart';
+import 'package:little_walk/blocs/dog.dart';
+import 'package:little_walk/models/dog.dart';
 
-class PortraitPicker extends StatelessWidget {
-  final String backendAddress;
-  final String authToken;
-  final String? imageID;
-  final void Function(String) setImageID;
+class DogPortraitPicker extends StatelessWidget {
   final Widget child;
 
-  const PortraitPicker(this.backendAddress, this.authToken, this.imageID,
-      this.setImageID, this.child,
-      {super.key});
+  const DogPortraitPicker(this.child, {super.key});
 
   Future<Uint8List?> crop(String path) async {
     final croppedImage = await ImageCropper().cropImage(
@@ -45,29 +43,25 @@ class PortraitPicker extends StatelessWidget {
     return croppedImage.readAsBytes();
   }
 
-  void upload(
-      {required String backendAddress,
-      required String authToken,
-      required ImageSource imageSource}) async {
+  Future<String?> upload({required ImageSource imageSource}) async {
     final image = await ImagePicker().pickImage(source: imageSource);
     if (image == null) {
-      return;
+      return null;
     }
     final bs = await crop(image.path);
     if (bs == null) {
       return null;
     }
-    final res = await upload_api.upload(
-      backendAddress,
-      authToken,
-      image.name,
-      bs,
+    final res = await httpUploadFile(
+      path: "/apis/dogs/portraits",
+      files: [MultipartFile.fromBytes("file", bs, filename: image.name)],
     );
-    setImageID(res.ids[0]);
+    return res.ids[0];
   }
 
   @override
   Widget build(BuildContext context) {
+    final dogBloc = BlocProvider.of<DogCubit>(context);
     return InkWell(
         onTap: () async {
           showModalBottomSheet(
@@ -78,22 +72,26 @@ class PortraitPicker extends StatelessWidget {
                     height: 115,
                     child: Column(children: [
                       TextButton(
-                          onPressed: () {
+                          onPressed: () async {
                             Navigator.of(context).pop();
-                            upload(
-                                backendAddress: backendAddress,
-                                authToken: authToken,
-                                imageSource: ImageSource.gallery);
+                            final id =
+                                await upload(imageSource: ImageSource.gallery);
+                            if (id == null) {
+                              return;
+                            }
+                            dogBloc.setPortrait(id);
                           },
                           child: const Text("从相册选择")),
                       const Divider(),
                       TextButton(
-                          onPressed: () {
+                          onPressed: () async {
                             Navigator.of(context).pop();
-                            upload(
-                                backendAddress: backendAddress,
-                                authToken: authToken,
-                                imageSource: ImageSource.camera);
+                            final id =
+                                await upload(imageSource: ImageSource.camera);
+                            if (id == null) {
+                              return;
+                            }
+                            dogBloc.setPortrait(id);
                           },
                           child: const Text("拍摄"))
                     ]));

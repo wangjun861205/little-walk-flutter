@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:little_walk/apis/auth.dart';
+import 'package:little_walk/blocs/app.dart';
 import 'package:little_walk/screens/add_dog.dart';
 import 'package:little_walk/screens/home.dart';
 import 'package:little_walk/screens/login.dart';
@@ -42,14 +44,21 @@ class MyAppState extends State<MyApp> {
           return MaterialApp(
               home: Scaffold(body: Center(child: Text("${snapshot.error}"))));
         }
-        if (!snapshot.hasData) {
+        if (snapshot.connectionState != ConnectionState.done) {
           return const MaterialApp(home: Scaffold(body: Text("请稍后")));
         }
+        final appCubit = AppCubit(
+            backendAddress: dotenv.get("BACKEND_ADDRESS"),
+            authToken: snapshot.data);
         if (snapshot.data == null) {
-          return MaterialApp(home: LoginScreen(60, widget.backendAddress));
+          return BlocBuilder(
+              builder: (context, state) {
+                return const MaterialApp(home: LoginScreen(60));
+              },
+              bloc: appCubit);
         }
-        return MaterialApp(
-            home: HomeScreen(widget.backendAddress, snapshot.data!));
+        return BlocProvider.value(
+            value: appCubit, child: const MaterialApp(home: HomeScreen()));
       },
     );
   }

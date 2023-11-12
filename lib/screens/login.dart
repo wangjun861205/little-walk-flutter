@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:little_walk/blocs/app.dart';
 import 'package:little_walk/components/send_verification_code_button.dart';
 import 'package:little_walk/components/verification_code_login_button.dart';
 import 'package:little_walk/screens/signup.dart';
@@ -9,6 +11,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final appBloc = BlocProvider.of<AppCubit>(context);
     return Scaffold(
         appBar: AppBar(
           title: const Text("登录"),
@@ -57,8 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: const Text("去注册"),
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) =>
-                              SignupScreen(widget.backendAddress)));
+                          builder: (context) => SignupScreen()));
                     }))
           ],
         )));
@@ -67,9 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
 class LoginScreen extends StatefulWidget {
   final int verificationCodeInterval;
-  final String backendAddress;
-  const LoginScreen(this.verificationCodeInterval, this.backendAddress,
-      {super.key});
+  const LoginScreen(this.verificationCodeInterval, {super.key});
   @override
   State<StatefulWidget> createState() {
     return _LoginScreenState();

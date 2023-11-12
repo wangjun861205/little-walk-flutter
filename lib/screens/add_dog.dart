@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:little_walk/apis/dog.dart';
+import 'package:little_walk/blocs/dog.dart';
 import 'package:little_walk/components/add_dog_submit_button.dart';
 import 'package:little_walk/components/dog_name_input.dart';
+import 'package:little_walk/models/dog.dart';
 import '../components/birthday_picker.dart';
 import '../components/dog_breeds_dropdown.dart';
 import '../components/dog_tags_input.dart';
@@ -59,30 +62,31 @@ class AddDogScreenState extends State<AddDogScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text("添加狗狗"),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            DogNameInput(setName),
-            DogBreedsDropdown(breed, setBreed),
-            DogTagsInput(tags, addTag, removeTag),
-            GenderRadioGroup(gender, setGender),
-            BirthdayPicker(birthday, setBirthday),
-            PortraitPicker(widget.backendAddress, authToken, portrait,
-                setPortrait, const Text("上传头像")),
-            AddDogSubmitButton(
-                "",
-                AddDogRequest(name, gender, breed, birthday, false, "", "1",
-                    tags, portrait)),
-          ],
-        ),
-      ),
-    );
+    return BlocProvider(
+        create: (_) => DogCubit(Dog.empty()),
+        child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+            title: const Text("添加狗狗"),
+          ),
+          body: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                DogNameInput(setName),
+                const DogBreedsDropdown(),
+                DogTagsInput(tags, addTag, removeTag),
+                GenderRadioGroup(gender, setGender),
+                BirthdayPicker(birthday, setBirthday),
+                const DogPortraitPicker(Text("上传头像")),
+                AddDogSubmitButton(
+                    "",
+                    AddDogRequest(name, gender, breed, birthday, false, "", "1",
+                        tags, portrait)),
+              ],
+            ),
+          ),
+        ));
   }
 }
 

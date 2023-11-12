@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart';
 import 'package:little_walk/apis/common.dart';
+import 'package:little_walk/models/dog_breed.dart';
 import '../models/dog.dart';
 
 class AddDogRequest {
@@ -92,4 +94,17 @@ Future<void> updateDogPortrait(
   if (resp.statusCode != 200) {
     throw Exception("更新狗狗头像失败(status: ${resp.statusCode})");
   }
+}
+
+Future<List<DogBreed>> fetchBreeds({required category}) async {
+  final map = await httpGet(
+      path: "/apis/dogs/breeds", params: {"category_eq": category});
+  final list = map["list"] as List<dynamic>;
+  if (list.isEmpty) {
+    return [];
+  }
+  return list.map((breed) {
+    debugPrint("$breed");
+    return DogBreed(breed["id"], breed["category"], breed["name"]);
+  }).toList();
 }
