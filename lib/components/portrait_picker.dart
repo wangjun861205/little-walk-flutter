@@ -56,7 +56,7 @@ class DogPortraitPicker extends StatelessWidget {
       path: "/apis/dogs/portraits",
       files: [MultipartFile.fromBytes("file", bs, filename: image.name)],
     );
-    return res.ids[0];
+    return res["ids"][0];
   }
 
   @override

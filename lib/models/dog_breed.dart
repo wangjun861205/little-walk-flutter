@@ -8,4 +8,8 @@ class DogBreed {
   factory DogBreed.fromJSON(Map<String, dynamic> json) {
     return DogBreed(json["id"], json["category"], json["name"]);
   }
+
+  Map<String, dynamic> toJson() {
+    return {"id": id, "category": category, "name": name};
+  }
 }

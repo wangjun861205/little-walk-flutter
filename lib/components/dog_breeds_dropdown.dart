@@ -27,7 +27,7 @@ class DogBreedsDropdown extends StatelessWidget {
         },
       ),
       DropdownButton(
-          value: dogBloc.state.breed != null ? dogBloc.state.breed!.id : "",
+          value: breedsBloc.state.breed,
           items: breedsBloc.state.breeds.map((b) {
             return DropdownMenuItem(value: b.id, child: Text(b.name));
           }).toList()

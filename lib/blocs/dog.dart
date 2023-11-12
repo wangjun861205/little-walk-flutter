@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:little_walk/apis/dog.dart';
 import 'package:little_walk/models/dog.dart';
@@ -13,8 +12,7 @@ class DogCubit extends Cubit<Dog> {
   }
 
   void setGender(String gender) {
-    state.gender = gender;
-    emit(state);
+    emit(Dog(state.id, state.name, gender, state.breed, state.portraitID));
   }
 
   void setBreed(DogBreed? breed) {
@@ -23,16 +21,17 @@ class DogCubit extends Cubit<Dog> {
   }
 
   void setPortrait(String portraitID) {
-    state.portrait = portraitID;
+    state.portraitID = portraitID;
     emit(state);
   }
 }
 
 class DogBreeds {
   String category;
+  String breed;
   List<DogBreed> breeds;
 
-  DogBreeds(this.category, this.breeds);
+  DogBreeds(this.category, this.breed, this.breeds);
 }
 
 class DogBreedsCubit extends Cubit<DogBreeds> {
@@ -40,6 +39,6 @@ class DogBreedsCubit extends Cubit<DogBreeds> {
 
   void refresh(String category) async {
     final breeds = await fetchBreeds(category: category);
-    emit(DogBreeds(category, breeds));
+    emit(DogBreeds(category, "", breeds));
   }
 }

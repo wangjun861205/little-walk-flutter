@@ -45,7 +45,7 @@ class DogDetailScreen extends StatelessWidget {
           Positioned(
               top: 20,
               left: MediaQuery.of(context).size.width * 0.15,
-              child: DogPortraitPicker(dogBloc.state.portrait == null
+              child: DogPortraitPicker(dogBloc.state.portraitID == null
                   ? CircleAvatar(
                       radius: 50,
                       backgroundColor: Colors.cyan[800],
@@ -53,7 +53,7 @@ class DogDetailScreen extends StatelessWidget {
                   : CircleAvatar(
                       radius: 50,
                       backgroundImage: NetworkImage(
-                          "http://${appBloc.state.backendAddress}/apis/dogs/portraits/${dogBloc.state.portrait}",
+                          "http://${appBloc.state.backendAddress}/apis/dogs/portraits/${dogBloc.state.portraitID}",
                           headers: {"X-Auth-Token": appBloc.state.authToken!}),
                       child: const Text("不二")))),
           Positioned(

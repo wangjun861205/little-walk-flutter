@@ -108,3 +108,7 @@ Future<List<DogBreed>> fetchBreeds({required category}) async {
     return DogBreed(breed["id"], breed["category"], breed["name"]);
   }).toList();
 }
+
+Future<void> updateDog(Dog dog) async {
+  await httpPutJson(path: "/apis/dogs/${dog.id}", obj: dog.toJson());
+}

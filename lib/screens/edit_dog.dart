@@ -3,14 +3,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:little_walk/apis/dog.dart';
 import 'package:little_walk/blocs/dog.dart';
 import 'package:little_walk/components/dog_breeds_dropdown.dart';
-import '../models/dog.dart';
+import 'package:little_walk/components/edit_dog_submit_button.dart';
+import 'package:little_walk/components/gender_radio_group.dart';
 
 class EditDogScreen extends StatelessWidget {
   const EditDogScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final dogBloc = BlocProvider.of<DogCubit>(context);
+    final dogBloc = BlocProvider.of<DogCubit>(context, listen: true);
     return Scaffold(
         appBar: AppBar(),
         body: Column(
@@ -27,27 +28,7 @@ class EditDogScreen extends StatelessWidget {
                 )
               ],
             ),
-            Row(
-              children: [
-                Flexible(
-                    child: ListTile(
-                  title: const Text("男生"),
-                  leading: Radio(
-                      value: "Male",
-                      groupValue: dogBloc.state.gender,
-                      onChanged: (gender) =>
-                          context.read<DogCubit>().setGender(gender!)),
-                )),
-                Flexible(
-                    child: ListTile(
-                        title: const Text("女生"),
-                        leading: Radio(
-                            value: "Famale",
-                            groupValue: dogBloc.state.gender,
-                            onChanged: (gender) =>
-                                context.read<DogCubit>().setGender(gender!))))
-              ],
-            ),
+            const GenderRadioGroup(),
             Row(
               children: [
                 FutureBuilder(
@@ -62,10 +43,15 @@ class EditDogScreen extends StatelessWidget {
                       }
                       return BlocProvider(
                           create: (_) => DogBreedsCubit(DogBreeds(
-                              dogBloc.state.breed!.category, snapshot.data!)),
+                              dogBloc.state.breed!.category,
+                              dogBloc.state.breed!.id,
+                              snapshot.data!)),
                           child: const Flexible(child: DogBreedsDropdown()));
                     })
               ],
+            ),
+            const Row(
+              children: [Flexible(child: EditDogSubmitButton(Text("提交")))],
             )
           ],
         ));

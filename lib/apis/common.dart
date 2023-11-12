@@ -45,7 +45,7 @@ Future<Map<String, dynamic>> httpGet(
   return jsonDecode(resp.body);
 }
 
-Future<T> httpUploadFile<T>(
+Future<Map<String, dynamic>> httpUploadFile(
     {required String path,
     required List<MultipartFile> files,
     Map<String, dynamic>? params}) async {
@@ -62,4 +62,41 @@ Future<T> httpUploadFile<T>(
     throw APIException(resp.statusCode, await resp.stream.bytesToString());
   }
   return jsonDecode(await resp.stream.bytesToString());
+}
+
+Future<Map<String, dynamic>> httpPostJson(
+    {required String path,
+    required Map<String, dynamic> obj,
+    Map<String, dynamic>? params}) async {
+  final backendAddress = dotenv.get("BACKEND_ADDRESS");
+  final authToken = await getAuthToken();
+  final url = Uri.http(backendAddress, path, params);
+  Map<String, String> headers = {"Content-Type": "application/json"};
+  if (authToken != null) {
+    headers[authTokenHeader] = authToken;
+  }
+  final resp = await post(url, headers: headers, body: jsonEncode(obj));
+  if (resp.statusCode != 200) {
+    throw APIException(resp.statusCode, resp.body);
+  }
+  return jsonDecode(resp.body);
+}
+
+Future<Map<String, dynamic>> httpPutJson(
+    {required String path,
+    required Map<String, dynamic> obj,
+    Map<String, dynamic>? params}) async {
+  final backendAddress = dotenv.get("BACKEND_ADDRESS");
+  final authToken = await getAuthToken();
+  final url = Uri.http(backendAddress, path, params);
+  Map<String, String> headers = {"Content-Type": "application/json"};
+  if (authToken != null) {
+    headers[authTokenHeader] = authToken;
+  }
+  final resp = await put(url, headers: headers, body: jsonEncode(obj));
+  if (resp.statusCode != 200) {
+    debugPrint(resp.body);
+    throw APIException(resp.statusCode, resp.body);
+  }
+  return jsonDecode(resp.body);
 }
