@@ -70,10 +70,7 @@ class AddDogScreenState extends State<AddDogScreen> {
                 const GenderRadioGroup(),
                 BirthdayPicker(birthday, setBirthday),
                 const DogPortraitPicker(Text("上传头像")),
-                AddDogSubmitButton(
-                    "",
-                    AddDogRequest(name, gender, breed, birthday, false, "", "1",
-                        tags, portrait)),
+                const AddDogSubmitButton(),
               ],
             ),
           ),
