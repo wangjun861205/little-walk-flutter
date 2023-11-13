@@ -12,23 +12,11 @@ import '../components/gender_radio_group.dart';
 import '../components/portrait_picker.dart';
 
 class AddDogScreenState extends State<AddDogScreen> {
-  String name = "";
-  String breed = "";
   List<String> tags = [];
   String gender = "Male";
   DateTime birthday = DateTime.now();
   String portrait = "";
   String authToken = "";
-
-  void setName(String? name) {
-    setState(() => name = name);
-  }
-
-  void setBreed(String b) {
-    setState(() {
-      breed = b;
-    });
-  }
 
   void addTag(String tag) {
     setState(() {
@@ -73,8 +61,11 @@ class AddDogScreenState extends State<AddDogScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                DogNameInput(setName),
-                const DogBreedsDropdown(),
+                const DogNameInput(),
+                BlocProvider(
+                  create: (_) => DogBreedsCubit(DogBreeds.empty()),
+                  child: const DogBreedsDropdown(),
+                ),
                 DogTagsInput(tags, addTag, removeTag),
                 const GenderRadioGroup(),
                 BirthdayPicker(birthday, setBirthday),
@@ -91,8 +82,7 @@ class AddDogScreenState extends State<AddDogScreen> {
 }
 
 class AddDogScreen extends StatefulWidget {
-  final String backendAddress;
-  const AddDogScreen(this.backendAddress, {super.key});
+  const AddDogScreen({super.key});
   @override
   State<AddDogScreen> createState() => AddDogScreenState();
 }

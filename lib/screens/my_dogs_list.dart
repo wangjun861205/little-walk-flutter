@@ -4,6 +4,7 @@ import 'package:little_walk/apis/common.dart';
 import 'package:little_walk/apis/dog.dart';
 import 'package:little_walk/blocs/dog.dart';
 import 'package:little_walk/exceptions.dart';
+import 'package:little_walk/screens/add_dog.dart';
 import 'package:little_walk/screens/dog_detail.dart';
 import 'package:little_walk/screens/login.dart';
 import '../models/dog.dart';
@@ -32,6 +33,27 @@ class MyDogsListScreen extends StatelessWidget {
           }
           if (!snapshot.hasData) {
             return const Center(child: CircularProgressIndicator());
+          }
+          if (snapshot.data != null && snapshot.data!.$2 == 0) {
+            return Scaffold(
+                appBar: AppBar(),
+                body: Center(
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Flexible(child: Text("还没有添加狗狗, ")),
+                        Flexible(
+                            child: TextButton(
+                          onPressed: () {
+                            Navigator.of(context)
+                                .push(MaterialPageRoute(builder: (context) {
+                              return const AddDogScreen();
+                            }));
+                          },
+                          child: const Text("去添加"),
+                        ))
+                      ]),
+                ));
           }
           return Scaffold(
             appBar: AppBar(),

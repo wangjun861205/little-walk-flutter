@@ -38,6 +38,7 @@ class DogBreedsDropdown extends StatelessWidget {
               return;
             }
             dogBloc.setBreed(DogBreed(val, "", ""));
+            breedsBloc.setBreed(val);
           })
     ]);
   }

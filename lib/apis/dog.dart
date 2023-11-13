@@ -55,27 +55,15 @@ class AddDogResponse {
   }
 }
 
-Future<AddDogResponse> addDog(String authToken, AddDogRequest req) async {
-  final url = Uri.parse("http://10.0.2.2:8000/dogs");
-  final body = jsonEncode(req);
-  final resp = await post(url,
-      headers: {"X-Auth-Token": authToken, "Content-Type": "application/json"},
-      body: body,
-      encoding: Encoding.getByName("utf-8"));
-  if (resp.statusCode != 200) {
-    throw HttpException("创建失败(status code: ${resp.statusCode})");
-  }
-  return AddDogResponse.fromJson(jsonDecode(resp.body));
+Future<AddDogResponse> addDog(Dog dog) async {
+  final resp = await httpPostJson(path: "/apis/dogs", obj: dog.toJson());
+  return AddDogResponse.fromJson(resp);
 }
 
 Future<(List<Dog>, int)> myDogs(String authToken, int page, size) async {
-  final url =
-      Uri.parse("http://10.0.2.2:8000/apis/dogs/mine?page=$page&size=$size");
-  final resp = await get(url, headers: {"X-Auth-Token": authToken});
-  if (resp.statusCode != 200) {
-    throw Exception("查询我的狗狗失败: ${resp.body}");
-  }
-  Map<String, dynamic> map = jsonDecode(resp.body);
+  final map = await httpGet(
+      path: "/apis/dogs/mine",
+      params: {"page": page.toString(), "size": size.toString()});
   final total = map["total"] as int;
   final list = map["list"] as List<dynamic>;
   final l = list.map((d) {

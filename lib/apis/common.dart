@@ -59,7 +59,9 @@ Future<Map<String, dynamic>> httpUploadFile(
 
   final resp = await request.send();
   if (resp.statusCode != 200) {
-    throw APIException(resp.statusCode, await resp.stream.bytesToString());
+    final reason = await resp.stream.bytesToString();
+    debugPrint(reason);
+    throw APIException(resp.statusCode, reason);
   }
   return jsonDecode(await resp.stream.bytesToString());
 }

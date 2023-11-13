@@ -121,5 +121,5 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   @override
-  Widget build(BuildContext context) => AddDogScreen(widget.backendAddress);
+  Widget build(BuildContext context) => const AddDogScreen();
 }

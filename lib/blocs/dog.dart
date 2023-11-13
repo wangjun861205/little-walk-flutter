@@ -32,6 +32,10 @@ class DogBreeds {
   List<DogBreed> breeds;
 
   DogBreeds(this.category, this.breed, this.breeds);
+
+  factory DogBreeds.empty() {
+    return DogBreeds("", "", []);
+  }
 }
 
 class DogBreedsCubit extends Cubit<DogBreeds> {
@@ -40,5 +44,9 @@ class DogBreedsCubit extends Cubit<DogBreeds> {
   void refresh(String category) async {
     final breeds = await fetchBreeds(category: category);
     emit(DogBreeds(category, "", breeds));
+  }
+
+  void setBreed(String breed) {
+    emit(DogBreeds(state.category, breed, state.breeds));
   }
 }
