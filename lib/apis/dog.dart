@@ -60,7 +60,7 @@ Future<AddDogResponse> addDog(Dog dog) async {
   return AddDogResponse.fromJson(resp);
 }
 
-Future<(List<Dog>, int)> myDogs(String authToken, int page, size) async {
+Future<(List<Dog>, int)> myDogs(int page, size) async {
   final map = await httpGet(
       path: "/apis/dogs/mine",
       params: {"page": page.toString(), "size": size.toString()});
