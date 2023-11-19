@@ -7,6 +7,7 @@ import 'package:little_walk/blocs/app.dart';
 import 'package:little_walk/screens/add_dog.dart';
 import 'package:little_walk/screens/home.dart';
 import 'package:little_walk/screens/login.dart';
+import 'package:amap_flutter_base/amap_flutter_base.dart';
 
 void main() async {
   await dotenv.load();

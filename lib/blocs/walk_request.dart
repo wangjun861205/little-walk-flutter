@@ -77,12 +77,22 @@ class WalkRequest {
       required this.shouldEndAfter,
       required this.shouldEndBefore});
 
-  WalkRequest clone() {
+  factory WalkRequest.fromJSON(Map<String, dynamic> json) {
     return WalkRequest(
-        dog: dog,
-        shouldStartAfter: shouldStartAfter,
-        shouldStartBefore: shouldStartBefore,
-        shouldEndAfter: shouldEndAfter,
-        shouldEndBefore: shouldEndBefore);
+        dog: Dog.fromJSON(json["dog"]),
+        shouldStartAfter: json["should_start_after"],
+        shouldStartBefore: json["should_start_before"],
+        shouldEndAfter: json["should_end_after"],
+        shouldEndBefore: json["should_end_before"]);
+  }
+}
+
+class WalkRequestListCubit extends Cubit<List<WalkRequest>> {
+  WalkRequestListCubit(List<WalkRequest> init) : super(init);
+
+  void append(List<WalkRequest> list) {
+    var curr = state;
+    curr.addAll(list);
+    emit(curr);
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:little_walk/blocs/app.dart';
+import 'package:little_walk/screens/location_picker.dart';
 import 'package:little_walk/screens/profile_menu.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -11,7 +12,7 @@ class HomeScreen extends StatelessWidget {
       BlocProvider.value(
           value: BlocProvider.of<AppCubit>(context),
           child: const ProfileMenuScreen()),
-      const ProfileMenuScreen(),
+      const LocationPickerScreen(),
       const ProfileMenuScreen(),
       const ProfileMenuScreen(),
     ];
