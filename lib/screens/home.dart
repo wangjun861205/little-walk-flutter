@@ -12,7 +12,7 @@ class HomeScreen extends StatelessWidget {
       BlocProvider.value(
           value: BlocProvider.of<AppCubit>(context),
           child: const ProfileMenuScreen()),
-      const LocationPickerScreen(),
+      LocationPickerScreen(),
       const ProfileMenuScreen(),
       const ProfileMenuScreen(),
     ];
