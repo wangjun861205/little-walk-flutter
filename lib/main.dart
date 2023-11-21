@@ -52,11 +52,8 @@ class MyAppState extends State<MyApp> {
             backendAddress: dotenv.get("BACKEND_ADDRESS"),
             authToken: snapshot.data);
         if (snapshot.data == null) {
-          return BlocBuilder(
-              builder: (context, state) {
-                return const MaterialApp(home: LoginScreen(60));
-              },
-              bloc: appCubit);
+          return BlocProvider.value(
+              value: appCubit, child: const MaterialApp(home: LoginScreen(60)));
         }
         return BlocProvider.value(
             value: appCubit, child: const MaterialApp(home: HomeScreen()));

@@ -2,46 +2,44 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart';
 import 'package:little_walk/apis/common.dart';
+import 'package:little_walk/apis/exceptions.dart';
 
 class LoginResponse {
   String token;
 
   LoginResponse(this.token);
 
-  factory LoginResponse.fromJSON(String json) {
-    Map<String, dynamic> m = jsonDecode(json);
-    return LoginResponse(m["token"]);
+  factory LoginResponse.fromJSON(Map<String, dynamic> json) {
+    return LoginResponse(json["token"]);
   }
 }
 
 Future<void> acquireSMSVerificationCode(String phone) async {
-  final uri = Uri.parse(
-      "http://10.0.2.2:8000/accounts/phones/$phone/verification_codes");
-  final resp = await put(uri);
-  if (resp.statusCode != 200) {
-    throw Exception("获取验证码失败(status: ${resp.statusCode}): ${resp.body}");
+  try {
+    await httpPutWithoutBody(
+        path: "/accounts/phones/$phone/verification_codes");
+  } on APIException catch (e) {
+    throw Exception("获取验证码失败: $e");
+  } catch (e) {
+    throw Exception("网络异常： $e");
   }
 }
 
 Future<String> loginByVerificationCode(String phone, code) async {
   try {
-    final uri = Uri.http(
-      "10.0.2.2:8000",
-      "/accounts/login/by_sms_verification_code",
-    );
-    final resp = await put(uri,
-        headers: {"Content-Type": "application/json"},
-        body: jsonEncode({"phone": phone, "code": code}));
-    if (resp.statusCode != 200) {
-      throw Exception("status: ${resp.statusCode}, detail: ${resp.body}");
-    }
-    LoginResponse loginResp = LoginResponse.fromJSON(resp.body);
+    final resp = await httpPutJson(
+        path: "/accounts/login/by_sms_verification_code",
+        obj: {"phone": phone, "code": code});
+    LoginResponse loginResp = LoginResponse.fromJSON(resp);
     return loginResp.token;
-  } catch (err) {
-    throw Exception("登录失败: $err");
+  } on APIException catch (err) {
+    throw Exception("登录失败(status: ${err.statusCode}, cause: ${err.cause})");
+  } catch (e) {
+    throw Exception("网络异常: $e");
   }
 }
 
