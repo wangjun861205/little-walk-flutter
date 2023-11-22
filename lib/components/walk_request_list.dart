@@ -1,15 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:little_walk/blocs/walk_request.dart';
 
 class WalkRequestList extends StatelessWidget {
-  const WalkRequestList({super.key});
+  final List<WalkRequest> requests;
+
+  const WalkRequestList({required this.requests, super.key});
+
   @override
   Widget build(BuildContext context) {
-    final reqBloc = BlocProvider.of<WalkRequestListCubit>(context);
-    return ListView.builder(itemBuilder: (context, i) {
-      return ListTile(title: Text(reqBloc.state[i].dog.name));
-    });
+    if (requests.isEmpty) {
+      return const Center(child: Text("暂无记录"));
+    }
+    return ListView.builder(
+        itemCount: requests.length,
+        itemBuilder: (context, i) {
+          final req = requests[i];
+          return ListTile(
+              leading: Row(
+                children: req.dogs.map((dog) {
+                  return CircleAvatar(
+                      backgroundImage:
+                          NetworkImage("/apis/dogs/avatars/${dog.portraitID}"));
+                }).toList(),
+              ),
+              title: Text(
+                  "开始时间: ${req.shouldEndAfter.toIso8601String()}~${req.shouldEndBefore.toIso8601String()}, 结束时间: ${req.shouldEndAfter.toIso8601String()}~${req.shouldEndBefore}"));
+        });
   }
 }

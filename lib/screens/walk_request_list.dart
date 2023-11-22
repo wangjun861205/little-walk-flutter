@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:little_walk/apis/walk_request.dart';
+import 'package:little_walk/blocs/pagination.dart';
 import 'package:little_walk/blocs/walk_request.dart';
 import 'package:little_walk/components/walk_request_list.dart';
 
 class WalkRequestListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final pageBloc = BlocProvider.of<PaginationCubit>(context);
     return FutureBuilder(
         future: nearbyWalkRequests([], 20),
         builder: (context, snapshot) {

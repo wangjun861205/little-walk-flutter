@@ -1,98 +1,68 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:little_walk/models/dog.dart';
 
-class WalkRequestCreate {
-  List<String> dogIDs;
-  String shouldStartAfter;
-  String shouldStartBefore;
-  String shouldEndAfter;
-  String shouldEndBefore;
+class WalkRequest {
+  List<Dog> dogs;
+  DateTime shouldStartAfter;
+  DateTime shouldStartBefore;
+  DateTime shouldEndAfter;
+  DateTime shouldEndBefore;
 
-  WalkRequestCreate(
-      {required this.dogIDs,
+  WalkRequest(
+      {required this.dogs,
       required this.shouldStartAfter,
       required this.shouldStartBefore,
       required this.shouldEndAfter,
       required this.shouldEndBefore});
 
-  WalkRequestCreate clone() {
-    return WalkRequestCreate(
-        dogIDs: dogIDs,
-        shouldStartAfter: shouldStartAfter,
-        shouldStartBefore: shouldStartBefore,
-        shouldEndAfter: shouldEndAfter,
-        shouldEndBefore: shouldEndBefore);
+  factory WalkRequest.empty() {
+    final now = DateTime.now();
+    return WalkRequest(
+        dogs: [],
+        shouldStartAfter: now,
+        shouldStartBefore: now,
+        shouldEndAfter: now,
+        shouldEndBefore: now);
   }
 
-  factory WalkRequestCreate.empty() {
-    return WalkRequestCreate(
-        dogIDs: [],
-        shouldStartAfter: "",
-        shouldStartBefore: "",
-        shouldEndAfter: "",
-        shouldEndBefore: "");
+  factory WalkRequest.fromJSON(Map<String, dynamic> json) {
+    return WalkRequest(
+      dogs: (json["dogs"] as List<Map<String, dynamic>>)
+          .map((d) => Dog.fromJSON(d))
+          .toList(),
+      shouldStartAfter: DateTime.parse(json["should_start_after"]),
+      shouldStartBefore: DateTime.parse(json["should_start_before"]),
+      shouldEndAfter: DateTime.parse(json["should_end_after"]),
+      shouldEndBefore: DateTime.parse(json["should_end_before"]),
+    );
   }
 }
 
-class WalkRequestCreateCubit extends Cubit<WalkRequestCreate> {
-  WalkRequestCreateCubit() : super(WalkRequestCreate.empty());
+class WalkRequestCubit extends Cubit<WalkRequest> {
+  WalkRequestCubit() : super(WalkRequest.empty());
 
-  void setDogIDs(List<String> dogIDs) {
-    state.dogIDs = dogIDs;
+  void setDogIDs(List<Dog> dogs) {
+    state.dogs = dogs;
     emit(state);
   }
 
-  void setShouldStartAfter(String time) {
+  void setShouldStartAfter(DateTime time) {
     state.shouldStartAfter = time;
     emit(state);
   }
 
-  void setShouldStartBefore(String time) {
+  void setShouldStartBefore(DateTime time) {
     state.shouldStartBefore = time;
     emit(state);
   }
 
-  void setShouldEndAfter(String time) {
+  void setShouldEndAfter(DateTime time) {
     state.shouldEndAfter = time;
     emit(state);
   }
 
-  void setShouldEndBefore(String time) {
+  void setShouldEndBefore(DateTime time) {
     state.shouldEndBefore = time;
     emit(state);
-  }
-}
-
-class WalkRequest {
-  Dog dog;
-  String shouldStartAfter;
-  String shouldStartBefore;
-  String shouldEndAfter;
-  String shouldEndBefore;
-
-  WalkRequest(
-      {required this.dog,
-      required this.shouldStartAfter,
-      required this.shouldStartBefore,
-      required this.shouldEndAfter,
-      required this.shouldEndBefore});
-
-  factory WalkRequest.fromJSON(Map<String, dynamic> json) {
-    return WalkRequest(
-        dog: Dog.fromJSON(json["dog"]),
-        shouldStartAfter: json["should_start_after"],
-        shouldStartBefore: json["should_start_before"],
-        shouldEndAfter: json["should_end_after"],
-        shouldEndBefore: json["should_end_before"]);
-  }
-}
-
-class WalkRequestListCubit extends Cubit<List<WalkRequest>> {
-  WalkRequestListCubit(List<WalkRequest> init) : super(init);
-
-  void append(List<WalkRequest> list) {
-    var curr = state;
-    curr.addAll(list);
-    emit(curr);
   }
 }
