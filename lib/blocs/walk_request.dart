@@ -41,7 +41,7 @@ class WalkRequest {
 class WalkRequestCubit extends Cubit<WalkRequest> {
   WalkRequestCubit() : super(WalkRequest.empty());
 
-  void setDogIDs(List<Dog> dogs) {
+  void setDogs(List<Dog> dogs) {
     state.dogs = dogs;
     emit(state);
   }
@@ -63,6 +63,15 @@ class WalkRequestCubit extends Cubit<WalkRequest> {
 
   void setShouldEndBefore(DateTime time) {
     state.shouldEndBefore = time;
+    emit(state);
+  }
+}
+
+class WalkRequestListCubit extends Cubit<List<WalkRequest>> {
+  WalkRequestListCubit() : super([]);
+
+  void append(List<WalkRequest> list) {
+    state.addAll(list);
     emit(state);
   }
 }
