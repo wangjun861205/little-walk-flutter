@@ -1,30 +1,19 @@
 import 'package:little_walk/models/dog_breed.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:flutter/foundation.dart';
 
-class Dog {
-  String id;
-  String name;
-  String gender;
-  DogBreed? breed;
-  String? portraitID;
+part 'dog.freezed.dart';
+part 'dog.g.dart';
 
-  Dog(this.id, this.name, this.gender, this.breed, this.portraitID);
+@freezed
+class Dog with _$Dog {
+  const factory Dog({
+    String? id,
+    String? name,
+    String? gender,
+    DogBreed? breed,
+    String? portraitID,
+  }) = _Dog;
 
-  factory Dog.fromJSON(Map<String, dynamic> json) {
-    return Dog(json["id"], json["name"], json["gender"],
-        DogBreed.fromJSON(json["breed"]), json["portrait_id"]);
-  }
-
-  factory Dog.empty() {
-    return Dog("", "", "", null, null);
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      "id": id,
-      "name": name,
-      "gender": gender,
-      "breed": breed?.toJson(),
-      "portrait_id": portraitID,
-    };
-  }
+  factory Dog.fromJson(Map<String, dynamic> json) => _$DogFromJson(json);
 }
