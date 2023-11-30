@@ -42,6 +42,8 @@ abstract class $DogCopyWith<$Res> {
       String? gender,
       DogBreed? breed,
       String? portraitID});
+
+  $DogBreedCopyWith<$Res>? get breed;
 }
 
 /// @nodoc
@@ -85,6 +87,18 @@ class _$DogCopyWithImpl<$Res, $Val extends Dog> implements $DogCopyWith<$Res> {
               as String?,
     ) as $Val);
   }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $DogBreedCopyWith<$Res>? get breed {
+    if (_value.breed == null) {
+      return null;
+    }
+
+    return $DogBreedCopyWith<$Res>(_value.breed!, (value) {
+      return _then(_value.copyWith(breed: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -99,6 +113,9 @@ abstract class _$$DogImplCopyWith<$Res> implements $DogCopyWith<$Res> {
       String? gender,
       DogBreed? breed,
       String? portraitID});
+
+  @override
+  $DogBreedCopyWith<$Res>? get breed;
 }
 
 /// @nodoc

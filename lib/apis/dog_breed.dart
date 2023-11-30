@@ -22,7 +22,7 @@ Future<ListResp<DogBreed>> queryBreeds(
   }
   Map<String, dynamic> map = jsonDecode(resp.body);
   List<DogBreed> list = List<Map<String, dynamic>>.from(map["list"])
-      .map((m) => DogBreed(m["id"], m["category"], m["name"]))
+      .map((m) => DogBreed.fromJson(m))
       .toList();
   int total = map["total"];
   return ListResp(list, total);

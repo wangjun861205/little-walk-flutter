@@ -21,7 +21,7 @@ class EditDogScreen extends StatelessWidget {
                 Flexible(
                   child: TextField(
                     controller: TextEditingController()
-                      ..text = dogBloc.state.name,
+                      ..text = dogBloc.state.name ?? "",
                     decoration: const InputDecoration(labelText: "狗狗名字"),
                     onChanged: (name) => context.read<DogCubit>().setName(name),
                   ),
@@ -43,8 +43,8 @@ class EditDogScreen extends StatelessWidget {
                       }
                       return BlocProvider(
                           create: (_) => DogBreedsCubit(DogBreeds(
-                              dogBloc.state.breed!.category,
-                              dogBloc.state.breed!.id,
+                              dogBloc.state.breed!.category ?? "",
+                              dogBloc.state.breed!.id ?? "",
                               snapshot.data!)),
                           child: const Flexible(child: DogBreedsDropdown()));
                     })

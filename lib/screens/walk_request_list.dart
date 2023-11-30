@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:little_walk/apis/walk_request.dart';
 import 'package:little_walk/blocs/list.dart';
 import 'package:little_walk/blocs/pagination.dart';
-import 'package:little_walk/blocs/walk_request.dart';
+import 'package:little_walk/models/walk_request.dart';
 import 'package:little_walk/components/walk_request_list.dart';
 
 class NearbyWalkRequestsScreen extends StatelessWidget {

@@ -7,22 +7,19 @@ class DogCubit extends Cubit<Dog> {
   DogCubit(Dog dog) : super(dog);
 
   void setName(String name) {
-    state.name = name;
-    emit(state);
+    emit(state.copyWith(name: name));
   }
 
   void setGender(String gender) {
-    emit(Dog(state.id, state.name, gender, state.breed, state.portraitID));
+    emit(state.copyWith(gender: gender));
   }
 
   void setBreed(DogBreed? breed) {
-    state.breed = breed;
-    emit(state);
+    emit(state.copyWith(breed: breed));
   }
 
   void setPortrait(String portraitID) {
-    state.portraitID = portraitID;
-    emit(state);
+    emit(state.copyWith(portraitID: portraitID));
   }
 }
 

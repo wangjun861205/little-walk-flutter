@@ -43,28 +43,15 @@ class WalkRequestCubit extends Cubit<WalkRequest> {
   WalkRequestCubit() : super(const WalkRequest());
 
   void setDogs(List<Dog> dogs) {
-    state.dogs = dogs;
-    emit(state);
+    emit(state.copyWith(dogs: dogs));
   }
 
-  void setShouldStartAfter(DateTime time) {
-    state.shouldStartAfter = time;
-    emit(state);
+  void setLongitude(double longitude) {
+    emit(state.copyWith(longitude: longitude));
   }
 
-  void setShouldStartBefore(DateTime time) {
-    state.shouldStartBefore = time;
-    emit(state);
-  }
-
-  void setShouldEndAfter(DateTime time) {
-    state.shouldEndAfter = time;
-    emit(state);
-  }
-
-  void setShouldEndBefore(DateTime time) {
-    state.shouldEndBefore = time;
-    emit(state);
+  void setLatitude(double latitude) {
+    emit(state.copyWith(latitude: latitude));
   }
 }
 

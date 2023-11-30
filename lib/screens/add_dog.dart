@@ -51,7 +51,7 @@ class AddDogScreenState extends State<AddDogScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (_) => DogCubit(Dog.empty()),
+        create: (_) => DogCubit(const Dog()),
         child: Scaffold(
           appBar: AppBar(
             backgroundColor: Theme.of(context).colorScheme.inversePrimary,

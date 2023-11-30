@@ -29,7 +29,7 @@ class DogBreedsDropdown extends StatelessWidget {
       DropdownButton(
           value: breedsBloc.state.breed,
           items: breedsBloc.state.breeds.map((b) {
-            return DropdownMenuItem(value: b.id, child: Text(b.name));
+            return DropdownMenuItem(value: b.id, child: Text(b.name ?? ""));
           }).toList()
             ..insert(
                 0, const DropdownMenuItem(value: "", child: Text("请选择狗狗的品种"))),
@@ -37,7 +37,7 @@ class DogBreedsDropdown extends StatelessWidget {
             if (val == null) {
               return;
             }
-            dogBloc.setBreed(DogBreed(val, "", ""));
+            dogBloc.setBreed(DogBreed(id: val));
             breedsBloc.setBreed(val);
           })
     ]);

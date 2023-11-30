@@ -66,8 +66,8 @@ class DogSelectChipRowState extends State<DogSelectChipRow> {
             });
           },
           child: DogSelectChip(
-            dogID: dog.id,
-            dogName: dog.name,
+            dogID: dog.id!,
+            dogName: dog.name!,
             isSelected: isSelected[i],
           ));
     }).toList());

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:little_walk/blocs/walk_request.dart';
+import 'package:little_walk/models/walk_request.dart';
 
 class WalkRequestList extends StatelessWidget {
   final List<WalkRequest> requests;
@@ -17,14 +17,13 @@ class WalkRequestList extends StatelessWidget {
           final req = requests[i];
           return ListTile(
               leading: Row(
-                children: req.dogs.map((dog) {
+                children: (req.dogs ?? []).map((dog) {
                   return CircleAvatar(
                       backgroundImage:
                           NetworkImage("/apis/dogs/avatars/${dog.portraitID}"));
                 }).toList(),
               ),
-              title: Text(
-                  "开始时间: ${req.shouldEndAfter.toIso8601String()}~${req.shouldEndBefore.toIso8601String()}, 结束时间: ${req.shouldEndAfter.toIso8601String()}~${req.shouldEndBefore}"));
+              title: Text((req.dogs ?? []).map((dog) => dog.name!).join(", ")));
         });
   }
 }

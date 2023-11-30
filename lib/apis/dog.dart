@@ -68,7 +68,7 @@ Future<(List<Dog>, int)> myDogs(int page, size) async {
   final list = map["list"] as List<dynamic>;
   final l = list.map((d) {
     final m = d as Map<String, dynamic>;
-    return Dog.fromJSON(m);
+    return Dog.fromJson(m);
   }).toList();
   return (l, total);
 }
@@ -93,7 +93,8 @@ Future<List<DogBreed>> fetchBreeds({required category}) async {
   }
   return list.map((breed) {
     debugPrint("$breed");
-    return DogBreed(breed["id"], breed["category"], breed["name"]);
+    return DogBreed(
+        id: breed["id"], category: breed["category"], name: breed["name"]);
   }).toList();
 }
 

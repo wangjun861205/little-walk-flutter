@@ -33,10 +33,10 @@ class DogDetailScreen extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(dogBloc.state.name),
-                              Text(dogBloc.state.gender),
+                              Text(dogBloc.state.name ?? ""),
+                              Text(dogBloc.state.gender ?? ""),
                               Text(dogBloc.state.breed != null
-                                  ? dogBloc.state.breed!.name
+                                  ? dogBloc.state.breed!.name!
                                   : "其他")
                             ],
                           )))

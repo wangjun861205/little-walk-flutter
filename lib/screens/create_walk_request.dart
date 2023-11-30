@@ -14,8 +14,7 @@ class CreateWalkRequestScreen extends StatelessWidget {
           child: Column(children: [
             DogSelect(onChanged: (dogIDs) {
               reqBloc.setDogs(dogIDs.map((id) {
-                var dog = Dog.empty();
-                dog.id = id;
+                var dog = Dog(id: id);
                 return dog;
               }).toList());
             })

@@ -1,15 +1,14 @@
-class DogBreed {
-  String id;
-  String category;
-  String name;
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:flutter/foundation.dart';
 
-  DogBreed(this.id, this.category, this.name);
+part 'dog_breed.freezed.dart';
+part 'dog_breed.g.dart';
 
-  factory DogBreed.fromJSON(Map<String, dynamic> json) {
-    return DogBreed(json["id"], json["category"], json["name"]);
-  }
+@freezed
+class DogBreed with _$DogBreed {
+  const factory DogBreed({String? id, String? category, String? name}) =
+      _DogBreed;
 
-  Map<String, dynamic> toJson() {
-    return {"id": id, "category": category, "name": name};
-  }
+  factory DogBreed.fromJson(Map<String, dynamic> json) =>
+      _$DogBreedFromJson(json);
 }
