@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:little_walk/apis/dog.dart';
 import 'package:little_walk/blocs/app.dart';
+import 'package:little_walk/blocs/dog.dart';
 import 'package:little_walk/models/dog.dart';
+import 'package:little_walk/screens/add_dog.dart';
+import 'package:little_walk/screens/error_boundary.dart';
 
 class DogSelectChip extends StatelessWidget {
   String dogID;
@@ -93,6 +96,30 @@ class DogSelectState extends State<DogSelect> {
     return FutureBuilder(
         future: myDogs(1, 10),
         builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return Row(children: [
+              const Text("出错了"),
+              TextButton(onPressed: () {}, child: const Text("重试"))
+            ]);
+          }
+          if (snapshot.connectionState != ConnectionState.done) {
+            return const CircularProgressIndicator();
+          }
+          if (!snapshot.hasData) {
+            return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              const Text("还没有添加您的爱犬， 去"),
+              TextButton(
+                  onPressed: () {
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (context) {
+                      return BlocProvider(
+                          create: (_) => DogCubit(const Dog()),
+                          child: const AddDogScreen());
+                    }));
+                  },
+                  child: const Text("添加"))
+            ]);
+          }
           return DogSelectChipRow(
               candidates: snapshot.data!.$1, onChanged: widget.onChanged);
         });

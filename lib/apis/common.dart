@@ -32,7 +32,7 @@ class Pagination {
   Pagination(this.page, this.size);
 }
 
-Future<Map<String, dynamic>> httpGet(
+Future<dynamic> httpGet(
     {required String path, Map<String, dynamic>? params}) async {
   final backendAddress = dotenv.get("BACKEND_ADDRESS");
   final authToken = await getAuthToken();
@@ -42,6 +42,7 @@ Future<Map<String, dynamic>> httpGet(
   if (resp.statusCode != 200) {
     throw APIException(resp.statusCode, resp.body);
   }
+  debugPrint(resp.body);
   return jsonDecode(resp.body);
 }
 

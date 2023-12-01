@@ -3,8 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:little_walk/apis/walk_request.dart';
 import 'package:little_walk/blocs/list.dart';
 import 'package:little_walk/blocs/pagination.dart';
+import 'package:little_walk/blocs/walk_request.dart';
 import 'package:little_walk/models/walk_request.dart';
 import 'package:little_walk/components/walk_request_list.dart';
+import 'package:little_walk/screens/create_walk_request.dart';
+import 'package:little_walk/screens/error_boundary.dart';
+import 'package:little_walk/screens/process_indicator.dart';
 
 class NearbyWalkRequestsScreen extends StatelessWidget {
   int size;
@@ -27,27 +31,40 @@ class NearbyWalkRequestsScreen extends StatelessWidget {
           }
         }(), builder: (context, snapshot) {
           if (snapshot.hasError) {
-            return Scaffold(
-              appBar: AppBar(),
-              body: Center(child: Text("${snapshot.error}")),
-            );
+            return ErrorBoundary(error: snapshot.error.toString());
           }
           if (snapshot.connectionState != ConnectionState.done) {
-            return Scaffold(
-              appBar: AppBar(),
-              body: const CircularProgressIndicator(),
-            );
+            return const ProcessIndicatorScreen();
           }
-          return RefreshIndicator(
-              child: WalkRequestList(requests: listBloc.state),
-              onRefresh: () async {
-                final requests = await nearbyWalkRequests(
-                    pageBloc.state.page + 1, pageBloc.state.size);
-                if (requests.isNotEmpty) {
-                  pageBloc.setPage(pageBloc.state.page + 1);
-                  listBloc.append(requests);
-                }
-              });
+          return Scaffold(
+              appBar: AppBar(actions: [
+                IconButton(
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => BlocProvider(
+                                create: (context) => WalkRequestCubit(),
+                                child: const CreateWalkRequestScreen(),
+                              )));
+                    },
+                    icon: const Icon(Icons.add))
+              ]),
+              body: RefreshIndicator(
+                  child: WalkRequestList(requests: listBloc.state),
+                  onRefresh: () async {
+                    nearbyWalkRequests(
+                            pageBloc.state.page + 1, pageBloc.state.size)
+                        .then((requests) {
+                      if (requests.isNotEmpty) {
+                        pageBloc.setPage(pageBloc.state.page + 1);
+                        listBloc.append(requests);
+                      }
+                    }).catchError((e) {
+                      Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (context) {
+                        return ErrorBoundary(error: e.toString());
+                      }));
+                    });
+                  }));
         }));
   }
 }

@@ -3,4 +3,10 @@ class APIException implements Exception {
   String cause;
 
   APIException(this.statusCode, this.cause);
+
+  @override
+  String toString() {
+    return """status code: $statusCode
+    cause: $cause""";
+  }
 }
