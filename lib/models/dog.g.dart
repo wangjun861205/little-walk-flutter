@@ -13,7 +13,7 @@ _$DogImpl _$$DogImplFromJson(Map<String, dynamic> json) => _$DogImpl(
       breed: json['breed'] == null
           ? null
           : DogBreed.fromJson(json['breed'] as Map<String, dynamic>),
-      portraitID: json['portraitID'] as String?,
+      portraitID: json['portrait_id'] as String?,
     );
 
 Map<String, dynamic> _$$DogImplToJson(_$DogImpl instance) => <String, dynamic>{
@@ -21,5 +21,5 @@ Map<String, dynamic> _$$DogImplToJson(_$DogImpl instance) => <String, dynamic>{
       'name': instance.name,
       'gender': instance.gender,
       'breed': instance.breed,
-      'portraitID': instance.portraitID,
+      'portrait_id': instance.portraitID,
     };

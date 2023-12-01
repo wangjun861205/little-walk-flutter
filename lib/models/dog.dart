@@ -12,7 +12,7 @@ class Dog with _$Dog {
     String? name,
     String? gender,
     DogBreed? breed,
-    String? portraitID,
+    @JsonKey(name: "portrait_id") String? portraitID,
   }) = _Dog;
 
   factory Dog.fromJson(Map<String, dynamic> json) => _$DogFromJson(json);

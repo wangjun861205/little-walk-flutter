@@ -24,6 +24,7 @@ mixin _$Dog {
   String? get name => throw _privateConstructorUsedError;
   String? get gender => throw _privateConstructorUsedError;
   DogBreed? get breed => throw _privateConstructorUsedError;
+  @JsonKey(name: "portrait_id")
   String? get portraitID => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -41,7 +42,7 @@ abstract class $DogCopyWith<$Res> {
       String? name,
       String? gender,
       DogBreed? breed,
-      String? portraitID});
+      @JsonKey(name: "portrait_id") String? portraitID});
 
   $DogBreedCopyWith<$Res>? get breed;
 }
@@ -112,7 +113,7 @@ abstract class _$$DogImplCopyWith<$Res> implements $DogCopyWith<$Res> {
       String? name,
       String? gender,
       DogBreed? breed,
-      String? portraitID});
+      @JsonKey(name: "portrait_id") String? portraitID});
 
   @override
   $DogBreedCopyWith<$Res>? get breed;
@@ -162,7 +163,11 @@ class __$$DogImplCopyWithImpl<$Res> extends _$DogCopyWithImpl<$Res, _$DogImpl>
 @JsonSerializable()
 class _$DogImpl with DiagnosticableTreeMixin implements _Dog {
   const _$DogImpl(
-      {this.id, this.name, this.gender, this.breed, this.portraitID});
+      {this.id,
+      this.name,
+      this.gender,
+      this.breed,
+      @JsonKey(name: "portrait_id") this.portraitID});
 
   factory _$DogImpl.fromJson(Map<String, dynamic> json) =>
       _$$DogImplFromJson(json);
@@ -176,6 +181,7 @@ class _$DogImpl with DiagnosticableTreeMixin implements _Dog {
   @override
   final DogBreed? breed;
   @override
+  @JsonKey(name: "portrait_id")
   final String? portraitID;
 
   @override
@@ -233,7 +239,7 @@ abstract class _Dog implements Dog {
       final String? name,
       final String? gender,
       final DogBreed? breed,
-      final String? portraitID}) = _$DogImpl;
+      @JsonKey(name: "portrait_id") final String? portraitID}) = _$DogImpl;
 
   factory _Dog.fromJson(Map<String, dynamic> json) = _$DogImpl.fromJson;
 
@@ -246,6 +252,7 @@ abstract class _Dog implements Dog {
   @override
   DogBreed? get breed;
   @override
+  @JsonKey(name: "portrait_id")
   String? get portraitID;
   @override
   @JsonKey(ignore: true)

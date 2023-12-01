@@ -80,7 +80,8 @@ Future<Map<String, dynamic>> httpPostJson(
   }
   final resp = await post(url, headers: headers, body: jsonEncode(obj));
   if (resp.statusCode != 200) {
-    throw APIException(resp.statusCode, resp.body);
+    return Future.error(
+        APIException(resp.statusCode, utf8.decode(resp.bodyBytes)));
   }
   return jsonDecode(resp.body);
 }
