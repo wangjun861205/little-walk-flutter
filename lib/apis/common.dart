@@ -42,8 +42,7 @@ Future<dynamic> httpGet(
   if (resp.statusCode != 200) {
     throw APIException(resp.statusCode, resp.body);
   }
-  debugPrint(resp.body);
-  return jsonDecode(resp.body);
+  return jsonDecode(utf8.decode(resp.bodyBytes));
 }
 
 Future<Map<String, dynamic>> httpUploadFile(
@@ -82,6 +81,9 @@ Future<Map<String, dynamic>> httpPostJson(
   if (resp.statusCode != 200) {
     return Future.error(
         APIException(resp.statusCode, utf8.decode(resp.bodyBytes)));
+  }
+  if (resp.body == "") {
+    return {};
   }
   return jsonDecode(resp.body);
 }

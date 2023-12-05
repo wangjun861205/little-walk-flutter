@@ -101,3 +101,22 @@ Future<List<DogBreed>> fetchBreeds({required category}) async {
 Future<void> updateDog(Dog dog) async {
   await httpPutJson(path: "/apis/dogs/${dog.id}", obj: dog.toJson());
 }
+
+Future<Dog> getDog(String id) async {
+  final resp = await httpGet(path: "/apis/dogs/$id");
+  return Dog.fromJson(resp);
+}
+
+class DogQuery {
+  List<String>? idIn;
+  DogQuery({this.idIn});
+}
+
+Future<List<Dog>> queryDogs(DogQuery query) async {
+  Map<String, dynamic> q = {"page": 1.toString(), "size": 10.toString()};
+  if (query.idIn != null) {
+    q["id_in"] = query.idIn;
+  }
+  final dogs = await httpGet(path: "/apis/dogs", params: q);
+  return (dogs["list"] as List<dynamic>).map((d) => Dog.fromJson(d)).toList();
+}
