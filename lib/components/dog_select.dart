@@ -133,7 +133,7 @@ class DogSelectState extends State<DogSelect> {
             ]);
           }
           return DogSelectChipRow(
-              candidates: snapshot.data!.$1, onChanged: widget.onChanged);
+              candidates: snapshot.data!, onChanged: widget.onChanged);
         });
   }
 }

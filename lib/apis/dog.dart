@@ -60,17 +60,13 @@ Future<AddDogResponse> addDog(Dog dog) async {
   return AddDogResponse.fromJson(resp);
 }
 
-Future<(List<Dog>, int)> myDogs({required int limit, skip}) async {
-  final map = await httpGet(
+Future<List<Dog>> myDogs({required int limit, skip}) async {
+  List<dynamic> list = await httpGet(
       path: "/apis/dogs/mine",
       params: {"limit": limit.toString(), "skip": skip.toString()});
-  final total = map["total"] as int;
-  final list = map["list"] as List<dynamic>;
-  final l = list.map((d) {
-    final m = d as Map<String, dynamic>;
-    return Dog.fromJson(m);
+  return list.map((d) {
+    return Dog.fromJson(d);
   }).toList();
-  return (l, total);
 }
 
 Future<void> updateDogPortrait(

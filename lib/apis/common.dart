@@ -55,7 +55,9 @@ Map<String, dynamic> flattenParams(Map<String, dynamic> values) {
       final val = values.remove(key);
       final jsonStr = jsonEncode(val);
       values[key] = jsonStr;
+      continue;
     }
+    values[key] = values[key].toString();
   }
   return values;
 }

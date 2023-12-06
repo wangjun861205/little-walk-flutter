@@ -12,7 +12,7 @@ import '../models/dog.dart';
 class MyDogsListScreen extends StatelessWidget {
   const MyDogsListScreen({super.key});
 
-  Future<(List<Dog>, int)> fetch() async {
+  Future<List<Dog>> fetch() async {
     final authToken = await getAuthToken();
     if (authToken == null) {
       throw UnauthorizedException();
@@ -34,7 +34,7 @@ class MyDogsListScreen extends StatelessWidget {
           if (!snapshot.hasData) {
             return const Center(child: CircularProgressIndicator());
           }
-          if (snapshot.data != null && snapshot.data!.$2 == 0) {
+          if (snapshot.data != null && snapshot.data!.isEmpty) {
             return Scaffold(
                 appBar: AppBar(),
                 body: Center(
@@ -58,13 +58,13 @@ class MyDogsListScreen extends StatelessWidget {
           return Scaffold(
             appBar: AppBar(),
             body: ListView.builder(
-                itemCount: snapshot.data?.$2,
+                itemCount: snapshot.data?.length,
                 itemBuilder: (context, i) {
                   return ListTile(
-                      title: Text("${snapshot.data?.$1[i].name}"),
+                      title: Text("${snapshot.data?[i].name}"),
                       onTap: () => Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => BlocProvider(
-                              create: (_) => DogCubit(snapshot.data!.$1[i]),
+                              create: (_) => DogCubit(snapshot.data![i]),
                               child: const DogDetailScreen()))));
                 }),
           );
