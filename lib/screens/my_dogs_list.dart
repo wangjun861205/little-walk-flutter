@@ -17,7 +17,7 @@ class MyDogsListScreen extends StatelessWidget {
     if (authToken == null) {
       throw UnauthorizedException();
     }
-    return await myDogs(1, 10);
+    return await myDogs(limit: 10, skip: 0);
   }
 
   @override

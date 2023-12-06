@@ -105,7 +105,7 @@ class DogSelectState extends State<DogSelect> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: myDogs(1, 10),
+        future: myDogs(limit: 10, skip: 0),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             debugPrint(snapshot.error.toString());
