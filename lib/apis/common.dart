@@ -162,8 +162,7 @@ Future<Map<String, dynamic>?> httpPutWithoutBody<T>(
   }
   final resp = await put(url, headers: headers);
   if (resp.statusCode != 200) {
-    debugPrint(resp.body);
-    throw APIException(resp.statusCode, resp.body);
+    throw APIException(resp.statusCode, utf8.decode(resp.bodyBytes));
   }
   if (resp.body.isNotEmpty) {
     return jsonDecode(resp.body);

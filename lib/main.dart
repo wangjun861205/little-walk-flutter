@@ -1,3 +1,4 @@
+import 'package:background_location/background_location.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -8,10 +9,19 @@ import 'package:little_walk/blocs/app.dart';
 import 'package:little_walk/screens/add_dog.dart';
 import 'package:little_walk/screens/home.dart';
 import 'package:little_walk/screens/login.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 void main() async {
   await dotenv.load();
   final backendAddress = dotenv.get("BACKEND_ADDRESS");
+  // final status = await [Permission.locationAlways].request();
+  // debugPrint(status[Permission.locationAlways].toString());
+  BackgroundLocation.setAndroidNotification(
+    title: "Notification title",
+    message: "Notification message",
+    icon: "@mipmap/ic_launcher",
+  );
+  BackgroundLocation.setAndroidConfiguration(1000);
   runApp(MyApp(backendAddress));
 }
 

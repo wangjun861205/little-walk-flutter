@@ -8,19 +8,25 @@ part of 'walk_request.dart';
 
 _$WalkRequestImpl _$$WalkRequestImplFromJson(Map<String, dynamic> json) =>
     _$WalkRequestImpl(
-      id: json['id'] as String?,
-      dogs: (json['dogs'] as List<dynamic>?)
-          ?.map((e) => Dog.fromJson(e as Map<String, dynamic>))
+      id: json['id'] as String,
+      dogs: (json['dogs'] as List<dynamic>)
+          .map((e) => Dog.fromJson(e as Map<String, dynamic>))
           .toList(),
-      longitude: (json['longitude'] as num?)?.toDouble(),
-      latitude: (json['latitude'] as num?)?.toDouble(),
-      acceptedBy: json['acceptedBy'] as String?,
-      acceptedAt: json['acceptedAt'] == null
+      longitude: (json['longitude'] as num).toDouble(),
+      latitude: (json['latitude'] as num).toDouble(),
+      acceptedBy: json['accepted_by'] as String?,
+      acceptedAt: json['accepted_at'] == null
           ? null
-          : DateTime.parse(json['acceptedAt'] as String),
-      canceledAt: json['canceledAt'] == null
+          : DateTime.parse(json['accepted_at'] as String),
+      canceledAt: json['canceled_at'] == null
           ? null
-          : DateTime.parse(json['canceledAt'] as String),
+          : DateTime.parse(json['canceled_at'] as String),
+      startedAt: json['started_at'] == null
+          ? null
+          : DateTime.parse(json['started_at'] as String),
+      finishedAt: json['finished_at'] == null
+          ? null
+          : DateTime.parse(json['finished_at'] as String),
     );
 
 Map<String, dynamic> _$$WalkRequestImplToJson(_$WalkRequestImpl instance) =>
@@ -29,7 +35,28 @@ Map<String, dynamic> _$$WalkRequestImplToJson(_$WalkRequestImpl instance) =>
       'dogs': instance.dogs,
       'longitude': instance.longitude,
       'latitude': instance.latitude,
-      'acceptedBy': instance.acceptedBy,
-      'acceptedAt': instance.acceptedAt?.toIso8601String(),
-      'canceledAt': instance.canceledAt?.toIso8601String(),
+      'accepted_by': instance.acceptedBy,
+      'accepted_at': instance.acceptedAt?.toIso8601String(),
+      'canceled_at': instance.canceledAt?.toIso8601String(),
+      'started_at': instance.startedAt?.toIso8601String(),
+      'finished_at': instance.finishedAt?.toIso8601String(),
+    };
+
+_$WalkRequestValueImpl _$$WalkRequestValueImplFromJson(
+        Map<String, dynamic> json) =>
+    _$WalkRequestValueImpl(
+      id: json['id'] as String?,
+      dogIDs:
+          (json['dog_ids'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      longitude: (json['longitude'] as num?)?.toDouble(),
+      latitude: (json['latitude'] as num?)?.toDouble(),
+    );
+
+Map<String, dynamic> _$$WalkRequestValueImplToJson(
+        _$WalkRequestValueImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'dog_ids': instance.dogIDs,
+      'longitude': instance.longitude,
+      'latitude': instance.latitude,
     };

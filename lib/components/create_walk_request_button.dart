@@ -8,7 +8,7 @@ import 'package:little_walk/utils/geolocation.dart';
 class CreateWalkRequestButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final reqBloc = BlocProvider.of<WalkRequestCubit>(context);
+    final reqBloc = BlocProvider.of<WalkRequestValueCubit>(context);
     return TextButton(
         onPressed: () {
           createWalkRequest(reqBloc.state).then((_) {

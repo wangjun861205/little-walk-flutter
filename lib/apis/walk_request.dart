@@ -18,6 +18,29 @@ Future<List<WalkRequest>> nearbyWalkRequests(int page, int size) async {
   }).toList();
 }
 
-Future<void> createWalkRequest(WalkRequest request) async {
+Future<void> createWalkRequest(WalkRequestValue request) async {
   await httpPostJson(path: "/apis/walk_requests", obj: request.toJson());
+}
+
+Future<WalkRequest> acceptWalkRequest(String id) async {
+  final resp =
+      await httpPutWithoutBody(path: "/apis/walk_requests/$id/accepted_by");
+  return WalkRequest.fromJson(resp as Map<String, dynamic>);
+}
+
+Future<WalkRequest> startWalkRequest(String id) async {
+  final resp = await httpPutWithoutBody(path: "/apis/walk_requests/$id/start");
+  return WalkRequest.fromJson(resp as Map<String, dynamic>);
+}
+
+Future<void> reportCurrentPosition(
+    {required String id, required double longitude, latitude}) async {
+  await httpPostJson(
+      path: "/apis/walk_requests/$id/locations",
+      obj: {"longitude": longitude, "latitude": latitude});
+}
+
+Future<WalkRequest> finishWalkRequest(String id) async {
+  final resp = await httpPutWithoutBody(path: "/apis/walk_requests/$id/finish");
+  return WalkRequest.fromJson(resp as Map<String, dynamic>);
 }

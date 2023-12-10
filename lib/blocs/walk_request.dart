@@ -40,9 +40,9 @@ import 'package:little_walk/models/walk_request.dart';
 // }
 
 class WalkRequestCubit extends Cubit<WalkRequest> {
-  WalkRequestCubit() : super(const WalkRequest());
+  WalkRequestCubit(WalkRequest req) : super(req);
 
-  void setDogs(List<Dog> dogs) {
+  void setDog(List<Dog> dogs) {
     emit(state.copyWith(dogs: dogs));
   }
 
@@ -53,6 +53,22 @@ class WalkRequestCubit extends Cubit<WalkRequest> {
   void setLatitude(double latitude) {
     emit(state.copyWith(latitude: latitude));
   }
+
+  void setAcceptedBy(String acceptedBy) {
+    emit(state.copyWith(acceptedBy: acceptedBy));
+  }
+
+  void setAcceptedAt(DateTime acceptedAt) {
+    emit(state.copyWith(acceptedAt: acceptedAt));
+  }
+
+  void setStartedAt(DateTime startedAt) {
+    emit(state.copyWith(startedAt: startedAt));
+  }
+
+  void setFinishedAt(DateTime finishedAt) {
+    emit(state.copyWith(startedAt: finishedAt));
+  }
 }
 
 class WalkRequestListCubit extends Cubit<List<WalkRequest>> {
@@ -61,5 +77,21 @@ class WalkRequestListCubit extends Cubit<List<WalkRequest>> {
   void append(List<WalkRequest> list) {
     state.addAll(list);
     emit(state);
+  }
+}
+
+class WalkRequestValueCubit extends Cubit<WalkRequestValue> {
+  WalkRequestValueCubit() : super(const WalkRequestValue());
+
+  void setDogIDs(List<String> dogIDs) {
+    emit(state.copyWith(dogIDs: dogIDs));
+  }
+
+  void setLongitude(double longitude) {
+    emit(state.copyWith(longitude: longitude));
+  }
+
+  void setLatitude(double latitude) {
+    emit(state.copyWith(latitude: latitude));
   }
 }

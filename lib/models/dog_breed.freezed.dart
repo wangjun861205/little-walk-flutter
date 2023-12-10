@@ -20,9 +20,9 @@ DogBreed _$DogBreedFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$DogBreed {
-  String? get id => throw _privateConstructorUsedError;
-  String? get category => throw _privateConstructorUsedError;
-  String? get name => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
+  String get category => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -35,7 +35,7 @@ abstract class $DogBreedCopyWith<$Res> {
   factory $DogBreedCopyWith(DogBreed value, $Res Function(DogBreed) then) =
       _$DogBreedCopyWithImpl<$Res, DogBreed>;
   @useResult
-  $Res call({String? id, String? category, String? name});
+  $Res call({String id, String category, String name});
 }
 
 /// @nodoc
@@ -51,23 +51,23 @@ class _$DogBreedCopyWithImpl<$Res, $Val extends DogBreed>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? category = freezed,
-    Object? name = freezed,
+    Object? id = null,
+    Object? category = null,
+    Object? name = null,
   }) {
     return _then(_value.copyWith(
-      id: freezed == id
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
-      category: freezed == category
+              as String,
+      category: null == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
-              as String?,
-      name: freezed == name
+              as String,
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
     ) as $Val);
   }
 }
@@ -80,7 +80,7 @@ abstract class _$$DogBreedImplCopyWith<$Res>
       __$$DogBreedImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? id, String? category, String? name});
+  $Res call({String id, String category, String name});
 }
 
 /// @nodoc
@@ -94,55 +94,46 @@ class __$$DogBreedImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? category = freezed,
-    Object? name = freezed,
+    Object? id = null,
+    Object? category = null,
+    Object? name = null,
   }) {
     return _then(_$DogBreedImpl(
-      id: freezed == id
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
-      category: freezed == category
+              as String,
+      category: null == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
-              as String?,
-      name: freezed == name
+              as String,
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$DogBreedImpl with DiagnosticableTreeMixin implements _DogBreed {
-  const _$DogBreedImpl({this.id, this.category, this.name});
+class _$DogBreedImpl implements _DogBreed {
+  const _$DogBreedImpl(
+      {required this.id, required this.category, required this.name});
 
   factory _$DogBreedImpl.fromJson(Map<String, dynamic> json) =>
       _$$DogBreedImplFromJson(json);
 
   @override
-  final String? id;
+  final String id;
   @override
-  final String? category;
+  final String category;
   @override
-  final String? name;
+  final String name;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'DogBreed(id: $id, category: $category, name: $name)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'DogBreed'))
-      ..add(DiagnosticsProperty('id', id))
-      ..add(DiagnosticsProperty('category', category))
-      ..add(DiagnosticsProperty('name', name));
   }
 
   @override
@@ -176,19 +167,19 @@ class _$DogBreedImpl with DiagnosticableTreeMixin implements _DogBreed {
 
 abstract class _DogBreed implements DogBreed {
   const factory _DogBreed(
-      {final String? id,
-      final String? category,
-      final String? name}) = _$DogBreedImpl;
+      {required final String id,
+      required final String category,
+      required final String name}) = _$DogBreedImpl;
 
   factory _DogBreed.fromJson(Map<String, dynamic> json) =
       _$DogBreedImpl.fromJson;
 
   @override
-  String? get id;
+  String get id;
   @override
-  String? get category;
+  String get category;
   @override
-  String? get name;
+  String get name;
   @override
   @JsonKey(ignore: true)
   _$$DogBreedImplCopyWith<_$DogBreedImpl> get copyWith =>

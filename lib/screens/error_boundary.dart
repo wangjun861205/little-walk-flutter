@@ -18,9 +18,8 @@ class ErrorBoundary extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [Text(error, overflow: TextOverflow.fade)],
-            ),
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [Flexible(child: Text(error))]),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

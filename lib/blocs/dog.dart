@@ -14,8 +14,28 @@ class DogCubit extends Cubit<Dog> {
     emit(state.copyWith(gender: gender));
   }
 
-  void setBreed(DogBreed? breed) {
+  void setBreed(DogBreed breed) {
     emit(state.copyWith(breed: breed));
+  }
+
+  void setPortrait(String portraitID) {
+    emit(state.copyWith(portraitID: portraitID));
+  }
+}
+
+class DogValueCubit extends Cubit<DogValue> {
+  DogValueCubit() : super(const DogValue());
+
+  void setName(String name) {
+    emit(state.copyWith(name: name));
+  }
+
+  void setGender(String gender) {
+    emit(state.copyWith(gender: gender));
+  }
+
+  void setBreedID(String breedID) {
+    emit(state.copyWith(breedID: breedID));
   }
 
   void setPortrait(String portraitID) {

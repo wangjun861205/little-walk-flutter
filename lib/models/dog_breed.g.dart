@@ -8,9 +8,9 @@ part of 'dog_breed.dart';
 
 _$DogBreedImpl _$$DogBreedImplFromJson(Map<String, dynamic> json) =>
     _$DogBreedImpl(
-      id: json['id'] as String?,
-      category: json['category'] as String?,
-      name: json['name'] as String?,
+      id: json['id'] as String,
+      category: json['category'] as String,
+      name: json['name'] as String,
     );
 
 Map<String, dynamic> _$$DogBreedImplToJson(_$DogBreedImpl instance) =>

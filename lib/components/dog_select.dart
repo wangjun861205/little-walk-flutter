@@ -125,7 +125,7 @@ class DogSelectState extends State<DogSelect> {
                     Navigator.of(context)
                         .push(MaterialPageRoute(builder: (context) {
                       return BlocProvider(
-                          create: (_) => DogCubit(const Dog()),
+                          create: (_) => DogValueCubit(),
                           child: const AddDogScreen());
                     }));
                   },

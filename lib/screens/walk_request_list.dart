@@ -42,7 +42,7 @@ class NearbyWalkRequestsScreen extends StatelessWidget {
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => BlocProvider(
-                                create: (context) => WalkRequestCubit(),
+                                create: (context) => WalkRequestValueCubit(),
                                 child: const CreateWalkRequestScreen(),
                               )));
                     },

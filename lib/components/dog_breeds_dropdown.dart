@@ -11,7 +11,7 @@ class DogBreedsDropdown extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final breedsBloc = BlocProvider.of<DogBreedsCubit>(context, listen: true);
-    final dogBloc = BlocProvider.of<DogCubit>(context, listen: true);
+    final dogBloc = BlocProvider.of<DogValueCubit>(context, listen: true);
     return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
       DropdownButton(
         value: breedsBloc.state.category,
@@ -29,7 +29,7 @@ class DogBreedsDropdown extends StatelessWidget {
       DropdownButton(
           value: breedsBloc.state.breed,
           items: breedsBloc.state.breeds.map((b) {
-            return DropdownMenuItem(value: b.id, child: Text(b.name ?? ""));
+            return DropdownMenuItem(value: b.id, child: Text(b.name));
           }).toList()
             ..insert(
                 0, const DropdownMenuItem(value: "", child: Text("请选择狗狗的品种"))),
@@ -37,7 +37,7 @@ class DogBreedsDropdown extends StatelessWidget {
             if (val == null) {
               return;
             }
-            dogBloc.setBreed(DogBreed(id: val));
+            dogBloc.setBreedID(val);
             breedsBloc.setBreed(val);
           })
     ]);

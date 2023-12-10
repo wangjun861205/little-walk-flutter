@@ -7,12 +7,10 @@ part of 'dog.dart';
 // **************************************************************************
 
 _$DogImpl _$$DogImplFromJson(Map<String, dynamic> json) => _$DogImpl(
-      id: json['id'] as String?,
-      name: json['name'] as String?,
-      gender: json['gender'] as String?,
-      breed: json['breed'] == null
-          ? null
-          : DogBreed.fromJson(json['breed'] as Map<String, dynamic>),
+      id: json['id'] as String,
+      name: json['name'] as String,
+      gender: json['gender'] as String,
+      breed: DogBreed.fromJson(json['breed'] as Map<String, dynamic>),
       portraitID: json['portrait_id'] as String?,
     );
 
