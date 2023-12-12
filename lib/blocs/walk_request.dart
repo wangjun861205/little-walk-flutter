@@ -69,6 +69,10 @@ class WalkRequestCubit extends Cubit<WalkRequest> {
   void setFinishedAt(DateTime finishedAt) {
     emit(state.copyWith(startedAt: finishedAt));
   }
+
+  void setCanceledAt(DateTime canceledAt) {
+    emit(state.copyWith(startedAt: canceledAt));
+  }
 }
 
 class WalkRequestListCubit extends Cubit<List<WalkRequest>> {

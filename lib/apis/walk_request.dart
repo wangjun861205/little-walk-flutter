@@ -44,3 +44,8 @@ Future<WalkRequest> finishWalkRequest(String id) async {
   final resp = await httpPutWithoutBody(path: "/apis/walk_requests/$id/finish");
   return WalkRequest.fromJson(resp as Map<String, dynamic>);
 }
+
+Future<WalkRequest> cancelWalkRequest(String id) async {
+  final resp = await httpPutWithoutBody(path: "/apis/walk_requests/$id/cancel");
+  return WalkRequest.fromJson(resp as Map<String, dynamic>);
+}
