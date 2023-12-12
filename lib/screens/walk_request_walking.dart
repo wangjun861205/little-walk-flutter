@@ -13,7 +13,7 @@ class WalkRequestWalkingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     BackgroundLocation.startLocationService(distanceFilter: 10);
-    final reqBloc = BlocProvider.of<WalkRequestCubit>(context);
+    final reqBloc = BlocProvider.of<WalkRequestCubit>(context, listen: true);
     BackgroundLocation.getLocationUpdates((position) async => {
           await reportCurrentPosition(
               id: reqBloc.state.id,

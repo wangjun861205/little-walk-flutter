@@ -10,7 +10,7 @@ class FinishWalkRequestButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final reqBloc = BlocProvider.of<WalkRequestCubit>(context);
+    final reqBloc = BlocProvider.of<WalkRequestCubit>(context, listen: true);
     return TextButton(
         onPressed: () {
           BackgroundLocation.stopLocationService();
