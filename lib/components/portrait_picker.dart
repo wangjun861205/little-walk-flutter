@@ -53,7 +53,7 @@ class DogPortraitPicker extends StatelessWidget {
       return null;
     }
     final res = await httpUploadFile(
-      path: "/apis/dogs/portraits",
+      path: "/apis/uploads",
       files: [MultipartFile.fromBytes("file", bs, filename: image.name)],
     );
     return res["ids"][0];
@@ -61,7 +61,7 @@ class DogPortraitPicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dogBloc = BlocProvider.of<DogCubit>(context);
+    final dogBloc = BlocProvider.of<DogValueCubit>(context);
     return InkWell(
         onTap: () async {
           showModalBottomSheet(

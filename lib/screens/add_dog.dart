@@ -62,10 +62,7 @@ class AddDogScreenState extends State<AddDogScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 const DogNameInput(),
-                BlocProvider(
-                  create: (_) => DogBreedsCubit(DogBreeds.empty()),
-                  child: const DogBreedsDropdown(),
-                ),
+                const DogBreedsDropdown(),
                 DogTagsInput(tags, addTag, removeTag),
                 const GenderRadioGroup(),
                 BirthdayPicker(birthday, setBirthday),

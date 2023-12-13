@@ -6,7 +6,7 @@ class DogNameInput extends StatelessWidget {
   const DogNameInput({super.key});
   @override
   Widget build(BuildContext context) {
-    final dogBloc = BlocProvider.of<DogCubit>(context);
+    final dogBloc = BlocProvider.of<DogValueCubit>(context);
     return TextField(
       decoration: const InputDecoration(
         hintText: "请输入狗狗的名字",

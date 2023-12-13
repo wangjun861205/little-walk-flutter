@@ -14,9 +14,13 @@ class StartWalkRequestButton extends StatelessWidget {
         onPressed: () {
           startWalkRequest(reqBloc.state.id).then((res) {
             reqBloc.setStartedAt(res.startedAt!);
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => BlocProvider.value(
-                    value: reqBloc, child: const WalkRequestWalkingPage())));
+            Navigator.of(context)
+                .push(MaterialPageRoute(
+                    builder: (context) => BlocProvider.value(
+                        value: reqBloc, child: const WalkRequestWalkingPage())))
+                .then((finishedAt) {
+              reqBloc.setFinishedAt(finishedAt as DateTime);
+            });
           }, onError: (e) {
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => ErrorBoundary(error: e.toString())));

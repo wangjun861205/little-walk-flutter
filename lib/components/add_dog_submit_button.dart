@@ -8,7 +8,7 @@ class AddDogSubmitButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dogBloc = BlocProvider.of<DogCubit>(context);
+    final dogBloc = BlocProvider.of<DogValueCubit>(context);
     final messenger = ScaffoldMessenger.of(context);
     Future<void> onPress() async {
       try {

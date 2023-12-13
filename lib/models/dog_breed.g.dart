@@ -19,3 +19,17 @@ Map<String, dynamic> _$$DogBreedImplToJson(_$DogBreedImpl instance) =>
       'category': instance.category,
       'name': instance.name,
     };
+
+_$DogBreedValueImpl _$$DogBreedValueImplFromJson(Map<String, dynamic> json) =>
+    _$DogBreedValueImpl(
+      id: json['id'] as String?,
+      category: json['category'] as String?,
+      name: json['name'] as String?,
+    );
+
+Map<String, dynamic> _$$DogBreedValueImplToJson(_$DogBreedValueImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'category': instance.category,
+      'name': instance.name,
+    };

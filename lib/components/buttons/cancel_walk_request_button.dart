@@ -5,6 +5,8 @@ import 'package:little_walk/blocs/walk_request.dart';
 import 'package:little_walk/screens/error_boundary.dart';
 
 class CancelWalkRequestButton extends StatelessWidget {
+  const CancelWalkRequestButton({super.key});
+
   @override
   Widget build(BuildContext context) {
     final reqBloc = BlocProvider.of<WalkRequestCubit>(context, listen: true);

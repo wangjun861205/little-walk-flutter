@@ -16,7 +16,7 @@ class FinishWalkRequestButton extends StatelessWidget {
           BackgroundLocation.stopLocationService();
           finishWalkRequest(reqBloc.state.id).then((res) {
             reqBloc.setFinishedAt(res.finishedAt!);
-            Navigator.of(context).pop();
+            Navigator.of(context).pop(res.finishedAt!);
           },
               onError: (e) => Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => ErrorBoundary(error: e.toString()))));

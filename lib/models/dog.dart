@@ -24,7 +24,7 @@ class DogValue with _$DogValue {
     String? id,
     String? name,
     String? gender,
-    @JsonKey(name: "breed_id") String? breedID,
+    DogBreedValue? breed,
     @JsonKey(name: "portrait_id") String? portraitID,
   }) = _DogValue;
 
@@ -32,6 +32,10 @@ class DogValue with _$DogValue {
       id: dog.id,
       name: dog.name,
       gender: dog.gender,
-      breedID: dog.breed?.id,
+      breed: DogBreedValue(
+          id: dog.breed.id, category: dog.breed.category, name: dog.breed.name),
       portraitID: dog.portraitID);
+
+  factory DogValue.fromJson(Map<String, dynamic> json) =>
+      _$DogValueFromJson(json);
 }

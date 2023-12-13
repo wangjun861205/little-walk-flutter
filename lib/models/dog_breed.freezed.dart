@@ -185,3 +185,175 @@ abstract class _DogBreed implements DogBreed {
   _$$DogBreedImplCopyWith<_$DogBreedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+DogBreedValue _$DogBreedValueFromJson(Map<String, dynamic> json) {
+  return _DogBreedValue.fromJson(json);
+}
+
+/// @nodoc
+mixin _$DogBreedValue {
+  String? get id => throw _privateConstructorUsedError;
+  String? get category => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $DogBreedValueCopyWith<DogBreedValue> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $DogBreedValueCopyWith<$Res> {
+  factory $DogBreedValueCopyWith(
+          DogBreedValue value, $Res Function(DogBreedValue) then) =
+      _$DogBreedValueCopyWithImpl<$Res, DogBreedValue>;
+  @useResult
+  $Res call({String? id, String? category, String? name});
+}
+
+/// @nodoc
+class _$DogBreedValueCopyWithImpl<$Res, $Val extends DogBreedValue>
+    implements $DogBreedValueCopyWith<$Res> {
+  _$DogBreedValueCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? category = freezed,
+    Object? name = freezed,
+  }) {
+    return _then(_value.copyWith(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
+      category: freezed == category
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as String?,
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$DogBreedValueImplCopyWith<$Res>
+    implements $DogBreedValueCopyWith<$Res> {
+  factory _$$DogBreedValueImplCopyWith(
+          _$DogBreedValueImpl value, $Res Function(_$DogBreedValueImpl) then) =
+      __$$DogBreedValueImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String? id, String? category, String? name});
+}
+
+/// @nodoc
+class __$$DogBreedValueImplCopyWithImpl<$Res>
+    extends _$DogBreedValueCopyWithImpl<$Res, _$DogBreedValueImpl>
+    implements _$$DogBreedValueImplCopyWith<$Res> {
+  __$$DogBreedValueImplCopyWithImpl(
+      _$DogBreedValueImpl _value, $Res Function(_$DogBreedValueImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? category = freezed,
+    Object? name = freezed,
+  }) {
+    return _then(_$DogBreedValueImpl(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
+      category: freezed == category
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as String?,
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$DogBreedValueImpl implements _DogBreedValue {
+  const _$DogBreedValueImpl({this.id, this.category, this.name});
+
+  factory _$DogBreedValueImpl.fromJson(Map<String, dynamic> json) =>
+      _$$DogBreedValueImplFromJson(json);
+
+  @override
+  final String? id;
+  @override
+  final String? category;
+  @override
+  final String? name;
+
+  @override
+  String toString() {
+    return 'DogBreedValue(id: $id, category: $category, name: $name)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$DogBreedValueImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.category, category) ||
+                other.category == category) &&
+            (identical(other.name, name) || other.name == name));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, id, category, name);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$DogBreedValueImplCopyWith<_$DogBreedValueImpl> get copyWith =>
+      __$$DogBreedValueImplCopyWithImpl<_$DogBreedValueImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$DogBreedValueImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _DogBreedValue implements DogBreedValue {
+  const factory _DogBreedValue(
+      {final String? id,
+      final String? category,
+      final String? name}) = _$DogBreedValueImpl;
+
+  factory _DogBreedValue.fromJson(Map<String, dynamic> json) =
+      _$DogBreedValueImpl.fromJson;
+
+  @override
+  String? get id;
+  @override
+  String? get category;
+  @override
+  String? get name;
+  @override
+  @JsonKey(ignore: true)
+  _$$DogBreedValueImplCopyWith<_$DogBreedValueImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}

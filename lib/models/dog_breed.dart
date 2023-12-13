@@ -15,3 +15,12 @@ class DogBreed with _$DogBreed {
   factory DogBreed.fromJson(Map<String, dynamic> json) =>
       _$DogBreedFromJson(json);
 }
+
+@freezed
+class DogBreedValue with _$DogBreedValue {
+  const factory DogBreedValue({String? id, String? category, String? name}) =
+      _DogBreedValue;
+
+  factory DogBreedValue.fromJson(Map<String, dynamic> json) =>
+      _$DogBreedValueFromJson(json);
+}

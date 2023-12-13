@@ -55,7 +55,7 @@ class AddDogResponse {
   }
 }
 
-Future<AddDogResponse> addDog(Dog dog) async {
+Future<AddDogResponse> addDog(DogValue dog) async {
   final resp = await httpPostJson(path: "/apis/dogs", obj: dog.toJson());
   return AddDogResponse.fromJson(resp);
 }
@@ -81,8 +81,8 @@ Future<void> updateDogPortrait(
 }
 
 Future<List<DogBreed>> fetchBreeds({required category}) async {
-  final map = await httpGet(
-      path: "/apis/dogs/breeds", params: {"category_eq": category});
+  final map =
+      await httpGet(path: "/apis/breeds", params: {"category_eq": category});
   final list = map["list"] as List<dynamic>;
   if (list.isEmpty) {
     return [];

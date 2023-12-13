@@ -7,7 +7,7 @@ class GenderRadioGroup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dogBloc = BlocProvider.of<DogCubit>(context, listen: true);
+    final dogBloc = BlocProvider.of<DogValueCubit>(context, listen: true);
 
     return Row(children: [
       Flexible(

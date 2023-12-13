@@ -34,8 +34,8 @@ class DogValueCubit extends Cubit<DogValue> {
     emit(state.copyWith(gender: gender));
   }
 
-  void setBreedID(String breedID) {
-    emit(state.copyWith(breedID: breedID));
+  void setBreed(DogBreedValue breed) {
+    emit(state.copyWith(breed: breed));
   }
 
   void setPortrait(String portraitID) {

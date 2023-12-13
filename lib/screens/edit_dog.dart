@@ -21,7 +21,7 @@ class EditDogScreen extends StatelessWidget {
                 Flexible(
                   child: TextField(
                     controller: TextEditingController()
-                      ..text = dogBloc.state.name ?? "",
+                      ..text = dogBloc.state.name,
                     decoration: const InputDecoration(labelText: "狗狗名字"),
                     onChanged: (name) => context.read<DogCubit>().setName(name),
                   ),
@@ -32,8 +32,7 @@ class EditDogScreen extends StatelessWidget {
             Row(
               children: [
                 FutureBuilder(
-                    future:
-                        fetchBreeds(category: dogBloc.state.breed!.category),
+                    future: fetchBreeds(category: dogBloc.state.breed.category),
                     builder: (context, snapshot) {
                       if (snapshot.hasError) {
                         throw snapshot.error as Error;
@@ -41,12 +40,8 @@ class EditDogScreen extends StatelessWidget {
                       if (snapshot.connectionState != ConnectionState.done) {
                         return const CircularProgressIndicator();
                       }
-                      return BlocProvider(
-                          create: (_) => DogBreedsCubit(DogBreeds(
-                              dogBloc.state.breed!.category ?? "",
-                              dogBloc.state.breed!.id ?? "",
-                              snapshot.data!)),
-                          child: const Flexible(child: DogBreedsDropdown()));
+
+                      return const Flexible(child: DogBreedsDropdown());
                     })
               ],
             ),

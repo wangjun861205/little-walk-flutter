@@ -256,16 +256,20 @@ abstract class _Dog implements Dog {
       throw _privateConstructorUsedError;
 }
 
+DogValue _$DogValueFromJson(Map<String, dynamic> json) {
+  return _DogValue.fromJson(json);
+}
+
 /// @nodoc
 mixin _$DogValue {
   String? get id => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   String? get gender => throw _privateConstructorUsedError;
-  @JsonKey(name: "breed_id")
-  String? get breedID => throw _privateConstructorUsedError;
+  DogBreedValue? get breed => throw _privateConstructorUsedError;
   @JsonKey(name: "portrait_id")
   String? get portraitID => throw _privateConstructorUsedError;
 
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $DogValueCopyWith<DogValue> get copyWith =>
       throw _privateConstructorUsedError;
@@ -280,8 +284,10 @@ abstract class $DogValueCopyWith<$Res> {
       {String? id,
       String? name,
       String? gender,
-      @JsonKey(name: "breed_id") String? breedID,
+      DogBreedValue? breed,
       @JsonKey(name: "portrait_id") String? portraitID});
+
+  $DogBreedValueCopyWith<$Res>? get breed;
 }
 
 /// @nodoc
@@ -300,7 +306,7 @@ class _$DogValueCopyWithImpl<$Res, $Val extends DogValue>
     Object? id = freezed,
     Object? name = freezed,
     Object? gender = freezed,
-    Object? breedID = freezed,
+    Object? breed = freezed,
     Object? portraitID = freezed,
   }) {
     return _then(_value.copyWith(
@@ -316,15 +322,27 @@ class _$DogValueCopyWithImpl<$Res, $Val extends DogValue>
           ? _value.gender
           : gender // ignore: cast_nullable_to_non_nullable
               as String?,
-      breedID: freezed == breedID
-          ? _value.breedID
-          : breedID // ignore: cast_nullable_to_non_nullable
-              as String?,
+      breed: freezed == breed
+          ? _value.breed
+          : breed // ignore: cast_nullable_to_non_nullable
+              as DogBreedValue?,
       portraitID: freezed == portraitID
           ? _value.portraitID
           : portraitID // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $DogBreedValueCopyWith<$Res>? get breed {
+    if (_value.breed == null) {
+      return null;
+    }
+
+    return $DogBreedValueCopyWith<$Res>(_value.breed!, (value) {
+      return _then(_value.copyWith(breed: value) as $Val);
+    });
   }
 }
 
@@ -340,8 +358,11 @@ abstract class _$$DogValueImplCopyWith<$Res>
       {String? id,
       String? name,
       String? gender,
-      @JsonKey(name: "breed_id") String? breedID,
+      DogBreedValue? breed,
       @JsonKey(name: "portrait_id") String? portraitID});
+
+  @override
+  $DogBreedValueCopyWith<$Res>? get breed;
 }
 
 /// @nodoc
@@ -358,7 +379,7 @@ class __$$DogValueImplCopyWithImpl<$Res>
     Object? id = freezed,
     Object? name = freezed,
     Object? gender = freezed,
-    Object? breedID = freezed,
+    Object? breed = freezed,
     Object? portraitID = freezed,
   }) {
     return _then(_$DogValueImpl(
@@ -374,10 +395,10 @@ class __$$DogValueImplCopyWithImpl<$Res>
           ? _value.gender
           : gender // ignore: cast_nullable_to_non_nullable
               as String?,
-      breedID: freezed == breedID
-          ? _value.breedID
-          : breedID // ignore: cast_nullable_to_non_nullable
-              as String?,
+      breed: freezed == breed
+          ? _value.breed
+          : breed // ignore: cast_nullable_to_non_nullable
+              as DogBreedValue?,
       portraitID: freezed == portraitID
           ? _value.portraitID
           : portraitID // ignore: cast_nullable_to_non_nullable
@@ -387,14 +408,17 @@ class __$$DogValueImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$DogValueImpl with DiagnosticableTreeMixin implements _DogValue {
   const _$DogValueImpl(
       {this.id,
       this.name,
       this.gender,
-      @JsonKey(name: "breed_id") this.breedID,
+      this.breed,
       @JsonKey(name: "portrait_id") this.portraitID});
+
+  factory _$DogValueImpl.fromJson(Map<String, dynamic> json) =>
+      _$$DogValueImplFromJson(json);
 
   @override
   final String? id;
@@ -403,15 +427,14 @@ class _$DogValueImpl with DiagnosticableTreeMixin implements _DogValue {
   @override
   final String? gender;
   @override
-  @JsonKey(name: "breed_id")
-  final String? breedID;
+  final DogBreedValue? breed;
   @override
   @JsonKey(name: "portrait_id")
   final String? portraitID;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'DogValue(id: $id, name: $name, gender: $gender, breedID: $breedID, portraitID: $portraitID)';
+    return 'DogValue(id: $id, name: $name, gender: $gender, breed: $breed, portraitID: $portraitID)';
   }
 
   @override
@@ -422,7 +445,7 @@ class _$DogValueImpl with DiagnosticableTreeMixin implements _DogValue {
       ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('name', name))
       ..add(DiagnosticsProperty('gender', gender))
-      ..add(DiagnosticsProperty('breedID', breedID))
+      ..add(DiagnosticsProperty('breed', breed))
       ..add(DiagnosticsProperty('portraitID', portraitID));
   }
 
@@ -434,20 +457,28 @@ class _$DogValueImpl with DiagnosticableTreeMixin implements _DogValue {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.gender, gender) || other.gender == gender) &&
-            (identical(other.breedID, breedID) || other.breedID == breedID) &&
+            (identical(other.breed, breed) || other.breed == breed) &&
             (identical(other.portraitID, portraitID) ||
                 other.portraitID == portraitID));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, id, name, gender, breedID, portraitID);
+      Object.hash(runtimeType, id, name, gender, breed, portraitID);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$DogValueImplCopyWith<_$DogValueImpl> get copyWith =>
       __$$DogValueImplCopyWithImpl<_$DogValueImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$DogValueImplToJson(
+      this,
+    );
+  }
 }
 
 abstract class _DogValue implements DogValue {
@@ -455,8 +486,11 @@ abstract class _DogValue implements DogValue {
       {final String? id,
       final String? name,
       final String? gender,
-      @JsonKey(name: "breed_id") final String? breedID,
+      final DogBreedValue? breed,
       @JsonKey(name: "portrait_id") final String? portraitID}) = _$DogValueImpl;
+
+  factory _DogValue.fromJson(Map<String, dynamic> json) =
+      _$DogValueImpl.fromJson;
 
   @override
   String? get id;
@@ -465,8 +499,7 @@ abstract class _DogValue implements DogValue {
   @override
   String? get gender;
   @override
-  @JsonKey(name: "breed_id")
-  String? get breedID;
+  DogBreedValue? get breed;
   @override
   @JsonKey(name: "portrait_id")
   String? get portraitID;
