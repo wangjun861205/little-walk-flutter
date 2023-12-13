@@ -119,7 +119,8 @@ Future<Map<String, dynamic>> httpPostJson<T>(
   if (authToken != null) {
     headers[authTokenHeader] = authToken;
   }
-  final resp = await post(url, headers: headers, body: jsonEncode(obj));
+  final jsonStr = jsonEncode(obj);
+  final resp = await post(url, headers: headers, body: jsonStr);
   if (resp.statusCode != 200) {
     return Future.error(
         APIException(resp.statusCode, utf8.decode(resp.bodyBytes)));

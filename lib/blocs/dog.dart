@@ -26,20 +26,28 @@ class DogCubit extends Cubit<Dog> {
 class DogValueCubit extends Cubit<DogValue> {
   DogValueCubit() : super(const DogValue());
 
-  void setName(String name) {
+  void setName(String? name) {
     emit(state.copyWith(name: name));
   }
 
-  void setGender(String gender) {
+  void setGender(String? gender) {
     emit(state.copyWith(gender: gender));
   }
 
-  void setBreed(DogBreedValue breed) {
+  void setBreed(DogBreedValue? breed) {
     emit(state.copyWith(breed: breed));
   }
 
-  void setPortrait(String portraitID) {
+  void setPortrait(String? portraitID) {
     emit(state.copyWith(portraitID: portraitID));
+  }
+
+  void setBirthday(String? birthday) {
+    emit(state.copyWith(birthday: birthday));
+  }
+
+  void setTags(List<String> tags) {
+    emit(state.copyWith(tags: tags));
   }
 }
 
@@ -55,15 +63,10 @@ class DogBreeds {
   }
 }
 
-class DogBreedsCubit extends Cubit<DogBreeds> {
-  DogBreedsCubit(DogBreeds breed) : super(breed);
+class DogBreedsCubit extends Cubit<List<DogBreed>> {
+  DogBreedsCubit(List<DogBreed> breeds) : super(breeds);
 
-  void refresh(String category) async {
-    final breeds = await fetchBreeds(category: category);
-    emit(DogBreeds(category, "", breeds));
-  }
-
-  void setBreed(String breed) {
-    emit(DogBreeds(state.category, breed, state.breeds));
+  void set(List<DogBreed> breeds) {
+    emit(breeds);
   }
 }

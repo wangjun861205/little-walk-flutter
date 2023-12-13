@@ -41,7 +41,7 @@ class EditDogScreen extends StatelessWidget {
                         return const CircularProgressIndicator();
                       }
 
-                      return const Flexible(child: DogBreedsDropdown());
+                      return const Flexible(child: DogBreedsDropdownGroup());
                     })
               ],
             ),

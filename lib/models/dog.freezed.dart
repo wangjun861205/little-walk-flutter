@@ -24,6 +24,8 @@ mixin _$Dog {
   String get name => throw _privateConstructorUsedError;
   String get gender => throw _privateConstructorUsedError;
   DogBreed get breed => throw _privateConstructorUsedError;
+  String get birthday => throw _privateConstructorUsedError;
+  List<String> get tags => throw _privateConstructorUsedError;
   @JsonKey(name: "portrait_id")
   String? get portraitID => throw _privateConstructorUsedError;
 
@@ -42,6 +44,8 @@ abstract class $DogCopyWith<$Res> {
       String name,
       String gender,
       DogBreed breed,
+      String birthday,
+      List<String> tags,
       @JsonKey(name: "portrait_id") String? portraitID});
 
   $DogBreedCopyWith<$Res> get breed;
@@ -63,6 +67,8 @@ class _$DogCopyWithImpl<$Res, $Val extends Dog> implements $DogCopyWith<$Res> {
     Object? name = null,
     Object? gender = null,
     Object? breed = null,
+    Object? birthday = null,
+    Object? tags = null,
     Object? portraitID = freezed,
   }) {
     return _then(_value.copyWith(
@@ -82,6 +88,14 @@ class _$DogCopyWithImpl<$Res, $Val extends Dog> implements $DogCopyWith<$Res> {
           ? _value.breed
           : breed // ignore: cast_nullable_to_non_nullable
               as DogBreed,
+      birthday: null == birthday
+          ? _value.birthday
+          : birthday // ignore: cast_nullable_to_non_nullable
+              as String,
+      tags: null == tags
+          ? _value.tags
+          : tags // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       portraitID: freezed == portraitID
           ? _value.portraitID
           : portraitID // ignore: cast_nullable_to_non_nullable
@@ -109,6 +123,8 @@ abstract class _$$DogImplCopyWith<$Res> implements $DogCopyWith<$Res> {
       String name,
       String gender,
       DogBreed breed,
+      String birthday,
+      List<String> tags,
       @JsonKey(name: "portrait_id") String? portraitID});
 
   @override
@@ -128,6 +144,8 @@ class __$$DogImplCopyWithImpl<$Res> extends _$DogCopyWithImpl<$Res, _$DogImpl>
     Object? name = null,
     Object? gender = null,
     Object? breed = null,
+    Object? birthday = null,
+    Object? tags = null,
     Object? portraitID = freezed,
   }) {
     return _then(_$DogImpl(
@@ -147,6 +165,14 @@ class __$$DogImplCopyWithImpl<$Res> extends _$DogCopyWithImpl<$Res, _$DogImpl>
           ? _value.breed
           : breed // ignore: cast_nullable_to_non_nullable
               as DogBreed,
+      birthday: null == birthday
+          ? _value.birthday
+          : birthday // ignore: cast_nullable_to_non_nullable
+              as String,
+      tags: null == tags
+          ? _value._tags
+          : tags // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       portraitID: freezed == portraitID
           ? _value.portraitID
           : portraitID // ignore: cast_nullable_to_non_nullable
@@ -163,7 +189,10 @@ class _$DogImpl with DiagnosticableTreeMixin implements _Dog {
       required this.name,
       required this.gender,
       required this.breed,
-      @JsonKey(name: "portrait_id") this.portraitID});
+      required this.birthday,
+      required final List<String> tags,
+      @JsonKey(name: "portrait_id") this.portraitID})
+      : _tags = tags;
 
   factory _$DogImpl.fromJson(Map<String, dynamic> json) =>
       _$$DogImplFromJson(json);
@@ -177,12 +206,22 @@ class _$DogImpl with DiagnosticableTreeMixin implements _Dog {
   @override
   final DogBreed breed;
   @override
+  final String birthday;
+  final List<String> _tags;
+  @override
+  List<String> get tags {
+    if (_tags is EqualUnmodifiableListView) return _tags;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_tags);
+  }
+
+  @override
   @JsonKey(name: "portrait_id")
   final String? portraitID;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Dog(id: $id, name: $name, gender: $gender, breed: $breed, portraitID: $portraitID)';
+    return 'Dog(id: $id, name: $name, gender: $gender, breed: $breed, birthday: $birthday, tags: $tags, portraitID: $portraitID)';
   }
 
   @override
@@ -194,6 +233,8 @@ class _$DogImpl with DiagnosticableTreeMixin implements _Dog {
       ..add(DiagnosticsProperty('name', name))
       ..add(DiagnosticsProperty('gender', gender))
       ..add(DiagnosticsProperty('breed', breed))
+      ..add(DiagnosticsProperty('birthday', birthday))
+      ..add(DiagnosticsProperty('tags', tags))
       ..add(DiagnosticsProperty('portraitID', portraitID));
   }
 
@@ -206,14 +247,17 @@ class _$DogImpl with DiagnosticableTreeMixin implements _Dog {
             (identical(other.name, name) || other.name == name) &&
             (identical(other.gender, gender) || other.gender == gender) &&
             (identical(other.breed, breed) || other.breed == breed) &&
+            (identical(other.birthday, birthday) ||
+                other.birthday == birthday) &&
+            const DeepCollectionEquality().equals(other._tags, _tags) &&
             (identical(other.portraitID, portraitID) ||
                 other.portraitID == portraitID));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, name, gender, breed, portraitID);
+  int get hashCode => Object.hash(runtimeType, id, name, gender, breed,
+      birthday, const DeepCollectionEquality().hash(_tags), portraitID);
 
   @JsonKey(ignore: true)
   @override
@@ -235,6 +279,8 @@ abstract class _Dog implements Dog {
       required final String name,
       required final String gender,
       required final DogBreed breed,
+      required final String birthday,
+      required final List<String> tags,
       @JsonKey(name: "portrait_id") final String? portraitID}) = _$DogImpl;
 
   factory _Dog.fromJson(Map<String, dynamic> json) = _$DogImpl.fromJson;
@@ -247,6 +293,10 @@ abstract class _Dog implements Dog {
   String get gender;
   @override
   DogBreed get breed;
+  @override
+  String get birthday;
+  @override
+  List<String> get tags;
   @override
   @JsonKey(name: "portrait_id")
   String? get portraitID;
@@ -266,6 +316,8 @@ mixin _$DogValue {
   String? get name => throw _privateConstructorUsedError;
   String? get gender => throw _privateConstructorUsedError;
   DogBreedValue? get breed => throw _privateConstructorUsedError;
+  String? get birthday => throw _privateConstructorUsedError;
+  List<String>? get tags => throw _privateConstructorUsedError;
   @JsonKey(name: "portrait_id")
   String? get portraitID => throw _privateConstructorUsedError;
 
@@ -285,6 +337,8 @@ abstract class $DogValueCopyWith<$Res> {
       String? name,
       String? gender,
       DogBreedValue? breed,
+      String? birthday,
+      List<String>? tags,
       @JsonKey(name: "portrait_id") String? portraitID});
 
   $DogBreedValueCopyWith<$Res>? get breed;
@@ -307,6 +361,8 @@ class _$DogValueCopyWithImpl<$Res, $Val extends DogValue>
     Object? name = freezed,
     Object? gender = freezed,
     Object? breed = freezed,
+    Object? birthday = freezed,
+    Object? tags = freezed,
     Object? portraitID = freezed,
   }) {
     return _then(_value.copyWith(
@@ -326,6 +382,14 @@ class _$DogValueCopyWithImpl<$Res, $Val extends DogValue>
           ? _value.breed
           : breed // ignore: cast_nullable_to_non_nullable
               as DogBreedValue?,
+      birthday: freezed == birthday
+          ? _value.birthday
+          : birthday // ignore: cast_nullable_to_non_nullable
+              as String?,
+      tags: freezed == tags
+          ? _value.tags
+          : tags // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
       portraitID: freezed == portraitID
           ? _value.portraitID
           : portraitID // ignore: cast_nullable_to_non_nullable
@@ -359,6 +423,8 @@ abstract class _$$DogValueImplCopyWith<$Res>
       String? name,
       String? gender,
       DogBreedValue? breed,
+      String? birthday,
+      List<String>? tags,
       @JsonKey(name: "portrait_id") String? portraitID});
 
   @override
@@ -380,6 +446,8 @@ class __$$DogValueImplCopyWithImpl<$Res>
     Object? name = freezed,
     Object? gender = freezed,
     Object? breed = freezed,
+    Object? birthday = freezed,
+    Object? tags = freezed,
     Object? portraitID = freezed,
   }) {
     return _then(_$DogValueImpl(
@@ -399,6 +467,14 @@ class __$$DogValueImplCopyWithImpl<$Res>
           ? _value.breed
           : breed // ignore: cast_nullable_to_non_nullable
               as DogBreedValue?,
+      birthday: freezed == birthday
+          ? _value.birthday
+          : birthday // ignore: cast_nullable_to_non_nullable
+              as String?,
+      tags: freezed == tags
+          ? _value._tags
+          : tags // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
       portraitID: freezed == portraitID
           ? _value.portraitID
           : portraitID // ignore: cast_nullable_to_non_nullable
@@ -415,7 +491,10 @@ class _$DogValueImpl with DiagnosticableTreeMixin implements _DogValue {
       this.name,
       this.gender,
       this.breed,
-      @JsonKey(name: "portrait_id") this.portraitID});
+      this.birthday,
+      final List<String>? tags,
+      @JsonKey(name: "portrait_id") this.portraitID})
+      : _tags = tags;
 
   factory _$DogValueImpl.fromJson(Map<String, dynamic> json) =>
       _$$DogValueImplFromJson(json);
@@ -429,12 +508,24 @@ class _$DogValueImpl with DiagnosticableTreeMixin implements _DogValue {
   @override
   final DogBreedValue? breed;
   @override
+  final String? birthday;
+  final List<String>? _tags;
+  @override
+  List<String>? get tags {
+    final value = _tags;
+    if (value == null) return null;
+    if (_tags is EqualUnmodifiableListView) return _tags;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  @override
   @JsonKey(name: "portrait_id")
   final String? portraitID;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'DogValue(id: $id, name: $name, gender: $gender, breed: $breed, portraitID: $portraitID)';
+    return 'DogValue(id: $id, name: $name, gender: $gender, breed: $breed, birthday: $birthday, tags: $tags, portraitID: $portraitID)';
   }
 
   @override
@@ -446,6 +537,8 @@ class _$DogValueImpl with DiagnosticableTreeMixin implements _DogValue {
       ..add(DiagnosticsProperty('name', name))
       ..add(DiagnosticsProperty('gender', gender))
       ..add(DiagnosticsProperty('breed', breed))
+      ..add(DiagnosticsProperty('birthday', birthday))
+      ..add(DiagnosticsProperty('tags', tags))
       ..add(DiagnosticsProperty('portraitID', portraitID));
   }
 
@@ -458,14 +551,17 @@ class _$DogValueImpl with DiagnosticableTreeMixin implements _DogValue {
             (identical(other.name, name) || other.name == name) &&
             (identical(other.gender, gender) || other.gender == gender) &&
             (identical(other.breed, breed) || other.breed == breed) &&
+            (identical(other.birthday, birthday) ||
+                other.birthday == birthday) &&
+            const DeepCollectionEquality().equals(other._tags, _tags) &&
             (identical(other.portraitID, portraitID) ||
                 other.portraitID == portraitID));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, name, gender, breed, portraitID);
+  int get hashCode => Object.hash(runtimeType, id, name, gender, breed,
+      birthday, const DeepCollectionEquality().hash(_tags), portraitID);
 
   @JsonKey(ignore: true)
   @override
@@ -487,6 +583,8 @@ abstract class _DogValue implements DogValue {
       final String? name,
       final String? gender,
       final DogBreedValue? breed,
+      final String? birthday,
+      final List<String>? tags,
       @JsonKey(name: "portrait_id") final String? portraitID}) = _$DogValueImpl;
 
   factory _DogValue.fromJson(Map<String, dynamic> json) =
@@ -500,6 +598,10 @@ abstract class _DogValue implements DogValue {
   String? get gender;
   @override
   DogBreedValue? get breed;
+  @override
+  String? get birthday;
+  @override
+  List<String>? get tags;
   @override
   @JsonKey(name: "portrait_id")
   String? get portraitID;

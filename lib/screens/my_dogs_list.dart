@@ -36,7 +36,18 @@ class MyDogsListScreen extends StatelessWidget {
           }
           if (snapshot.data != null && snapshot.data!.isEmpty) {
             return Scaffold(
-                appBar: AppBar(),
+                appBar: AppBar(
+                  centerTitle: true,
+                  title: const Text("我的狗狗"),
+                  actions: [
+                    TextButton(
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const AddDogScreen()));
+                        },
+                        child: const Text("添加"))
+                  ],
+                ),
                 body: Center(
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -56,7 +67,18 @@ class MyDogsListScreen extends StatelessWidget {
                 ));
           }
           return Scaffold(
-            appBar: AppBar(),
+            appBar: AppBar(
+              centerTitle: true,
+              title: const Text("我的狗狗"),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const AddDogScreen()));
+                    },
+                    child: const Text("添加"))
+              ],
+            ),
             body: ListView.builder(
                 itemCount: snapshot.data?.length,
                 itemBuilder: (context, i) {

@@ -1,19 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:little_walk/blocs/dog.dart';
 
 class BirthdayPicker extends StatelessWidget {
-  final DateTime birthday;
-  final void Function(DateTime) setBirthday;
-
-  TextEditingController? dateController;
-
-  BirthdayPicker(this.birthday, this.setBirthday, {super.key}) {
-    dateController = TextEditingController(text: birthday.toIso8601String());
-  }
+  TextEditingController controller;
+  BirthdayPicker({super.key}) : controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    final dogBloc = BlocProvider.of<DogValueCubit>(context);
     return TextField(
-        controller: dateController,
+        controller: controller,
         decoration: const InputDecoration(
             icon: Icon(Icons.calendar_today), labelText: "请选择生日"),
         readOnly: true,
@@ -24,7 +21,9 @@ class BirthdayPicker extends StatelessWidget {
             firstDate: DateTime(1900),
             lastDate: DateTime(2100),
           );
-          setBirthday(date ?? DateTime.now());
+          final dateStr = date != null ? date.toIso8601String() + "+08:00" : "";
+          controller.text = dateStr;
+          dogBloc.setBirthday(dateStr);
         });
   }
 }

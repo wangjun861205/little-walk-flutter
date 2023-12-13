@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:little_walk/apis/dog.dart';
 import 'package:little_walk/blocs/dog.dart';
 import 'package:little_walk/components/add_dog_submit_button.dart';
 import 'package:little_walk/components/dog_name_input.dart';
-import 'package:little_walk/models/dog.dart';
 import '../components/birthday_picker.dart';
 import '../components/dog_breeds_dropdown.dart';
 import '../components/dog_tags_input.dart';
@@ -62,10 +60,10 @@ class AddDogScreenState extends State<AddDogScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 const DogNameInput(),
-                const DogBreedsDropdown(),
-                DogTagsInput(tags, addTag, removeTag),
+                const DogBreedsDropdownGroup(),
+                const DogTagsInput(),
                 const GenderRadioGroup(),
-                BirthdayPicker(birthday, setBirthday),
+                BirthdayPicker(),
                 const DogPortraitPicker(Text("上传头像")),
                 const AddDogSubmitButton(),
               ],

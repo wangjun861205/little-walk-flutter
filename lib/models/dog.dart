@@ -12,6 +12,8 @@ class Dog with _$Dog {
     required String name,
     required String gender,
     required DogBreed breed,
+    required String birthday,
+    required List<String> tags,
     @JsonKey(name: "portrait_id") String? portraitID,
   }) = _Dog;
 
@@ -25,6 +27,8 @@ class DogValue with _$DogValue {
     String? name,
     String? gender,
     DogBreedValue? breed,
+    String? birthday,
+    List<String>? tags,
     @JsonKey(name: "portrait_id") String? portraitID,
   }) = _DogValue;
 
@@ -32,8 +36,9 @@ class DogValue with _$DogValue {
       id: dog.id,
       name: dog.name,
       gender: dog.gender,
-      breed: DogBreedValue(
-          id: dog.breed.id, category: dog.breed.category, name: dog.breed.name),
+      breed: DogBreedValue.fromDogBreed(dog.breed),
+      birthday: dog.birthday,
+      tags: dog.tags,
       portraitID: dog.portraitID);
 
   factory DogValue.fromJson(Map<String, dynamic> json) =>

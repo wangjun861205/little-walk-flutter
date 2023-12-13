@@ -23,4 +23,7 @@ class DogBreedValue with _$DogBreedValue {
 
   factory DogBreedValue.fromJson(Map<String, dynamic> json) =>
       _$DogBreedValueFromJson(json);
+
+  factory DogBreedValue.fromDogBreed(DogBreed breed) =>
+      DogBreedValue(id: breed.id, category: breed.category, name: breed.name);
 }
