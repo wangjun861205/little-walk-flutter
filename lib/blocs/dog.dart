@@ -49,6 +49,17 @@ class DogValueCubit extends Cubit<DogValue> {
   void setTags(List<String> tags) {
     emit(state.copyWith(tags: tags));
   }
+
+  void removeTag(String tag) {
+    emit(state.copyWith(
+        tags: [...state.tags ?? List<String>.empty()]
+            .where((t) => t != tag)
+            .toList()));
+  }
+
+  void pushTag(String tag) {
+    emit(state.copyWith(tags: [...state.tags ?? List<String>.empty(), tag]));
+  }
 }
 
 class DogBreeds {

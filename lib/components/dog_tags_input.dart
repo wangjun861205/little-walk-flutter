@@ -1,34 +1,62 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_tags/flutter_tags.dart';
 import 'package:little_walk/blocs/dog.dart';
 
-class DogTagsInput extends StatelessWidget {
-  const DogTagsInput({super.key});
+class Tag extends StatelessWidget {
+  final String tag;
+
+  const Tag(this.tag, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    final dogBloc = BlocProvider.of<DogValueCubit>(context);
-    return Tags(
-      key: super.key,
-      textField: TagsTextField(
-        onSubmitted: (val) => dogBloc.state,
-      ),
-      itemCount: dogBloc.state.tags?.length ?? 0,
-      itemBuilder: (int idx) {
-        final item = dogBloc.state.tags?[idx];
-        return ActionChip(
-          key: Key(item!),
-          label: Text(item),
-          onPressed: () {
-            var tags = dogBloc.state.tags == null
-                ? List<String>.empty()
-                : dogBloc.state.tags!;
-            tags.remove(item);
-            dogBloc.setTags(tags);
-          },
-        );
-      },
-    );
+    final dogBloc = BlocProvider.of<DogValueCubit>(context, listen: true);
+    return InkWell(
+        onTap: () => dogBloc.removeTag(tag),
+        child: DecoratedBox(
+            decoration: BoxDecoration(
+                color: Colors.lightBlue[400],
+                borderRadius: const BorderRadius.all(Radius.circular(15))),
+            child: Padding(
+                padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                child: SizedBox(height: 30, child: Text(tag)))));
+  }
+}
+
+class InputSuit extends StatelessWidget {
+  const InputSuit({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final dogBloc = BlocProvider.of<DogValueCubit>(context, listen: true);
+    var controller = TextEditingController();
+    return Wrap(children: [
+      SizedBox(
+          width: 80,
+          height: 30,
+          child: TextField(
+            controller: controller,
+          )),
+      SizedBox(
+          width: 40,
+          height: 30,
+          child: TextButton(
+              onPressed: () => dogBloc.pushTag(controller.text),
+              child: const Text("添加"))),
+    ]);
+  }
+}
+
+class TagsEditor extends StatelessWidget {
+  const TagsEditor({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final dogBloc = BlocProvider.of<DogValueCubit>(context, listen: true);
+
+    return Wrap(
+        children: (dogBloc.state.tags ?? [])
+            .map((t) => Flexible(child: Tag(t)))
+            .toList()
+          ..add(const Flexible(child: InputSuit())));
   }
 }

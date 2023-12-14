@@ -61,7 +61,7 @@ class AddDogScreenState extends State<AddDogScreen> {
               children: <Widget>[
                 const DogNameInput(),
                 const DogBreedsDropdownGroup(),
-                const DogTagsInput(),
+                const TagsEditor(),
                 const GenderRadioGroup(),
                 BirthdayPicker(),
                 const DogPortraitPicker(Text("上传头像")),
