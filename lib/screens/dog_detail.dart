@@ -11,7 +11,6 @@ class DogDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final appBloc = BlocProvider.of<AppCubit>(context, listen: true);
     final dogBloc = BlocProvider.of<DogCubit>(context, listen: true);
     return Scaffold(
         appBar: AppBar(),
@@ -34,11 +33,9 @@ class DogDetailScreen extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(dogBloc.state.name ?? ""),
-                              Text(dogBloc.state.gender ?? ""),
-                              Text(dogBloc.state.breed != null
-                                  ? dogBloc.state.breed!.name!
-                                  : "其他")
+                              Text(dogBloc.state.name),
+                              Text(dogBloc.state.gender),
+                              Text(dogBloc.state.breed.name),
                             ],
                           )))
                 ],
@@ -46,7 +43,7 @@ class DogDetailScreen extends StatelessWidget {
           Positioned(
               top: 20,
               left: MediaQuery.of(context).size.width * 0.15,
-              child: const DogPortraitPicker(DogAvatar())),
+              child: const DogAvatar()),
           Positioned(
               top: 60,
               right: MediaQuery.of(context).size.width * 0.15,
