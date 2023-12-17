@@ -87,8 +87,8 @@ class WalkRequestListCubit extends Cubit<List<WalkRequest>> {
 class WalkRequestValueCubit extends Cubit<WalkRequestValue> {
   WalkRequestValueCubit() : super(const WalkRequestValue());
 
-  void setDogIDs(List<String> dogIDs) {
-    emit(state.copyWith(dogIDs: dogIDs));
+  void setDogs(List<Dog> dog) {
+    emit(state.copyWith(dogs: dog));
   }
 
   void setLongitude(double longitude) {

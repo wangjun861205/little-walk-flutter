@@ -14,6 +14,7 @@ class Dog with _$Dog {
     required DogBreed breed,
     required String birthday,
     required List<String> tags,
+    @JsonKey(name: "owner_id") required String ownerID,
     @JsonKey(name: "portrait_id") String? portraitID,
   }) = _Dog;
 

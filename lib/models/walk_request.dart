@@ -27,7 +27,7 @@ class WalkRequest with _$WalkRequest {
 class WalkRequestValue with _$WalkRequestValue {
   const factory WalkRequestValue({
     String? id,
-    @JsonKey(name: "dog_ids") List<String>? dogIDs,
+    List<Dog>? dogs,
     double? longitude,
     double? latitude,
   }) = _WalkRequestValue;
@@ -37,7 +37,7 @@ class WalkRequestValue with _$WalkRequestValue {
 
   factory WalkRequestValue.fromWalkRequest(WalkRequest req) => WalkRequestValue(
       id: req.id,
-      dogIDs: req.dogs.map((dog) => dog.id).toList(),
+      dogs: req.dogs,
       longitude: req.longitude,
       latitude: req.latitude);
 }

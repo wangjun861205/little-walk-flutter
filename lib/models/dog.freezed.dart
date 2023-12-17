@@ -26,6 +26,8 @@ mixin _$Dog {
   DogBreed get breed => throw _privateConstructorUsedError;
   String get birthday => throw _privateConstructorUsedError;
   List<String> get tags => throw _privateConstructorUsedError;
+  @JsonKey(name: "owner_id")
+  String get ownerID => throw _privateConstructorUsedError;
   @JsonKey(name: "portrait_id")
   String? get portraitID => throw _privateConstructorUsedError;
 
@@ -46,6 +48,7 @@ abstract class $DogCopyWith<$Res> {
       DogBreed breed,
       String birthday,
       List<String> tags,
+      @JsonKey(name: "owner_id") String ownerID,
       @JsonKey(name: "portrait_id") String? portraitID});
 
   $DogBreedCopyWith<$Res> get breed;
@@ -69,6 +72,7 @@ class _$DogCopyWithImpl<$Res, $Val extends Dog> implements $DogCopyWith<$Res> {
     Object? breed = null,
     Object? birthday = null,
     Object? tags = null,
+    Object? ownerID = null,
     Object? portraitID = freezed,
   }) {
     return _then(_value.copyWith(
@@ -96,6 +100,10 @@ class _$DogCopyWithImpl<$Res, $Val extends Dog> implements $DogCopyWith<$Res> {
           ? _value.tags
           : tags // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      ownerID: null == ownerID
+          ? _value.ownerID
+          : ownerID // ignore: cast_nullable_to_non_nullable
+              as String,
       portraitID: freezed == portraitID
           ? _value.portraitID
           : portraitID // ignore: cast_nullable_to_non_nullable
@@ -125,6 +133,7 @@ abstract class _$$DogImplCopyWith<$Res> implements $DogCopyWith<$Res> {
       DogBreed breed,
       String birthday,
       List<String> tags,
+      @JsonKey(name: "owner_id") String ownerID,
       @JsonKey(name: "portrait_id") String? portraitID});
 
   @override
@@ -146,6 +155,7 @@ class __$$DogImplCopyWithImpl<$Res> extends _$DogCopyWithImpl<$Res, _$DogImpl>
     Object? breed = null,
     Object? birthday = null,
     Object? tags = null,
+    Object? ownerID = null,
     Object? portraitID = freezed,
   }) {
     return _then(_$DogImpl(
@@ -173,6 +183,10 @@ class __$$DogImplCopyWithImpl<$Res> extends _$DogCopyWithImpl<$Res, _$DogImpl>
           ? _value._tags
           : tags // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      ownerID: null == ownerID
+          ? _value.ownerID
+          : ownerID // ignore: cast_nullable_to_non_nullable
+              as String,
       portraitID: freezed == portraitID
           ? _value.portraitID
           : portraitID // ignore: cast_nullable_to_non_nullable
@@ -191,6 +205,7 @@ class _$DogImpl with DiagnosticableTreeMixin implements _Dog {
       required this.breed,
       required this.birthday,
       required final List<String> tags,
+      @JsonKey(name: "owner_id") required this.ownerID,
       @JsonKey(name: "portrait_id") this.portraitID})
       : _tags = tags;
 
@@ -216,12 +231,15 @@ class _$DogImpl with DiagnosticableTreeMixin implements _Dog {
   }
 
   @override
+  @JsonKey(name: "owner_id")
+  final String ownerID;
+  @override
   @JsonKey(name: "portrait_id")
   final String? portraitID;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Dog(id: $id, name: $name, gender: $gender, breed: $breed, birthday: $birthday, tags: $tags, portraitID: $portraitID)';
+    return 'Dog(id: $id, name: $name, gender: $gender, breed: $breed, birthday: $birthday, tags: $tags, ownerID: $ownerID, portraitID: $portraitID)';
   }
 
   @override
@@ -235,6 +253,7 @@ class _$DogImpl with DiagnosticableTreeMixin implements _Dog {
       ..add(DiagnosticsProperty('breed', breed))
       ..add(DiagnosticsProperty('birthday', birthday))
       ..add(DiagnosticsProperty('tags', tags))
+      ..add(DiagnosticsProperty('ownerID', ownerID))
       ..add(DiagnosticsProperty('portraitID', portraitID));
   }
 
@@ -250,14 +269,23 @@ class _$DogImpl with DiagnosticableTreeMixin implements _Dog {
             (identical(other.birthday, birthday) ||
                 other.birthday == birthday) &&
             const DeepCollectionEquality().equals(other._tags, _tags) &&
+            (identical(other.ownerID, ownerID) || other.ownerID == ownerID) &&
             (identical(other.portraitID, portraitID) ||
                 other.portraitID == portraitID));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, gender, breed,
-      birthday, const DeepCollectionEquality().hash(_tags), portraitID);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      name,
+      gender,
+      breed,
+      birthday,
+      const DeepCollectionEquality().hash(_tags),
+      ownerID,
+      portraitID);
 
   @JsonKey(ignore: true)
   @override
@@ -281,6 +309,7 @@ abstract class _Dog implements Dog {
       required final DogBreed breed,
       required final String birthday,
       required final List<String> tags,
+      @JsonKey(name: "owner_id") required final String ownerID,
       @JsonKey(name: "portrait_id") final String? portraitID}) = _$DogImpl;
 
   factory _Dog.fromJson(Map<String, dynamic> json) = _$DogImpl.fromJson;
@@ -297,6 +326,9 @@ abstract class _Dog implements Dog {
   String get birthday;
   @override
   List<String> get tags;
+  @override
+  @JsonKey(name: "owner_id")
+  String get ownerID;
   @override
   @JsonKey(name: "portrait_id")
   String? get portraitID;

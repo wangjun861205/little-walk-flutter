@@ -10,16 +10,16 @@ class AddDogSubmitButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final dogBloc = BlocProvider.of<DogValueCubit>(context, listen: true);
     final messenger = ScaffoldMessenger.of(context);
-    Future<void> onPress() async {
-      try {
-        final resp = await addDog(dogBloc.state);
+    onPress() {
+      addDog(dogBloc.state).then((resp) {
         messenger.showSnackBar(SnackBar(content: Text("success: ${resp.id}")));
-      } catch (err) {
+        Navigator.of(context).pop(resp);
+      }, onError: (err) {
         messenger.showSnackBar(SnackBar(
           content: Text("$err"),
           duration: const Duration(seconds: 10),
         ));
-      }
+      });
     }
 
     return TextButton(onPressed: onPress, child: const Text("创建"));

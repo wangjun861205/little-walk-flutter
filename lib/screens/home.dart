@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:little_walk/apis/walk_request.dart';
 import 'package:little_walk/blocs/app.dart';
+import 'package:little_walk/blocs/common.dart';
+import 'package:little_walk/models/walk_request.dart';
 import 'package:little_walk/screens/location_picker.dart';
 import 'package:little_walk/screens/profile_menu.dart';
 import 'package:little_walk/screens/walk_request_list.dart';
@@ -14,7 +17,15 @@ class HomeScreen extends StatelessWidget {
           value: BlocProvider.of<AppCubit>(context),
           child: const ProfileMenuScreen()),
       LocationPickerScreen(),
-      NearbyWalkRequestsScreen(size: 20),
+      BlocProvider(
+          create: (_) => FutureCubit<List<WalkRequest>, int>(
+              initData: [],
+              factory: (prev, arg) async {
+                final curr = await nearbyWalkRequests(arg, 10);
+                return [...(prev ?? []), ...curr];
+              },
+              arg: 1),
+          child: const WalkRequestListScreen()),
       const ProfileMenuScreen(),
     ];
 

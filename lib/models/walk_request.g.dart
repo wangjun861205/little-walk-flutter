@@ -46,8 +46,9 @@ _$WalkRequestValueImpl _$$WalkRequestValueImplFromJson(
         Map<String, dynamic> json) =>
     _$WalkRequestValueImpl(
       id: json['id'] as String?,
-      dogIDs:
-          (json['dog_ids'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      dogs: (json['dogs'] as List<dynamic>?)
+          ?.map((e) => Dog.fromJson(e as Map<String, dynamic>))
+          .toList(),
       longitude: (json['longitude'] as num?)?.toDouble(),
       latitude: (json['latitude'] as num?)?.toDouble(),
     );
@@ -56,7 +57,7 @@ Map<String, dynamic> _$$WalkRequestValueImplToJson(
         _$WalkRequestValueImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'dog_ids': instance.dogIDs,
+      'dogs': instance.dogs,
       'longitude': instance.longitude,
       'latitude': instance.latitude,
     };

@@ -377,8 +377,7 @@ WalkRequestValue _$WalkRequestValueFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$WalkRequestValue {
   String? get id => throw _privateConstructorUsedError;
-  @JsonKey(name: "dog_ids")
-  List<String>? get dogIDs => throw _privateConstructorUsedError;
+  List<Dog>? get dogs => throw _privateConstructorUsedError;
   double? get longitude => throw _privateConstructorUsedError;
   double? get latitude => throw _privateConstructorUsedError;
 
@@ -394,11 +393,7 @@ abstract class $WalkRequestValueCopyWith<$Res> {
           WalkRequestValue value, $Res Function(WalkRequestValue) then) =
       _$WalkRequestValueCopyWithImpl<$Res, WalkRequestValue>;
   @useResult
-  $Res call(
-      {String? id,
-      @JsonKey(name: "dog_ids") List<String>? dogIDs,
-      double? longitude,
-      double? latitude});
+  $Res call({String? id, List<Dog>? dogs, double? longitude, double? latitude});
 }
 
 /// @nodoc
@@ -415,7 +410,7 @@ class _$WalkRequestValueCopyWithImpl<$Res, $Val extends WalkRequestValue>
   @override
   $Res call({
     Object? id = freezed,
-    Object? dogIDs = freezed,
+    Object? dogs = freezed,
     Object? longitude = freezed,
     Object? latitude = freezed,
   }) {
@@ -424,10 +419,10 @@ class _$WalkRequestValueCopyWithImpl<$Res, $Val extends WalkRequestValue>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      dogIDs: freezed == dogIDs
-          ? _value.dogIDs
-          : dogIDs // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
+      dogs: freezed == dogs
+          ? _value.dogs
+          : dogs // ignore: cast_nullable_to_non_nullable
+              as List<Dog>?,
       longitude: freezed == longitude
           ? _value.longitude
           : longitude // ignore: cast_nullable_to_non_nullable
@@ -448,11 +443,7 @@ abstract class _$$WalkRequestValueImplCopyWith<$Res>
       __$$WalkRequestValueImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String? id,
-      @JsonKey(name: "dog_ids") List<String>? dogIDs,
-      double? longitude,
-      double? latitude});
+  $Res call({String? id, List<Dog>? dogs, double? longitude, double? latitude});
 }
 
 /// @nodoc
@@ -467,7 +458,7 @@ class __$$WalkRequestValueImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
-    Object? dogIDs = freezed,
+    Object? dogs = freezed,
     Object? longitude = freezed,
     Object? latitude = freezed,
   }) {
@@ -476,10 +467,10 @@ class __$$WalkRequestValueImplCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      dogIDs: freezed == dogIDs
-          ? _value._dogIDs
-          : dogIDs // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
+      dogs: freezed == dogs
+          ? _value._dogs
+          : dogs // ignore: cast_nullable_to_non_nullable
+              as List<Dog>?,
       longitude: freezed == longitude
           ? _value.longitude
           : longitude // ignore: cast_nullable_to_non_nullable
@@ -498,24 +489,20 @@ class _$WalkRequestValueImpl
     with DiagnosticableTreeMixin
     implements _WalkRequestValue {
   const _$WalkRequestValueImpl(
-      {this.id,
-      @JsonKey(name: "dog_ids") final List<String>? dogIDs,
-      this.longitude,
-      this.latitude})
-      : _dogIDs = dogIDs;
+      {this.id, final List<Dog>? dogs, this.longitude, this.latitude})
+      : _dogs = dogs;
 
   factory _$WalkRequestValueImpl.fromJson(Map<String, dynamic> json) =>
       _$$WalkRequestValueImplFromJson(json);
 
   @override
   final String? id;
-  final List<String>? _dogIDs;
+  final List<Dog>? _dogs;
   @override
-  @JsonKey(name: "dog_ids")
-  List<String>? get dogIDs {
-    final value = _dogIDs;
+  List<Dog>? get dogs {
+    final value = _dogs;
     if (value == null) return null;
-    if (_dogIDs is EqualUnmodifiableListView) return _dogIDs;
+    if (_dogs is EqualUnmodifiableListView) return _dogs;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }
@@ -527,7 +514,7 @@ class _$WalkRequestValueImpl
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'WalkRequestValue(id: $id, dogIDs: $dogIDs, longitude: $longitude, latitude: $latitude)';
+    return 'WalkRequestValue(id: $id, dogs: $dogs, longitude: $longitude, latitude: $latitude)';
   }
 
   @override
@@ -536,7 +523,7 @@ class _$WalkRequestValueImpl
     properties
       ..add(DiagnosticsProperty('type', 'WalkRequestValue'))
       ..add(DiagnosticsProperty('id', id))
-      ..add(DiagnosticsProperty('dogIDs', dogIDs))
+      ..add(DiagnosticsProperty('dogs', dogs))
       ..add(DiagnosticsProperty('longitude', longitude))
       ..add(DiagnosticsProperty('latitude', latitude));
   }
@@ -547,7 +534,7 @@ class _$WalkRequestValueImpl
         (other.runtimeType == runtimeType &&
             other is _$WalkRequestValueImpl &&
             (identical(other.id, id) || other.id == id) &&
-            const DeepCollectionEquality().equals(other._dogIDs, _dogIDs) &&
+            const DeepCollectionEquality().equals(other._dogs, _dogs) &&
             (identical(other.longitude, longitude) ||
                 other.longitude == longitude) &&
             (identical(other.latitude, latitude) ||
@@ -557,7 +544,7 @@ class _$WalkRequestValueImpl
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id,
-      const DeepCollectionEquality().hash(_dogIDs), longitude, latitude);
+      const DeepCollectionEquality().hash(_dogs), longitude, latitude);
 
   @JsonKey(ignore: true)
   @override
@@ -577,7 +564,7 @@ class _$WalkRequestValueImpl
 abstract class _WalkRequestValue implements WalkRequestValue {
   const factory _WalkRequestValue(
       {final String? id,
-      @JsonKey(name: "dog_ids") final List<String>? dogIDs,
+      final List<Dog>? dogs,
       final double? longitude,
       final double? latitude}) = _$WalkRequestValueImpl;
 
@@ -587,8 +574,7 @@ abstract class _WalkRequestValue implements WalkRequestValue {
   @override
   String? get id;
   @override
-  @JsonKey(name: "dog_ids")
-  List<String>? get dogIDs;
+  List<Dog>? get dogs;
   @override
   double? get longitude;
   @override

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart';
 import 'package:little_walk/apis/common.dart';
+import 'package:little_walk/blocs/common.dart';
 import 'package:little_walk/models/dog_breed.dart';
 import '../models/dog.dart';
 
@@ -55,9 +56,9 @@ class AddDogResponse {
   }
 }
 
-Future<AddDogResponse> addDog(DogValue dog) async {
+Future<Dog> addDog(DogValue dog) async {
   final resp = await httpPostJson(path: "/apis/dogs", obj: dog.toJson());
-  return AddDogResponse.fromJson(resp);
+  return Dog.fromJson(resp);
 }
 
 Future<List<Dog>> myDogs({required int limit, skip}) async {

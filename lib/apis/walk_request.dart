@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:little_walk/apis/common.dart';
 import 'package:little_walk/models/walk_request.dart';
 import 'package:little_walk/utils/geolocation.dart';
@@ -13,6 +11,15 @@ Future<List<WalkRequest>> nearbyWalkRequests(int page, int size) async {
     "latitude": latitude.toString(),
     "radius": 10.toString(),
   });
+  return (resp as List<dynamic>).map((r) {
+    return WalkRequest.fromJson(r);
+  }).toList();
+}
+
+Future<List<WalkRequest>> myWalkRequests(
+    {required int page, int size = 10}) async {
+  final resp = await httpGet(
+      path: "/apis/walk_requests/mine", params: {"page": page, "size": size});
   return (resp as List<dynamic>).map((r) {
     return WalkRequest.fromJson(r);
   }).toList();

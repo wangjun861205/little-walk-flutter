@@ -81,3 +81,13 @@ class DogBreedsCubit extends Cubit<List<DogBreed>> {
     emit(breeds);
   }
 }
+
+class DogsCubit extends Cubit<List<Dog>> {
+  DogsCubit(List<Dog> dogs) : super(dogs);
+
+  void push(Dog dog) {
+    emit([...state, dog]);
+  }
+
+  void remove(String id) => emit(state.where((d) => d.id != id).toList());
+}

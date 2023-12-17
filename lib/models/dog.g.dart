@@ -13,6 +13,7 @@ _$DogImpl _$$DogImplFromJson(Map<String, dynamic> json) => _$DogImpl(
       breed: DogBreed.fromJson(json['breed'] as Map<String, dynamic>),
       birthday: json['birthday'] as String,
       tags: (json['tags'] as List<dynamic>).map((e) => e as String).toList(),
+      ownerID: json['owner_id'] as String,
       portraitID: json['portrait_id'] as String?,
     );
 
@@ -23,6 +24,7 @@ Map<String, dynamic> _$$DogImplToJson(_$DogImpl instance) => <String, dynamic>{
       'breed': instance.breed,
       'birthday': instance.birthday,
       'tags': instance.tags,
+      'owner_id': instance.ownerID,
       'portrait_id': instance.portraitID,
     };
 

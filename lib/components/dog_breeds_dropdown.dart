@@ -46,8 +46,9 @@ class BreedDropdown extends StatelessWidget {
           if (val == null) {
             return;
           }
-          dogBloc.setBreed(
-              DogBreedValue(id: val, category: dogBloc.state.breed!.category));
+          final breed = breedsBloc.state.where((b) => b.id == val).first;
+          dogBloc.setBreed(DogBreedValue(
+              id: breed.id, category: breed.category, name: breed.name));
         });
   }
 }
