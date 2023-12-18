@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:little_walk/apis/dog.dart';
 import 'package:little_walk/blocs/common.dart';
-import 'package:little_walk/blocs/dog.dart';
 import 'package:little_walk/blocs/walk_request.dart';
 import 'package:little_walk/components/create_walk_request_button.dart';
 import 'package:little_walk/components/dog_select.dart';
@@ -44,7 +43,7 @@ class CreateWalkRequestScreen extends StatelessWidget {
                           arg: 0),
                       child: DogSelect(
                           selected: reqBloc.state.dogs ?? [], onTap: onTap))),
-              Row(
+              const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [CreateWalkRequestButton()])
             ]),

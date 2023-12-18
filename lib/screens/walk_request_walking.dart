@@ -4,8 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:little_walk/apis/walk_request.dart';
 import 'package:little_walk/blocs/walk_request.dart';
 import 'package:little_walk/components/finish_walk_request_button.dart';
-import 'package:little_walk/models/walk_request.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 class WalkRequestWalkingPage extends StatelessWidget {
   const WalkRequestWalkingPage({super.key});

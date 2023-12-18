@@ -21,7 +21,7 @@ class BirthdayPicker extends StatelessWidget {
             firstDate: DateTime(1900),
             lastDate: DateTime(2100),
           );
-          final dateStr = date != null ? date.toIso8601String() + "+08:00" : "";
+          final dateStr = date != null ? "${date.toIso8601String()}+08:00" : "";
           controller.text = dateStr;
           dogBloc.setBirthday(dateStr);
         });

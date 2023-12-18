@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:little_walk/apis/auth.dart';
 import 'package:little_walk/apis/common.dart';
-import 'package:little_walk/main.dart';
 import 'package:little_walk/screens/home.dart';
 
 class VerificationCodeLoginButton extends StatelessWidget {

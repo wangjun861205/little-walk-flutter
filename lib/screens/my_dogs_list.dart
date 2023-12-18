@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:little_walk/blocs/common.dart';
 import 'package:little_walk/blocs/dog.dart';
-import 'package:little_walk/blocs/pagination.dart';
 import 'package:little_walk/exceptions.dart';
 import 'package:little_walk/screens/add_dog.dart';
 import 'package:little_walk/screens/dog_detail.dart';

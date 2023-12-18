@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:little_walk/apis/dog.dart';
 import 'package:little_walk/blocs/common.dart';
 import 'package:little_walk/blocs/dog.dart';
 import 'package:little_walk/components/dog_avatar.dart';

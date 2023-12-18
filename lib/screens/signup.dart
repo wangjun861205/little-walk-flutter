@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:little_walk/apis/auth.dart';
 import 'package:little_walk/apis/common.dart';
@@ -9,6 +8,8 @@ import 'package:little_walk/models/auth.dart';
 import 'package:little_walk/screens/home.dart';
 
 class SignupScreen extends StatelessWidget {
+  const SignupScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(

@@ -1,8 +1,6 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart';
 import 'package:little_walk/apis/common.dart';

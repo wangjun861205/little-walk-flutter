@@ -7,7 +7,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:little_walk/apis/common.dart';
 import 'package:little_walk/blocs/dog.dart';
-import 'package:little_walk/models/dog.dart';
 
 class DogPortraitPicker extends StatelessWidget {
   final Widget child;

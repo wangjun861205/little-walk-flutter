@@ -1,11 +1,8 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart';
 import 'package:little_walk/apis/common.dart';
-import 'package:little_walk/blocs/common.dart';
 import 'package:little_walk/models/dog_breed.dart';
 import '../models/dog.dart';
 

@@ -3,9 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:little_walk/apis/walk_request.dart';
 import 'package:little_walk/blocs/walk_request.dart';
 import 'package:little_walk/screens/error_boundary.dart';
-import 'package:little_walk/utils/geolocation.dart';
 
 class CreateWalkRequestButton extends StatelessWidget {
+  const CreateWalkRequestButton({super.key});
+
   @override
   Widget build(BuildContext context) {
     final reqBloc = BlocProvider.of<WalkRequestValueCubit>(context);

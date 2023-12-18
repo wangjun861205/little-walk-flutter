@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:little_walk/apis/auth.dart';
 import 'package:little_walk/blocs/app.dart';
 import 'package:little_walk/screens/add_dog.dart';
 import 'package:little_walk/screens/home.dart';
 import 'package:little_walk/screens/login.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
   await dotenv.load();
@@ -22,6 +22,7 @@ void main() async {
     icon: "@mipmap/ic_launcher",
   );
   BackgroundLocation.setAndroidConfiguration(1000);
+  await Firebase.initializeApp();
   runApp(MyApp(backendAddress));
 }
 
@@ -48,6 +49,13 @@ class MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    FirebaseMessaging.instance
+        .requestPermission(provisional: true)
+        .then((settints) {
+      FirebaseMessaging.instance
+          .getToken()
+          .then((deviceToken) => debugPrint(deviceToken));
+    });
     return FutureBuilder(
       future: future,
       builder: (context, snapshot) {

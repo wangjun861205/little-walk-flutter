@@ -1,6 +1,4 @@
-import 'package:flutter/rendering.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:flutter/foundation.dart';
 
 part 'dog_breed.freezed.dart';
 part 'dog_breed.g.dart';

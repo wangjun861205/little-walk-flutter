@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:little_walk/blocs/app.dart';
 import 'package:little_walk/blocs/dog.dart';
 import 'package:little_walk/components/dog_avatar.dart';
-import 'package:little_walk/components/portrait_picker.dart';
 import 'package:little_walk/screens/edit_dog.dart';
 
 class DogDetailScreen extends StatelessWidget {

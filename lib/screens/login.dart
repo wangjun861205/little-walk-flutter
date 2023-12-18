@@ -60,7 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: const Text("去注册"),
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => SignupScreen()));
+                          builder: (context) => const SignupScreen()));
                     }))
           ],
         )));
