@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "632935276892",
+    "project_id": "little-walk",
+    "storage_bucket": "little-walk.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:632935276892:android:fc5641c93b7cbefe092199",
+        "android_client_info": {
+          "package_name": "com.example.little_walk"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCuufLeKTl0s7zHjzRtvU7Lfmo28SwX04o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

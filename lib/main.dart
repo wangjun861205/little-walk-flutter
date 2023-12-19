@@ -10,6 +10,7 @@ import 'package:little_walk/screens/home.dart';
 import 'package:little_walk/screens/login.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 void main() async {
   await dotenv.load();
@@ -22,7 +23,10 @@ void main() async {
     icon: "@mipmap/ic_launcher",
   );
   BackgroundLocation.setAndroidConfiguration(1000);
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await FirebaseMessaging.instance.requestPermission(provisional: true);
+  final deviceToken = await FirebaseMessaging.instance.getToken();
+  debugPrint(deviceToken);
   runApp(MyApp(backendAddress));
 }
 
@@ -49,16 +53,14 @@ class MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    FirebaseMessaging.instance
-        .requestPermission(provisional: true)
-        .then((settints) {
-      FirebaseMessaging.instance
-          .getToken()
-          .then((deviceToken) => debugPrint(deviceToken));
-    });
     return FutureBuilder(
       future: future,
       builder: (context, snapshot) {
+        FirebaseMessaging.onMessage.listen((event) {
+          debugPrint(event.from);
+          debugPrint(event.category);
+          debugPrint(event.data.toString());
+        });
         if (snapshot.hasError) {
           return MaterialApp(
               home: Scaffold(body: Center(child: Text("${snapshot.error}"))));
