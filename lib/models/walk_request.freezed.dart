@@ -370,12 +370,12 @@ abstract class _WalkRequest implements WalkRequest {
       throw _privateConstructorUsedError;
 }
 
-WalkRequestValue _$WalkRequestValueFromJson(Map<String, dynamic> json) {
+CreateWalkRequest _$CreateWalkRequestFromJson(Map<String, dynamic> json) {
   return _WalkRequestValue.fromJson(json);
 }
 
 /// @nodoc
-mixin _$WalkRequestValue {
+mixin _$CreateWalkRequest {
   String? get id => throw _privateConstructorUsedError;
   List<Dog>? get dogs => throw _privateConstructorUsedError;
   double? get longitude => throw _privateConstructorUsedError;
@@ -383,23 +383,23 @@ mixin _$WalkRequestValue {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $WalkRequestValueCopyWith<WalkRequestValue> get copyWith =>
+  $CreateWalkRequestCopyWith<CreateWalkRequest> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $WalkRequestValueCopyWith<$Res> {
-  factory $WalkRequestValueCopyWith(
-          WalkRequestValue value, $Res Function(WalkRequestValue) then) =
-      _$WalkRequestValueCopyWithImpl<$Res, WalkRequestValue>;
+abstract class $CreateWalkRequestCopyWith<$Res> {
+  factory $CreateWalkRequestCopyWith(
+          CreateWalkRequest value, $Res Function(CreateWalkRequest) then) =
+      _$CreateWalkRequestCopyWithImpl<$Res, CreateWalkRequest>;
   @useResult
   $Res call({String? id, List<Dog>? dogs, double? longitude, double? latitude});
 }
 
 /// @nodoc
-class _$WalkRequestValueCopyWithImpl<$Res, $Val extends WalkRequestValue>
-    implements $WalkRequestValueCopyWith<$Res> {
-  _$WalkRequestValueCopyWithImpl(this._value, this._then);
+class _$CreateWalkRequestCopyWithImpl<$Res, $Val extends CreateWalkRequest>
+    implements $CreateWalkRequestCopyWith<$Res> {
+  _$CreateWalkRequestCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -437,7 +437,7 @@ class _$WalkRequestValueCopyWithImpl<$Res, $Val extends WalkRequestValue>
 
 /// @nodoc
 abstract class _$$WalkRequestValueImplCopyWith<$Res>
-    implements $WalkRequestValueCopyWith<$Res> {
+    implements $CreateWalkRequestCopyWith<$Res> {
   factory _$$WalkRequestValueImplCopyWith(_$WalkRequestValueImpl value,
           $Res Function(_$WalkRequestValueImpl) then) =
       __$$WalkRequestValueImplCopyWithImpl<$Res>;
@@ -448,7 +448,7 @@ abstract class _$$WalkRequestValueImplCopyWith<$Res>
 
 /// @nodoc
 class __$$WalkRequestValueImplCopyWithImpl<$Res>
-    extends _$WalkRequestValueCopyWithImpl<$Res, _$WalkRequestValueImpl>
+    extends _$CreateWalkRequestCopyWithImpl<$Res, _$WalkRequestValueImpl>
     implements _$$WalkRequestValueImplCopyWith<$Res> {
   __$$WalkRequestValueImplCopyWithImpl(_$WalkRequestValueImpl _value,
       $Res Function(_$WalkRequestValueImpl) _then)
@@ -514,14 +514,14 @@ class _$WalkRequestValueImpl
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'WalkRequestValue(id: $id, dogs: $dogs, longitude: $longitude, latitude: $latitude)';
+    return 'CreateWalkRequest(id: $id, dogs: $dogs, longitude: $longitude, latitude: $latitude)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'WalkRequestValue'))
+      ..add(DiagnosticsProperty('type', 'CreateWalkRequest'))
       ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('dogs', dogs))
       ..add(DiagnosticsProperty('longitude', longitude))
@@ -561,7 +561,7 @@ class _$WalkRequestValueImpl
   }
 }
 
-abstract class _WalkRequestValue implements WalkRequestValue {
+abstract class _WalkRequestValue implements CreateWalkRequest {
   const factory _WalkRequestValue(
       {final String? id,
       final List<Dog>? dogs,

@@ -24,20 +24,21 @@ class WalkRequest with _$WalkRequest {
 }
 
 @freezed
-class WalkRequestValue with _$WalkRequestValue {
-  const factory WalkRequestValue({
+class CreateWalkRequest with _$CreateWalkRequest {
+  const factory CreateWalkRequest({
     String? id,
     List<Dog>? dogs,
     double? longitude,
     double? latitude,
   }) = _WalkRequestValue;
 
-  factory WalkRequestValue.fromJson(Map<String, dynamic> json) =>
-      _$WalkRequestValueFromJson(json);
+  factory CreateWalkRequest.fromJson(Map<String, dynamic> json) =>
+      _$CreateWalkRequestFromJson(json);
 
-  factory WalkRequestValue.fromWalkRequest(WalkRequest req) => WalkRequestValue(
-      id: req.id,
-      dogs: req.dogs,
-      longitude: req.longitude,
-      latitude: req.latitude);
+  factory CreateWalkRequest.fromWalkRequest(WalkRequest req) =>
+      CreateWalkRequest(
+          id: req.id,
+          dogs: req.dogs,
+          longitude: req.longitude,
+          latitude: req.latitude);
 }

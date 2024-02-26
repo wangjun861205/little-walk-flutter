@@ -1,101 +1,64 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:little_walk/apis/walk_request.dart';
+import 'package:little_walk/blocs/common.dart';
 import 'package:little_walk/models/dog.dart';
 import 'package:little_walk/models/walk_request.dart';
 
-// class WalkRequest {
-//   List<Dog> dogs;
-//   DateTime shouldStartAfter;
-//   DateTime shouldStartBefore;
-//   DateTime shouldEndAfter;
-//   DateTime shouldEndBefore;
+class WalkRequestCubit extends QueryCubit<String, WalkRequest?> {
+  WalkRequestCubit(String id)
+      : super(Query(
+          query: ({required String params}) async => getWalkRequest(id),
+          params: id,
+          result: null,
+        ));
 
-//   WalkRequest(
-//       {required this.dogs,
-//       required this.shouldStartAfter,
-//       required this.shouldStartBefore,
-//       required this.shouldEndAfter,
-//       required this.shouldEndBefore});
+  void set(WalkRequest req) => emit(state.copyWith(result: req));
 
-//   factory WalkRequest.empty() {
-//     final now = DateTime.now();
-//     return WalkRequest(
-//         dogs: [],
-//         shouldStartAfter: now,
-//         shouldStartBefore: now,
-//         shouldEndAfter: now,
-//         shouldEndBefore: now);
-//   }
-
-//   factory WalkRequest.fromJSON(Map<String, dynamic> json) {
-//     return WalkRequest(
-//       dogs: (json["dogs"] as List<Map<String, dynamic>>)
-//           .map((d) => Dog.fromJSON(d))
-//           .toList(),
-//       shouldStartAfter: DateTime.parse(json["should_start_after"]),
-//       shouldStartBefore: DateTime.parse(json["should_start_before"]),
-//       shouldEndAfter: DateTime.parse(json["should_end_after"]),
-//       shouldEndBefore: DateTime.parse(json["should_end_before"]),
-//     );
-//   }
-// }
-
-class WalkRequestCubit extends Cubit<WalkRequest> {
-  WalkRequestCubit(WalkRequest req) : super(req);
-
-  void setDog(List<Dog> dogs) {
-    emit(state.copyWith(dogs: dogs));
+  void accept() {
+    emit(state.copyWith(isLoading: true, error: null));
+    acceptWalkRequest(state.result!.id).then(
+        (res) =>
+            emit(state.copyWith(isLoading: false, error: null, result: res)),
+        onError: (err) => emit(state.copyWith(isLoading: false, error: err)));
   }
 
-  void setLongitude(double longitude) {
-    emit(state.copyWith(longitude: longitude));
-  }
-
-  void setLatitude(double latitude) {
-    emit(state.copyWith(latitude: latitude));
-  }
-
-  void setAcceptedBy(String acceptedBy) {
-    emit(state.copyWith(acceptedBy: acceptedBy));
-  }
-
-  void setAcceptedAt(DateTime acceptedAt) {
-    emit(state.copyWith(acceptedAt: acceptedAt));
-  }
-
-  void setStartedAt(DateTime startedAt) {
-    emit(state.copyWith(startedAt: startedAt));
-  }
-
-  void setFinishedAt(DateTime finishedAt) {
-    emit(state.copyWith(startedAt: finishedAt));
-  }
-
-  void setCanceledAt(DateTime canceledAt) {
-    emit(state.copyWith(startedAt: canceledAt));
+  void cancel() {
+    emit(state.copyWith(isLoading: true, error: null));
+    cancelWalkRequest(state.result!.id).then(
+        (res) =>
+            emit(state.copyWith(isLoading: false, error: null, result: res)),
+        onError: (err) => emit(state.copyWith(isLoading: false, error: err)));
   }
 }
 
-class WalkRequestListCubit extends Cubit<List<WalkRequest>> {
-  WalkRequestListCubit() : super([]);
-
-  void append(List<WalkRequest> list) {
-    state.addAll(list);
-    emit(state);
+class MyWalkRequestsParams with QueryListParams {
+  MyWalkRequestsParams({int limit = 20, String? after}) {
+    limit = limit;
+    after = after;
   }
 }
 
-class WalkRequestValueCubit extends Cubit<WalkRequestValue> {
-  WalkRequestValueCubit() : super(const WalkRequestValue());
-
-  void setDogs(List<Dog> dog) {
-    emit(state.copyWith(dogs: dog));
-  }
-
-  void setLongitude(double longitude) {
-    emit(state.copyWith(longitude: longitude));
-  }
-
-  void setLatitude(double latitude) {
-    emit(state.copyWith(latitude: latitude));
-  }
+class MyWalkRequestsCubit
+    extends QueryCubit<MyWalkRequestsParams, List<WalkRequest>> {
+  MyWalkRequestsCubit({int limit = 20})
+      : super(Query(
+            query: ({required MyWalkRequestsParams params}) async =>
+                myWalkRequests(limit: params.limit, after: params.after),
+            params: MyWalkRequestsParams(limit: limit),
+            result: [],
+            nextParams: (
+                {required MyWalkRequestsParams currParams,
+                required List<WalkRequest> response}) {
+              if (response.isEmpty) {
+                return currParams;
+              }
+              return MyWalkRequestsParams(
+                  limit: currParams.limit, after: response.last.id);
+            },
+            nextResult: (
+                {required List<WalkRequest> currResult,
+                required List<WalkRequest> response}) {
+              currResult.addAll(response);
+              return currResult;
+            }));
 }

@@ -1,88 +1,44 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:flutter/foundation.dart';
 
-enum LoadStatus {
-  loading,
-  loaded,
-  error,
+part 'common.freezed.dart';
+part 'common.g.dart';
+
+mixin class QueryListParams {
+  int limit = 20;
+  String? after;
 }
 
-class LoadResult<T> {
-  LoadStatus status;
-  T? data;
-  Object? error;
-  LoadResult({required this.status, this.data, this.error});
+@freezed
+class Query<P, T> with _$Query<P, T> {
+  const factory Query({
+    required Future<T> Function({required P params}) query,
+    required P params,
+    required T result,
+    P Function({required P currParams, required T response})? nextParams,
+    T Function({required T currResult, required T response})? nextResult,
+    @Default(false) bool isLoading,
+    Object? error,
+  }) = _Query;
 }
 
-class LoadResultCubit<T> extends Cubit<LoadResult<T>> {
-  LoadResultCubit(LoadResult<T> res) : super(res);
+class QueryCubit<P, T> extends Cubit<Query<P, T>> {
+  QueryCubit(Query<P, T> query) : super(query);
 
-  void set(LoadResult<T> res) => emit(res);
-  void setData(T? data) =>
-      emit(LoadResult(status: LoadStatus.loaded, data: data, error: null));
-  void setError(Object? error) =>
-      emit(LoadResult(status: LoadStatus.error, data: null, error: error));
-}
-
-typedef FutureFactory<T, A> = Future<T?> Function(T? ori, A arg);
-
-class FutureState<T, A> {
-  LoadResult<T> result;
-  A arg;
-
-  FutureState({required this.result, required this.arg});
-}
-
-class FutureCubit<T, A> extends Cubit<FutureState> {
-  FutureFactory<T, A> factory;
-  FutureCubit({required this.factory, required T initData, required A arg})
-      : super(FutureState(
-            result: LoadResult(status: LoadStatus.loading, data: initData),
-            arg: arg)) {
-    factory(initData, arg).then((data) {
-      emit(FutureState(
-          result:
-              LoadResult(status: LoadStatus.loaded, data: data, error: null),
-          arg: arg));
-    },
-        onError: (err) => emit(FutureState(
-            result: LoadResult(
-                status: LoadStatus.error, data: state.result.data, error: err),
-            arg: arg)));
-  }
-
-  void setArg(A arg) {
-    emit(FutureState(
-        result: LoadResult(
-            status: LoadStatus.loading, data: state.result.data, error: null),
-        arg: arg));
-    factory(state.result.data, arg).then(
-        (data) => emit(FutureState(
-            result:
-                LoadResult(status: LoadStatus.loaded, data: data, error: null),
-            arg: arg)),
-        onError: (err) => emit(FutureState(
-            result: LoadResult(
-                status: LoadStatus.error, data: state.result.data, error: err),
-            arg: arg)));
-  }
-
-  void refresh() {
-    emit(FutureState(
-      result: LoadResult(
-        status: LoadStatus.loading,
-        data: state.result.data,
-        error: null,
-      ),
-      arg: state.arg,
-    ));
-    factory(state.result.data, state.arg).then(
-        (data) => emit(FutureState(
-            result:
-                LoadResult(status: LoadStatus.loaded, data: data, error: null),
-            arg: state.arg)),
-        onError: (err) => emit(FutureState(
-            result: LoadResult(
-                status: LoadStatus.error, data: state.result.data, error: err),
-            arg: state.arg)));
+  void next() {
+    emit(state.copyWith(isLoading: true, error: null));
+    state.query(params: state.params).then((res) {
+      final result = state.nextResult != null
+          ? state.nextResult!(currResult: state.result, response: res)
+          : res;
+      final params = state.nextParams != null
+          ? state.nextParams!(currParams: state.params, response: res)
+          : state.params;
+      emit(state.copyWith(
+          isLoading: false, error: null, result: result, params: params));
+    }, onError: (err) {
+      emit(state.copyWith(isLoading: false, error: err));
+    });
   }
 }

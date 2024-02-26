@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:little_walk/blocs/common.dart';
 import 'package:little_walk/blocs/dog.dart';
 import 'package:little_walk/components/dog_avatar.dart';
 import 'package:little_walk/components/dog_overview_card.dart';
@@ -14,34 +13,32 @@ class DogSelect extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final futureBloc =
-        BlocProvider.of<FutureCubit<List<Dog>, int>>(context, listen: true);
-
-    switch (futureBloc.state.result.status) {
-      case LoadStatus.error:
-        return ErrorBoundary(error: futureBloc.state.result.error.toString());
-      case LoadStatus.loading:
-        return const Center(child: CircularProgressIndicator());
-      default:
-        List<Widget> selectedAvatars = selected
-            .map((dog) => BlocProvider(
-                create: (_) => DogCubit(
-                    (futureBloc.state.result.data as List<Dog>)
-                        .firstWhere((d) => d == dog)),
-                child: const Expanded(child: DogAvatar())))
-            .toList();
-        List<Widget> candidates = (futureBloc.state.result.data as List<Dog>)
-            .map((dog) => InkWell(
-                onTap: () => onTap(dog),
-                child: BlocProvider(
-                    create: (_) => DogCubit(dog),
-                    child: Container(
-                      margin: const EdgeInsets.only(top: 10, bottom: 10),
-                      child: const DogOverviewCard(),
-                    ))))
-            .toList();
-        return Column(
-            children: [Row(children: selectedAvatars), ...candidates]);
+    final myDogs = BlocProvider.of<MyDogsCubit>(context, listen: true);
+    if (myDogs.error != null) {
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) =>
+              ErrorBoundary(error: myDogs.error!, retry: () => myDogs.next())));
+      return Container();
     }
+    if (myDogs.isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    List<Widget> selectedAvatars = selected
+        .map((dog) => BlocProvider(
+            create: (_) => DogCubit(myDogs.state.firstWhere((d) => d == dog)),
+            child: const Expanded(child: DogAvatar())))
+        .toList();
+    List<Widget> candidates = myDogs.state
+        .map((dog) => InkWell(
+            onTap: () => onTap(dog),
+            child: BlocProvider(
+                create: (_) => DogCubit(dog),
+                child: Container(
+                  margin: const EdgeInsets.only(top: 10, bottom: 10),
+                  child: const DogOverviewCard(),
+                ))))
+        .toList();
+    return Column(children: [Row(children: selectedAvatars), ...candidates]);
   }
 }

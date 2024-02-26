@@ -1,4 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:little_walk/apis/dog.dart';
+import 'package:little_walk/blocs/common.dart';
 import 'package:little_walk/models/dog.dart';
 import 'package:little_walk/models/dog_breed.dart';
 
@@ -89,4 +91,34 @@ class DogsCubit extends Cubit<List<Dog>> {
   }
 
   void remove(String id) => emit(state.where((d) => d.id != id).toList());
+}
+
+class MyDogsParams {
+  final int limit;
+  final String? after;
+
+  const MyDogsParams({required this.limit, this.after});
+}
+
+class MyDogsCubit extends QueryCubit<MyDogsParams, List<Dog>> {
+  MyDogsCubit({int limit = 20})
+      : super(Query(
+            params: MyDogsParams(limit: limit),
+            result: [],
+            query: ({required MyDogsParams params}) async =>
+                await myDogs(limit: limit),
+            nextParams: (
+                {required MyDogsParams currParams,
+                required List<Dog> response}) {
+              if (response.isEmpty) {
+                return currParams;
+              }
+              return MyDogsParams(
+                  limit: currParams.limit, after: response.last.id);
+            },
+            nextResult: (
+                {required List<Dog> currResult, required List<Dog> response}) {
+              currResult.addAll(response);
+              return currResult;
+            }));
 }

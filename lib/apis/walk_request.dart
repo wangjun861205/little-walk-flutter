@@ -17,16 +17,19 @@ Future<List<WalkRequest>> nearbyWalkRequests(int page, int size) async {
 }
 
 Future<List<WalkRequest>> myWalkRequests(
-    {required int page, int size = 10}) async {
+    {required int limit, String? after}) async {
   final resp = await httpGet(
-      path: "/apis/walk_requests/mine", params: {"page": page, "size": size});
+      path: "/apis/walk_requests/mine",
+      params: {"limit": limit, "after": after});
   return (resp as List<dynamic>).map((r) {
     return WalkRequest.fromJson(r);
   }).toList();
 }
 
-Future<void> createWalkRequest(WalkRequestValue request) async {
-  await httpPostJson(path: "/apis/walk_requests", obj: request.toJson());
+Future<String> createWalkRequest(CreateWalkRequest request) async {
+  final resp =
+      await httpPostJson(path: "/apis/walk_requests", obj: request.toJson());
+  return resp["id"];
 }
 
 Future<WalkRequest> acceptWalkRequest(String id) async {
@@ -54,5 +57,10 @@ Future<WalkRequest> finishWalkRequest(String id) async {
 
 Future<WalkRequest> cancelWalkRequest(String id) async {
   final resp = await httpPutWithoutBody(path: "/apis/walk_requests/$id/cancel");
+  return WalkRequest.fromJson(resp as Map<String, dynamic>);
+}
+
+Future<WalkRequest> getWalkRequest(String id) async {
+  final resp = await httpGet(path: "/apis/walk_requests/$id");
   return WalkRequest.fromJson(resp as Map<String, dynamic>);
 }
