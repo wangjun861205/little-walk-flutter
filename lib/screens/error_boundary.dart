@@ -19,12 +19,7 @@ class ErrorBoundary extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextButton(
-                onPressed: () {
-                  retry.call();
-                  Navigator.of(context).pop();
-                },
-                child: const Text("重试"))
+            TextButton(onPressed: () => retry.call(), child: const Text("重试"))
           ],
         )
       ],

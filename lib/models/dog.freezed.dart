@@ -20,14 +20,13 @@ Dog _$DogFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Dog {
-  String get id => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
-  String get gender => throw _privateConstructorUsedError;
-  DogBreed get breed => throw _privateConstructorUsedError;
-  String get birthday => throw _privateConstructorUsedError;
-  List<String> get tags => throw _privateConstructorUsedError;
-  @JsonKey(name: "owner_id")
-  String get ownerID => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
+  String? get gender => throw _privateConstructorUsedError;
+  Breed? get breed => throw _privateConstructorUsedError;
+  String? get birthday => throw _privateConstructorUsedError;
+  @JsonKey(name: "owners")
+  List<Owner>? get owners => throw _privateConstructorUsedError;
   @JsonKey(name: "portrait_id")
   String? get portraitID => throw _privateConstructorUsedError;
 
@@ -42,16 +41,15 @@ abstract class $DogCopyWith<$Res> {
       _$DogCopyWithImpl<$Res, Dog>;
   @useResult
   $Res call(
-      {String id,
-      String name,
-      String gender,
-      DogBreed breed,
-      String birthday,
-      List<String> tags,
-      @JsonKey(name: "owner_id") String ownerID,
+      {String? id,
+      String? name,
+      String? gender,
+      Breed? breed,
+      String? birthday,
+      @JsonKey(name: "owners") List<Owner>? owners,
       @JsonKey(name: "portrait_id") String? portraitID});
 
-  $DogBreedCopyWith<$Res> get breed;
+  $BreedCopyWith<$Res>? get breed;
 }
 
 /// @nodoc
@@ -66,44 +64,39 @@ class _$DogCopyWithImpl<$Res, $Val extends Dog> implements $DogCopyWith<$Res> {
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? name = null,
-    Object? gender = null,
-    Object? breed = null,
-    Object? birthday = null,
-    Object? tags = null,
-    Object? ownerID = null,
+    Object? id = freezed,
+    Object? name = freezed,
+    Object? gender = freezed,
+    Object? breed = freezed,
+    Object? birthday = freezed,
+    Object? owners = freezed,
     Object? portraitID = freezed,
   }) {
     return _then(_value.copyWith(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
+              as String?,
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      gender: null == gender
+              as String?,
+      gender: freezed == gender
           ? _value.gender
           : gender // ignore: cast_nullable_to_non_nullable
-              as String,
-      breed: null == breed
+              as String?,
+      breed: freezed == breed
           ? _value.breed
           : breed // ignore: cast_nullable_to_non_nullable
-              as DogBreed,
-      birthday: null == birthday
+              as Breed?,
+      birthday: freezed == birthday
           ? _value.birthday
           : birthday // ignore: cast_nullable_to_non_nullable
-              as String,
-      tags: null == tags
-          ? _value.tags
-          : tags // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      ownerID: null == ownerID
-          ? _value.ownerID
-          : ownerID // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
+      owners: freezed == owners
+          ? _value.owners
+          : owners // ignore: cast_nullable_to_non_nullable
+              as List<Owner>?,
       portraitID: freezed == portraitID
           ? _value.portraitID
           : portraitID // ignore: cast_nullable_to_non_nullable
@@ -113,8 +106,12 @@ class _$DogCopyWithImpl<$Res, $Val extends Dog> implements $DogCopyWith<$Res> {
 
   @override
   @pragma('vm:prefer-inline')
-  $DogBreedCopyWith<$Res> get breed {
-    return $DogBreedCopyWith<$Res>(_value.breed, (value) {
+  $BreedCopyWith<$Res>? get breed {
+    if (_value.breed == null) {
+      return null;
+    }
+
+    return $BreedCopyWith<$Res>(_value.breed!, (value) {
       return _then(_value.copyWith(breed: value) as $Val);
     });
   }
@@ -127,17 +124,16 @@ abstract class _$$DogImplCopyWith<$Res> implements $DogCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String id,
-      String name,
-      String gender,
-      DogBreed breed,
-      String birthday,
-      List<String> tags,
-      @JsonKey(name: "owner_id") String ownerID,
+      {String? id,
+      String? name,
+      String? gender,
+      Breed? breed,
+      String? birthday,
+      @JsonKey(name: "owners") List<Owner>? owners,
       @JsonKey(name: "portrait_id") String? portraitID});
 
   @override
-  $DogBreedCopyWith<$Res> get breed;
+  $BreedCopyWith<$Res>? get breed;
 }
 
 /// @nodoc
@@ -149,44 +145,39 @@ class __$$DogImplCopyWithImpl<$Res> extends _$DogCopyWithImpl<$Res, _$DogImpl>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? name = null,
-    Object? gender = null,
-    Object? breed = null,
-    Object? birthday = null,
-    Object? tags = null,
-    Object? ownerID = null,
+    Object? id = freezed,
+    Object? name = freezed,
+    Object? gender = freezed,
+    Object? breed = freezed,
+    Object? birthday = freezed,
+    Object? owners = freezed,
     Object? portraitID = freezed,
   }) {
     return _then(_$DogImpl(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
+              as String?,
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      gender: null == gender
+              as String?,
+      gender: freezed == gender
           ? _value.gender
           : gender // ignore: cast_nullable_to_non_nullable
-              as String,
-      breed: null == breed
+              as String?,
+      breed: freezed == breed
           ? _value.breed
           : breed // ignore: cast_nullable_to_non_nullable
-              as DogBreed,
-      birthday: null == birthday
+              as Breed?,
+      birthday: freezed == birthday
           ? _value.birthday
           : birthday // ignore: cast_nullable_to_non_nullable
-              as String,
-      tags: null == tags
-          ? _value._tags
-          : tags // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      ownerID: null == ownerID
-          ? _value.ownerID
-          : ownerID // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
+      owners: freezed == owners
+          ? _value._owners
+          : owners // ignore: cast_nullable_to_non_nullable
+              as List<Owner>?,
       portraitID: freezed == portraitID
           ? _value.portraitID
           : portraitID // ignore: cast_nullable_to_non_nullable
@@ -199,47 +190,46 @@ class __$$DogImplCopyWithImpl<$Res> extends _$DogCopyWithImpl<$Res, _$DogImpl>
 @JsonSerializable()
 class _$DogImpl with DiagnosticableTreeMixin implements _Dog {
   const _$DogImpl(
-      {required this.id,
-      required this.name,
-      required this.gender,
-      required this.breed,
-      required this.birthday,
-      required final List<String> tags,
-      @JsonKey(name: "owner_id") required this.ownerID,
+      {this.id,
+      this.name,
+      this.gender,
+      this.breed,
+      this.birthday,
+      @JsonKey(name: "owners") final List<Owner>? owners,
       @JsonKey(name: "portrait_id") this.portraitID})
-      : _tags = tags;
+      : _owners = owners;
 
   factory _$DogImpl.fromJson(Map<String, dynamic> json) =>
       _$$DogImplFromJson(json);
 
   @override
-  final String id;
+  final String? id;
   @override
-  final String name;
+  final String? name;
   @override
-  final String gender;
+  final String? gender;
   @override
-  final DogBreed breed;
+  final Breed? breed;
   @override
-  final String birthday;
-  final List<String> _tags;
+  final String? birthday;
+  final List<Owner>? _owners;
   @override
-  List<String> get tags {
-    if (_tags is EqualUnmodifiableListView) return _tags;
+  @JsonKey(name: "owners")
+  List<Owner>? get owners {
+    final value = _owners;
+    if (value == null) return null;
+    if (_owners is EqualUnmodifiableListView) return _owners;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_tags);
+    return EqualUnmodifiableListView(value);
   }
 
-  @override
-  @JsonKey(name: "owner_id")
-  final String ownerID;
   @override
   @JsonKey(name: "portrait_id")
   final String? portraitID;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Dog(id: $id, name: $name, gender: $gender, breed: $breed, birthday: $birthday, tags: $tags, ownerID: $ownerID, portraitID: $portraitID)';
+    return 'Dog(id: $id, name: $name, gender: $gender, breed: $breed, birthday: $birthday, owners: $owners, portraitID: $portraitID)';
   }
 
   @override
@@ -252,8 +242,7 @@ class _$DogImpl with DiagnosticableTreeMixin implements _Dog {
       ..add(DiagnosticsProperty('gender', gender))
       ..add(DiagnosticsProperty('breed', breed))
       ..add(DiagnosticsProperty('birthday', birthday))
-      ..add(DiagnosticsProperty('tags', tags))
-      ..add(DiagnosticsProperty('ownerID', ownerID))
+      ..add(DiagnosticsProperty('owners', owners))
       ..add(DiagnosticsProperty('portraitID', portraitID));
   }
 
@@ -268,24 +257,15 @@ class _$DogImpl with DiagnosticableTreeMixin implements _Dog {
             (identical(other.breed, breed) || other.breed == breed) &&
             (identical(other.birthday, birthday) ||
                 other.birthday == birthday) &&
-            const DeepCollectionEquality().equals(other._tags, _tags) &&
-            (identical(other.ownerID, ownerID) || other.ownerID == ownerID) &&
+            const DeepCollectionEquality().equals(other._owners, _owners) &&
             (identical(other.portraitID, portraitID) ||
                 other.portraitID == portraitID));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      name,
-      gender,
-      breed,
-      birthday,
-      const DeepCollectionEquality().hash(_tags),
-      ownerID,
-      portraitID);
+  int get hashCode => Object.hash(runtimeType, id, name, gender, breed,
+      birthday, const DeepCollectionEquality().hash(_owners), portraitID);
 
   @JsonKey(ignore: true)
   @override
@@ -303,32 +283,29 @@ class _$DogImpl with DiagnosticableTreeMixin implements _Dog {
 
 abstract class _Dog implements Dog {
   const factory _Dog(
-      {required final String id,
-      required final String name,
-      required final String gender,
-      required final DogBreed breed,
-      required final String birthday,
-      required final List<String> tags,
-      @JsonKey(name: "owner_id") required final String ownerID,
+      {final String? id,
+      final String? name,
+      final String? gender,
+      final Breed? breed,
+      final String? birthday,
+      @JsonKey(name: "owners") final List<Owner>? owners,
       @JsonKey(name: "portrait_id") final String? portraitID}) = _$DogImpl;
 
   factory _Dog.fromJson(Map<String, dynamic> json) = _$DogImpl.fromJson;
 
   @override
-  String get id;
+  String? get id;
   @override
-  String get name;
+  String? get name;
   @override
-  String get gender;
+  String? get gender;
   @override
-  DogBreed get breed;
+  Breed? get breed;
   @override
-  String get birthday;
+  String? get birthday;
   @override
-  List<String> get tags;
-  @override
-  @JsonKey(name: "owner_id")
-  String get ownerID;
+  @JsonKey(name: "owners")
+  List<Owner>? get owners;
   @override
   @JsonKey(name: "portrait_id")
   String? get portraitID;
@@ -338,48 +315,34 @@ abstract class _Dog implements Dog {
       throw _privateConstructorUsedError;
 }
 
-DogValue _$DogValueFromJson(Map<String, dynamic> json) {
-  return _DogValue.fromJson(json);
+Breed _$BreedFromJson(Map<String, dynamic> json) {
+  return _Breed.fromJson(json);
 }
 
 /// @nodoc
-mixin _$DogValue {
+mixin _$Breed {
   String? get id => throw _privateConstructorUsedError;
+  String? get category => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
-  String? get gender => throw _privateConstructorUsedError;
-  DogBreedValue? get breed => throw _privateConstructorUsedError;
-  String? get birthday => throw _privateConstructorUsedError;
-  List<String>? get tags => throw _privateConstructorUsedError;
-  @JsonKey(name: "portrait_id")
-  String? get portraitID => throw _privateConstructorUsedError;
+  String? get photo => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $DogValueCopyWith<DogValue> get copyWith =>
-      throw _privateConstructorUsedError;
+  $BreedCopyWith<Breed> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $DogValueCopyWith<$Res> {
-  factory $DogValueCopyWith(DogValue value, $Res Function(DogValue) then) =
-      _$DogValueCopyWithImpl<$Res, DogValue>;
+abstract class $BreedCopyWith<$Res> {
+  factory $BreedCopyWith(Breed value, $Res Function(Breed) then) =
+      _$BreedCopyWithImpl<$Res, Breed>;
   @useResult
-  $Res call(
-      {String? id,
-      String? name,
-      String? gender,
-      DogBreedValue? breed,
-      String? birthday,
-      List<String>? tags,
-      @JsonKey(name: "portrait_id") String? portraitID});
-
-  $DogBreedValueCopyWith<$Res>? get breed;
+  $Res call({String? id, String? category, String? name, String? photo});
 }
 
 /// @nodoc
-class _$DogValueCopyWithImpl<$Res, $Val extends DogValue>
-    implements $DogValueCopyWith<$Res> {
-  _$DogValueCopyWithImpl(this._value, this._then);
+class _$BreedCopyWithImpl<$Res, $Val extends Breed>
+    implements $BreedCopyWith<$Res> {
+  _$BreedCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -390,126 +353,73 @@ class _$DogValueCopyWithImpl<$Res, $Val extends DogValue>
   @override
   $Res call({
     Object? id = freezed,
+    Object? category = freezed,
     Object? name = freezed,
-    Object? gender = freezed,
-    Object? breed = freezed,
-    Object? birthday = freezed,
-    Object? tags = freezed,
-    Object? portraitID = freezed,
+    Object? photo = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
+      category: freezed == category
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as String?,
       name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      gender: freezed == gender
-          ? _value.gender
-          : gender // ignore: cast_nullable_to_non_nullable
-              as String?,
-      breed: freezed == breed
-          ? _value.breed
-          : breed // ignore: cast_nullable_to_non_nullable
-              as DogBreedValue?,
-      birthday: freezed == birthday
-          ? _value.birthday
-          : birthday // ignore: cast_nullable_to_non_nullable
-              as String?,
-      tags: freezed == tags
-          ? _value.tags
-          : tags // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
-      portraitID: freezed == portraitID
-          ? _value.portraitID
-          : portraitID // ignore: cast_nullable_to_non_nullable
+      photo: freezed == photo
+          ? _value.photo
+          : photo // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
   }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $DogBreedValueCopyWith<$Res>? get breed {
-    if (_value.breed == null) {
-      return null;
-    }
-
-    return $DogBreedValueCopyWith<$Res>(_value.breed!, (value) {
-      return _then(_value.copyWith(breed: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
-abstract class _$$DogValueImplCopyWith<$Res>
-    implements $DogValueCopyWith<$Res> {
-  factory _$$DogValueImplCopyWith(
-          _$DogValueImpl value, $Res Function(_$DogValueImpl) then) =
-      __$$DogValueImplCopyWithImpl<$Res>;
+abstract class _$$BreedImplCopyWith<$Res> implements $BreedCopyWith<$Res> {
+  factory _$$BreedImplCopyWith(
+          _$BreedImpl value, $Res Function(_$BreedImpl) then) =
+      __$$BreedImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String? id,
-      String? name,
-      String? gender,
-      DogBreedValue? breed,
-      String? birthday,
-      List<String>? tags,
-      @JsonKey(name: "portrait_id") String? portraitID});
-
-  @override
-  $DogBreedValueCopyWith<$Res>? get breed;
+  $Res call({String? id, String? category, String? name, String? photo});
 }
 
 /// @nodoc
-class __$$DogValueImplCopyWithImpl<$Res>
-    extends _$DogValueCopyWithImpl<$Res, _$DogValueImpl>
-    implements _$$DogValueImplCopyWith<$Res> {
-  __$$DogValueImplCopyWithImpl(
-      _$DogValueImpl _value, $Res Function(_$DogValueImpl) _then)
+class __$$BreedImplCopyWithImpl<$Res>
+    extends _$BreedCopyWithImpl<$Res, _$BreedImpl>
+    implements _$$BreedImplCopyWith<$Res> {
+  __$$BreedImplCopyWithImpl(
+      _$BreedImpl _value, $Res Function(_$BreedImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
+    Object? category = freezed,
     Object? name = freezed,
-    Object? gender = freezed,
-    Object? breed = freezed,
-    Object? birthday = freezed,
-    Object? tags = freezed,
-    Object? portraitID = freezed,
+    Object? photo = freezed,
   }) {
-    return _then(_$DogValueImpl(
+    return _then(_$BreedImpl(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
+              as String?,
+      category: freezed == category
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
               as String?,
       name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      gender: freezed == gender
-          ? _value.gender
-          : gender // ignore: cast_nullable_to_non_nullable
-              as String?,
-      breed: freezed == breed
-          ? _value.breed
-          : breed // ignore: cast_nullable_to_non_nullable
-              as DogBreedValue?,
-      birthday: freezed == birthday
-          ? _value.birthday
-          : birthday // ignore: cast_nullable_to_non_nullable
-              as String?,
-      tags: freezed == tags
-          ? _value._tags
-          : tags // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
-      portraitID: freezed == portraitID
-          ? _value.portraitID
-          : portraitID // ignore: cast_nullable_to_non_nullable
+      photo: freezed == photo
+          ? _value.photo
+          : photo // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -517,128 +427,86 @@ class __$$DogValueImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$DogValueImpl with DiagnosticableTreeMixin implements _DogValue {
-  const _$DogValueImpl(
-      {this.id,
-      this.name,
-      this.gender,
-      this.breed,
-      this.birthday,
-      final List<String>? tags,
-      @JsonKey(name: "portrait_id") this.portraitID})
-      : _tags = tags;
+class _$BreedImpl with DiagnosticableTreeMixin implements _Breed {
+  const _$BreedImpl({this.id, this.category, this.name, this.photo});
 
-  factory _$DogValueImpl.fromJson(Map<String, dynamic> json) =>
-      _$$DogValueImplFromJson(json);
+  factory _$BreedImpl.fromJson(Map<String, dynamic> json) =>
+      _$$BreedImplFromJson(json);
 
   @override
   final String? id;
   @override
+  final String? category;
+  @override
   final String? name;
   @override
-  final String? gender;
-  @override
-  final DogBreedValue? breed;
-  @override
-  final String? birthday;
-  final List<String>? _tags;
-  @override
-  List<String>? get tags {
-    final value = _tags;
-    if (value == null) return null;
-    if (_tags is EqualUnmodifiableListView) return _tags;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
-
-  @override
-  @JsonKey(name: "portrait_id")
-  final String? portraitID;
+  final String? photo;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'DogValue(id: $id, name: $name, gender: $gender, breed: $breed, birthday: $birthday, tags: $tags, portraitID: $portraitID)';
+    return 'Breed(id: $id, category: $category, name: $name, photo: $photo)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'DogValue'))
+      ..add(DiagnosticsProperty('type', 'Breed'))
       ..add(DiagnosticsProperty('id', id))
+      ..add(DiagnosticsProperty('category', category))
       ..add(DiagnosticsProperty('name', name))
-      ..add(DiagnosticsProperty('gender', gender))
-      ..add(DiagnosticsProperty('breed', breed))
-      ..add(DiagnosticsProperty('birthday', birthday))
-      ..add(DiagnosticsProperty('tags', tags))
-      ..add(DiagnosticsProperty('portraitID', portraitID));
+      ..add(DiagnosticsProperty('photo', photo));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$DogValueImpl &&
+            other is _$BreedImpl &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.category, category) ||
+                other.category == category) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.gender, gender) || other.gender == gender) &&
-            (identical(other.breed, breed) || other.breed == breed) &&
-            (identical(other.birthday, birthday) ||
-                other.birthday == birthday) &&
-            const DeepCollectionEquality().equals(other._tags, _tags) &&
-            (identical(other.portraitID, portraitID) ||
-                other.portraitID == portraitID));
+            (identical(other.photo, photo) || other.photo == photo));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, gender, breed,
-      birthday, const DeepCollectionEquality().hash(_tags), portraitID);
+  int get hashCode => Object.hash(runtimeType, id, category, name, photo);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$DogValueImplCopyWith<_$DogValueImpl> get copyWith =>
-      __$$DogValueImplCopyWithImpl<_$DogValueImpl>(this, _$identity);
+  _$$BreedImplCopyWith<_$BreedImpl> get copyWith =>
+      __$$BreedImplCopyWithImpl<_$BreedImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$DogValueImplToJson(
+    return _$$BreedImplToJson(
       this,
     );
   }
 }
 
-abstract class _DogValue implements DogValue {
-  const factory _DogValue(
+abstract class _Breed implements Breed {
+  const factory _Breed(
       {final String? id,
+      final String? category,
       final String? name,
-      final String? gender,
-      final DogBreedValue? breed,
-      final String? birthday,
-      final List<String>? tags,
-      @JsonKey(name: "portrait_id") final String? portraitID}) = _$DogValueImpl;
+      final String? photo}) = _$BreedImpl;
 
-  factory _DogValue.fromJson(Map<String, dynamic> json) =
-      _$DogValueImpl.fromJson;
+  factory _Breed.fromJson(Map<String, dynamic> json) = _$BreedImpl.fromJson;
 
   @override
   String? get id;
   @override
+  String? get category;
+  @override
   String? get name;
   @override
-  String? get gender;
-  @override
-  DogBreedValue? get breed;
-  @override
-  String? get birthday;
-  @override
-  List<String>? get tags;
-  @override
-  @JsonKey(name: "portrait_id")
-  String? get portraitID;
+  String? get photo;
   @override
   @JsonKey(ignore: true)
-  _$$DogValueImplCopyWith<_$DogValueImpl> get copyWith =>
+  _$$BreedImplCopyWith<_$BreedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

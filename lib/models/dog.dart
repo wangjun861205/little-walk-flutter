@@ -1,6 +1,6 @@
-import 'package:little_walk/models/dog_breed.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
+import 'package:little_walk/models/owner.dart';
 
 part 'dog.freezed.dart';
 part 'dog.g.dart';
@@ -8,13 +8,12 @@ part 'dog.g.dart';
 @freezed
 class Dog with _$Dog {
   const factory Dog({
-    required String id,
-    required String name,
-    required String gender,
-    required DogBreed breed,
-    required String birthday,
-    required List<String> tags,
-    @JsonKey(name: "owner_id") required String ownerID,
+    String? id,
+    String? name,
+    String? gender,
+    Breed? breed,
+    String? birthday,
+    @JsonKey(name: "owners") List<Owner>? owners,
     @JsonKey(name: "portrait_id") String? portraitID,
   }) = _Dog;
 
@@ -22,26 +21,13 @@ class Dog with _$Dog {
 }
 
 @freezed
-class DogValue with _$DogValue {
-  const factory DogValue({
+class Breed with _$Breed {
+  const factory Breed({
     String? id,
+    String? category,
     String? name,
-    String? gender,
-    DogBreedValue? breed,
-    String? birthday,
-    List<String>? tags,
-    @JsonKey(name: "portrait_id") String? portraitID,
-  }) = _DogValue;
+    String? photo,
+  }) = _Breed;
 
-  factory DogValue.fromDog(Dog dog) => DogValue(
-      id: dog.id,
-      name: dog.name,
-      gender: dog.gender,
-      breed: DogBreedValue.fromDogBreed(dog.breed),
-      birthday: dog.birthday,
-      tags: dog.tags,
-      portraitID: dog.portraitID);
-
-  factory DogValue.fromJson(Map<String, dynamic> json) =>
-      _$DogValueFromJson(json);
+  factory Breed.fromJson(Map<String, dynamic> json) => _$BreedFromJson(json);
 }

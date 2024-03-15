@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:http/http.dart' as http;
+import 'package:little_walk/apis/http_client.dart';
+import 'package:little_walk/main.dart';
 
 class UploadResponse {
   List<String> ids;

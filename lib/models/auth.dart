@@ -1,12 +1,26 @@
-class Signup {
-  String phone;
-  String password;
-  String passwordRepeat;
-  String verificationCode;
+import "package:freezed_annotation/freezed_annotation.dart";
+part 'auth.freezed.dart';
+part 'auth.g.dart';
 
-  Signup(this.phone, this.password, this.passwordRepeat, this.verificationCode);
+@freezed
+class Signup with _$Signup {
+  const factory Signup({
+    required String phone,
+    required String password,
+  }) = _Signup;
+}
 
-  factory Signup.empty() {
-    return Signup("", "", "", "");
-  }
+@freezed
+class Login with _$Login {
+  const factory Login({
+    required String phone,
+    required String password,
+  }) = _Login;
+}
+
+@freezed
+class User with _$User {
+  const factory User({required String id, required String phone}) = _User;
+
+  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 }

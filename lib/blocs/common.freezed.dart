@@ -16,14 +16,11 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$Query<P, T> {
-  Future<T> Function({required P params}) get query =>
-      throw _privateConstructorUsedError;
+  Future<T> Function(P) get query => throw _privateConstructorUsedError;
   P get params => throw _privateConstructorUsedError;
   T get result => throw _privateConstructorUsedError;
-  P Function({required P currParams, required T response})? get nextParams =>
-      throw _privateConstructorUsedError;
-  T Function({required T currResult, required T response})? get nextResult =>
-      throw _privateConstructorUsedError;
+  P Function(P, T)? get nextParams => throw _privateConstructorUsedError;
+  T Function(T, T)? get nextResult => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
   Object? get error => throw _privateConstructorUsedError;
 
@@ -38,11 +35,11 @@ abstract class $QueryCopyWith<P, T, $Res> {
       _$QueryCopyWithImpl<P, T, $Res, Query<P, T>>;
   @useResult
   $Res call(
-      {Future<T> Function({required P params}) query,
+      {Future<T> Function(P) query,
       P params,
       T result,
-      P Function({required P currParams, required T response})? nextParams,
-      T Function({required T currResult, required T response})? nextResult,
+      P Function(P, T)? nextParams,
+      T Function(T, T)? nextResult,
       bool isLoading,
       Object? error});
 }
@@ -72,7 +69,7 @@ class _$QueryCopyWithImpl<P, T, $Res, $Val extends Query<P, T>>
       query: null == query
           ? _value.query
           : query // ignore: cast_nullable_to_non_nullable
-              as Future<T> Function({required P params}),
+              as Future<T> Function(P),
       params: freezed == params
           ? _value.params
           : params // ignore: cast_nullable_to_non_nullable
@@ -84,11 +81,11 @@ class _$QueryCopyWithImpl<P, T, $Res, $Val extends Query<P, T>>
       nextParams: freezed == nextParams
           ? _value.nextParams
           : nextParams // ignore: cast_nullable_to_non_nullable
-              as P Function({required P currParams, required T response})?,
+              as P Function(P, T)?,
       nextResult: freezed == nextResult
           ? _value.nextResult
           : nextResult // ignore: cast_nullable_to_non_nullable
-              as T Function({required T currResult, required T response})?,
+              as T Function(T, T)?,
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
@@ -107,11 +104,11 @@ abstract class _$$QueryImplCopyWith<P, T, $Res>
   @override
   @useResult
   $Res call(
-      {Future<T> Function({required P params}) query,
+      {Future<T> Function(P) query,
       P params,
       T result,
-      P Function({required P currParams, required T response})? nextParams,
-      T Function({required T currResult, required T response})? nextResult,
+      P Function(P, T)? nextParams,
+      T Function(T, T)? nextResult,
       bool isLoading,
       Object? error});
 }
@@ -139,7 +136,7 @@ class __$$QueryImplCopyWithImpl<P, T, $Res>
       query: null == query
           ? _value.query
           : query // ignore: cast_nullable_to_non_nullable
-              as Future<T> Function({required P params}),
+              as Future<T> Function(P),
       params: freezed == params
           ? _value.params
           : params // ignore: cast_nullable_to_non_nullable
@@ -151,11 +148,11 @@ class __$$QueryImplCopyWithImpl<P, T, $Res>
       nextParams: freezed == nextParams
           ? _value.nextParams
           : nextParams // ignore: cast_nullable_to_non_nullable
-              as P Function({required P currParams, required T response})?,
+              as P Function(P, T)?,
       nextResult: freezed == nextResult
           ? _value.nextResult
           : nextResult // ignore: cast_nullable_to_non_nullable
-              as T Function({required T currResult, required T response})?,
+              as T Function(T, T)?,
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
@@ -178,15 +175,15 @@ class _$QueryImpl<P, T> with DiagnosticableTreeMixin implements _Query<P, T> {
       this.error});
 
   @override
-  final Future<T> Function({required P params}) query;
+  final Future<T> Function(P) query;
   @override
   final P params;
   @override
   final T result;
   @override
-  final P Function({required P currParams, required T response})? nextParams;
+  final P Function(P, T)? nextParams;
   @override
-  final T Function({required T currResult, required T response})? nextResult;
+  final T Function(T, T)? nextResult;
   @override
   @JsonKey()
   final bool isLoading;
@@ -249,26 +246,24 @@ class _$QueryImpl<P, T> with DiagnosticableTreeMixin implements _Query<P, T> {
 
 abstract class _Query<P, T> implements Query<P, T> {
   const factory _Query(
-      {required final Future<T> Function({required P params}) query,
+      {required final Future<T> Function(P) query,
       required final P params,
       required final T result,
-      final P Function({required P currParams, required T response})?
-          nextParams,
-      final T Function({required T currResult, required T response})?
-          nextResult,
+      final P Function(P, T)? nextParams,
+      final T Function(T, T)? nextResult,
       final bool isLoading,
       final Object? error}) = _$QueryImpl<P, T>;
 
   @override
-  Future<T> Function({required P params}) get query;
+  Future<T> Function(P) get query;
   @override
   P get params;
   @override
   T get result;
   @override
-  P Function({required P currParams, required T response})? get nextParams;
+  P Function(P, T)? get nextParams;
   @override
-  T Function({required T currResult, required T response})? get nextResult;
+  T Function(T, T)? get nextResult;
   @override
   bool get isLoading;
   @override

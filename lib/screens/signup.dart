@@ -2,20 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:little_walk/apis/auth.dart';
 import 'package:little_walk/apis/common.dart';
+import 'package:little_walk/apis/http_client.dart';
 import 'package:little_walk/blocs/auth.dart';
 import 'package:little_walk/components/send_verification_code_button.dart';
 import 'package:little_walk/models/auth.dart';
 import 'package:little_walk/screens/home.dart';
+import 'package:little_walk/screens/login.dart';
 
 class SignupScreen extends StatelessWidget {
-  const SignupScreen({super.key});
+  final TextEditingController ctrl = TextEditingController();
+
+  SignupScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (_) => SignupCubit(Signup.empty()),
-        child: BlocBuilder<SignupCubit, Signup>(builder: (context, _) {
-          final bloc = BlocProvider.of<SignupCubit>(context);
+        create: (_) => AuthCubit(client: HttpClient.fromEnv()),
+        child: Builder(builder: (context) {
+          final auth = BlocProvider.of<AuthCubit>(context);
           return Scaffold(
             body: Center(
               child: Column(children: [
@@ -32,26 +36,8 @@ class SignupScreen extends StatelessWidget {
                                 const InputDecoration(hintText: "请输入手机号"),
                           ),
                         ),
-                        Expanded(
-                          child:
-                              SendVerificationCodeButton(bloc.state.phone, 60),
-                        )
                       ],
                     )),
-                Padding(
-                  padding: const EdgeInsets.only(top: 10, left: 30, right: 30),
-                  child: Row(children: [
-                    Expanded(
-                        child: TextField(
-                      enableSuggestions: false,
-                      autocorrect: false,
-                      decoration: const InputDecoration(hintText: "请输入验证码"),
-                      onChanged: (value) {
-                        bloc.setVerificationCode(value);
-                      },
-                    ))
-                  ]),
-                ),
                 Padding(
                     padding:
                         const EdgeInsets.only(top: 10, left: 30, right: 30),
@@ -62,12 +48,11 @@ class SignupScreen extends StatelessWidget {
                           obscureText: true,
                           enableSuggestions: false,
                           autocorrect: false,
-                          onChanged: (value) => bloc.setPassword(value),
+                          onChanged: (value) => auth.setPassword(value),
                           decoration: InputDecoration(
                               hintText: "请输入密码",
-                              errorText: bloc.state.password == "" ||
-                                      bloc.state.password ==
-                                          bloc.state.passwordRepeat
+                              errorText: auth.state.result.password == "" ||
+                                      auth.state.result.password == ctrl.text
                                   ? null
                                   : "密码不一致"),
                         ))
@@ -78,11 +63,11 @@ class SignupScreen extends StatelessWidget {
                   child: Row(children: [
                     Expanded(
                         child: TextField(
+                      controller: ctrl,
                       obscureText: true,
                       enableSuggestions: false,
                       autocorrect: false,
                       decoration: const InputDecoration(hintText: "再次输入密码"),
-                      onChanged: (value) => bloc.setPasswordRepeat(value),
                     ))
                   ]),
                 ),
@@ -92,23 +77,13 @@ class SignupScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         TextButton(
-                            onPressed: bloc.state.password ==
-                                    bloc.state.passwordRepeat
+                            onPressed: auth.state.result.password == ctrl.text
                                 ? () {
-                                    signup(
-                                            bloc.state.phone,
-                                            bloc.state.password,
-                                            bloc.state.verificationCode)
-                                        .then((token) {
-                                      putAuthToken(token);
+                                    auth.signup().then((token) {
                                       Navigator.of(context).push(
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  const HomeScreen()));
-                                    }).catchError((e) {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                              SnackBar(content: Text("$e")));
+                                                  LoginScreen()));
                                     });
                                   }
                                 : null,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:little_walk/blocs/dog.dart';
-import 'package:little_walk/components/dog_avatar.dart';
+import 'package:little_walk/components/images/dog_avatar.dart';
 import 'package:little_walk/screens/edit_dog.dart';
 
 class DogDetailScreen extends StatelessWidget {
@@ -9,7 +9,7 @@ class DogDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dogBloc = BlocProvider.of<DogCubit>(context, listen: true);
+    final dog = BlocProvider.of<DogCubit>(context, listen: true);
     return Scaffold(
         appBar: AppBar(),
         body: Stack(children: [
@@ -31,9 +31,9 @@ class DogDetailScreen extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(dogBloc.state.name),
-                              Text(dogBloc.state.gender),
-                              Text(dogBloc.state.breed.name),
+                              Text(dog.state.result!.name!),
+                              Text(dog.state.result!.gender!),
+                              Text(dog.state.result!.breed!.name!),
                             ],
                           )))
                 ],
@@ -50,7 +50,7 @@ class DogDetailScreen extends StatelessWidget {
                     Navigator.of(context)
                         .push(MaterialPageRoute(builder: (context) {
                       return BlocProvider.value(
-                          value: dogBloc, child: const EditDogScreen());
+                          value: dog, child: const EditDogScreen());
                     }));
                   },
                   child: const Text("编辑信息")))

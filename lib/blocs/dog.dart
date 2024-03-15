@@ -1,65 +1,50 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:little_walk/apis/client.dart';
 import 'package:little_walk/apis/dog.dart';
 import 'package:little_walk/blocs/common.dart';
 import 'package:little_walk/models/dog.dart';
 import 'package:little_walk/models/dog_breed.dart';
 
-class DogCubit extends Cubit<Dog> {
-  DogCubit(Dog dog) : super(dog);
+class DogCubit extends QueryCubit<String, Dog?> {
+  final DogClient client;
+  DogCubit({required this.client, Dog? dog, String? id})
+      : super(Query(
+            query: (id) async => await client.getDog(id),
+            params: dog != null ? dog.id! : id!,
+            result: dog));
 
   void setName(String name) {
-    emit(state.copyWith(name: name));
+    emit(state.copyWith(result: state.result!.copyWith(name: name)));
   }
 
   void setGender(String gender) {
-    emit(state.copyWith(gender: gender));
+    emit(state.copyWith(result: state.result!.copyWith(gender: gender)));
   }
 
-  void setBreed(DogBreed breed) {
-    emit(state.copyWith(breed: breed));
+  void setBreed(Breed breed) {
+    emit(state.copyWith(result: state.result!.copyWith(breed: breed)));
   }
 
   void setPortrait(String portraitID) {
-    emit(state.copyWith(portraitID: portraitID));
-  }
-}
-
-class DogValueCubit extends Cubit<DogValue> {
-  DogValueCubit() : super(const DogValue());
-
-  void setName(String? name) {
-    emit(state.copyWith(name: name));
+    emit(
+        state.copyWith(result: state.result!.copyWith(portraitID: portraitID)));
   }
 
-  void setGender(String? gender) {
-    emit(state.copyWith(gender: gender));
+  void setBirthday(String birthday) =>
+      emit(state.copyWith(result: state.result!.copyWith(birthday: birthday)));
+
+  Future<String> addDog() async {
+    emit(state.copyWith(isLoading: true, error: null));
+    final res = await client.addDog(state.result!);
+    emit(state.copyWith(isLoading: false));
+    return res;
   }
 
-  void setBreed(DogBreedValue? breed) {
-    emit(state.copyWith(breed: breed));
-  }
-
-  void setPortrait(String? portraitID) {
-    emit(state.copyWith(portraitID: portraitID));
-  }
-
-  void setBirthday(String? birthday) {
-    emit(state.copyWith(birthday: birthday));
-  }
-
-  void setTags(List<String> tags) {
-    emit(state.copyWith(tags: tags));
-  }
-
-  void removeTag(String tag) {
-    emit(state.copyWith(
-        tags: [...state.tags ?? List<String>.empty()]
-            .where((t) => t != tag)
-            .toList()));
-  }
-
-  void pushTag(String tag) {
-    emit(state.copyWith(tags: [...state.tags ?? List<String>.empty(), tag]));
+  Future<Dog> updateDog() async {
+    emit(state.copyWith(isLoading: true, error: null));
+    final res = await client.updateDog(state.result!);
+    emit(state.copyWith(isLoading: true));
+    return res;
   }
 }
 
@@ -93,32 +78,21 @@ class DogsCubit extends Cubit<List<Dog>> {
   void remove(String id) => emit(state.where((d) => d.id != id).toList());
 }
 
-class MyDogsParams {
-  final int limit;
-  final String? after;
-
-  const MyDogsParams({required this.limit, this.after});
+class MyDogsCubit extends QueryCubit<void, List<Dog>> {
+  final DogClient client;
+  MyDogsCubit({required this.client})
+      : super(Query(
+          params: null,
+          result: [],
+          query: (params) async => await client.myDogs(),
+        ));
 }
 
-class MyDogsCubit extends QueryCubit<MyDogsParams, List<Dog>> {
-  MyDogsCubit({int limit = 20})
+class BreedsCubit extends QueryCubit<void, List<Breed>> {
+  final DogClient client;
+  BreedsCubit({required this.client})
       : super(Query(
-            params: MyDogsParams(limit: limit),
-            result: [],
-            query: ({required MyDogsParams params}) async =>
-                await myDogs(limit: limit),
-            nextParams: (
-                {required MyDogsParams currParams,
-                required List<Dog> response}) {
-              if (response.isEmpty) {
-                return currParams;
-              }
-              return MyDogsParams(
-                  limit: currParams.limit, after: response.last.id);
-            },
-            nextResult: (
-                {required List<Dog> currResult, required List<Dog> response}) {
-              currResult.addAll(response);
-              return currResult;
-            }));
+            query: (_) async => await client.breeds(),
+            params: null,
+            result: []));
 }

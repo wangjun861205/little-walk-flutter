@@ -1,26 +1,35 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:little_walk/apis/client.dart';
+import 'package:little_walk/blocs/common.dart';
+import 'package:little_walk/main.dart';
 import 'package:little_walk/models/auth.dart';
 
-class SignupCubit extends Cubit<Signup> {
-  SignupCubit(Signup signup) : super(signup);
+class AuthCubit extends QueryCubit<void, Auth> {
+  AuthClient client;
 
-  void setPhone(String phone) {
-    state.phone = phone;
-    emit(state);
+  AuthCubit({required this.client})
+      : super(Query(
+            query: (_) async => const Auth(),
+            params: null,
+            result: const Auth()));
+
+  Future<void> signup() async {
+    emit(state.copyWith(isLoading: true, error: null));
+    await client.signup(state.result);
+    emit(state.copyWith(isLoading: false));
   }
 
-  void setPassword(String password) {
-    state.password = password;
-    emit(state);
+  Future<void> login() async {
+    emit(state.copyWith(isLoading: true, error: null));
+    final token = await client.login(state.result);
+    await const FlutterSecureStorage().write(key: "AUTH_TOKEN", value: token);
+    AuthToken.token = token;
+    emit(state.copyWith(isLoading: false));
   }
 
-  void setPasswordRepeat(String passwordRepeat) {
-    state.passwordRepeat = passwordRepeat;
-    emit(state);
-  }
+  void setPhone(String phone) =>
+      emit(state.copyWith(result: state.result.copyWith(phone: phone)));
 
-  void setVerificationCode(String verificationCode) {
-    state.verificationCode = verificationCode;
-    emit(state);
-  }
+  void setPassword(String password) =>
+      emit(state.copyWith(result: state.result.copyWith(password: password)));
 }

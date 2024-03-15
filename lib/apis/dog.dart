@@ -53,7 +53,7 @@ class AddDogResponse {
   }
 }
 
-Future<Dog> addDog(DogValue dog) async {
+Future<Dog> addDog(Dog dog) async {
   final resp = await httpPostJson(path: "/apis/dogs", obj: dog.toJson());
   return Dog.fromJson(resp);
 }

@@ -12,11 +12,27 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
+class Config {
+  static String? backendAddress;
+}
+
+class AuthToken {
+  static String? token;
+}
+
+class CurrentLocation {
+  static double? longitude;
+  static double? latitude;
+}
+
 void main() async {
   await dotenv.load();
   final backendAddress = dotenv.get("BACKEND_ADDRESS");
+  Config.backendAddress = backendAddress;
   // final status = await [Permission.locationAlways].request();
   // debugPrint(status[Permission.locationAlways].toString());
+  final authToken = await const FlutterSecureStorage().read(key: "AUTH_TOKEN");
+  AuthToken.token = authToken;
   BackgroundLocation.setAndroidNotification(
     title: "Notification title",
     message: "Notification message",
@@ -39,105 +55,12 @@ class MyApp extends StatefulWidget {
   }
 }
 
-Future<bool> needLogin() async {
-  final token = await const FlutterSecureStorage().read(key: "AUTH_TOKEN");
-  if (token == null) {
-    return true;
-  }
-  return await verifyToken(token) == null ? true : false;
-}
-
 class MyAppState extends State<MyApp> {
-  int selectedIndex = 0;
-  final future = const FlutterSecureStorage().read(key: "AUTH_TOKEN");
-
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: future,
-      builder: (context, snapshot) {
-        FirebaseMessaging.onMessage.listen((event) {
-          debugPrint(event.from);
-          debugPrint(event.category);
-          debugPrint(event.data.toString());
-        });
-        if (snapshot.hasError) {
-          return MaterialApp(
-              home: Scaffold(body: Center(child: Text("${snapshot.error}"))));
-        }
-        if (snapshot.connectionState != ConnectionState.done) {
-          return const MaterialApp(home: Scaffold(body: Text("请稍后")));
-        }
-        final appCubit = AppCubit(
-            backendAddress: dotenv.get("BACKEND_ADDRESS"),
-            authToken: snapshot.data);
-        if (snapshot.data == null) {
-          return BlocProvider.value(
-              value: appCubit, child: const MaterialApp(home: LoginScreen(60)));
-        }
-        return BlocProvider.value(
-            value: appCubit, child: const MaterialApp(home: HomeScreen()));
-      },
-    );
+    if (AuthToken.token == null) {
+      return const LoginScreen();
+    }
+    return const MaterialApp(home: HomeScreen());
   }
-}
-
-class MyHomePage extends StatefulWidget {
-  final String backendAddress;
-  const MyHomePage(
-      {super.key, required this.title, required this.backendAddress});
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  String? breed;
-
-  void setBreed(String? b) {
-    setState(() {
-      breed = b;
-    });
-  }
-
-  List<String> tags = [];
-
-  void addTag(String tag) {
-    setState(() {
-      tags.add(tag);
-    });
-  }
-
-  void removeTag(String tag) {
-    setState(() {
-      tags.remove(tag);
-    });
-  }
-
-  String? gender;
-
-  void setGender(String? gender) {
-    setState(() {
-      this.gender = gender;
-    });
-  }
-
-  DateTime? birthday;
-  void setBirthday(DateTime? birthday) {
-    setState(() {
-      this.birthday = birthday;
-    });
-  }
-
-  String? portrait;
-  void setPortrait(String portrait) {
-    setState(() {
-      portrait = portrait;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) => const AddDogScreen();
 }
